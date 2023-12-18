@@ -2,6 +2,11 @@ from flask import Flask
 
 from src.config import Config
 from src.extensions import db, login_manager, migrate
+from src.commands import init_db_command
+
+COMMANDS = [
+    init_db_command
+]
 
 
 def create_app():
@@ -9,6 +14,7 @@ def create_app():
     app.config.from_object(Config)
 
     register_extenstions(app)
+    register_commands(app)
     
 
     return app
@@ -18,8 +24,10 @@ def register_extenstions(app):
 
     login_manager.init_app(app)
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(user_id)
+   
+    
 
 
+def register_commands(app):
+    for command in COMMANDS:
+        app.cli.add_command(command)
