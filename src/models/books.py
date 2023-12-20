@@ -29,6 +29,12 @@ class Book(BaseModel):
     collections = db.relationship("Collection", back_populates="book", secondary="book_collection")
 
 
+class Author(BaseModel):
+    id =  id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    last_name = db.Column(db.String)
+
+
 class Series(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
