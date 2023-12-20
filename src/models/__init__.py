@@ -1,1 +1,1 @@
-from src.models.books import Book, Series, BookSeries, Theme, BookTheme, Publisher, BookPublisher, Collection, BookCollection
+from src.models.books import Book, Series, BookSeries, Theme, BookTheme, Publisher, BookPublisher, Collection, BookCollection, Author
