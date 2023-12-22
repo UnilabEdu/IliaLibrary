@@ -2,7 +2,7 @@ from flask.cli import with_appcontext
 import click
 
 
-from src.models import Book, Series, BookSeries, Theme, BookTheme, Publisher, BookPublisher, Collection, BookCollection
+from src.models import Book, Series, BookSeries, Theme, BookTheme, Publisher, Collection, BookCollection
 from src.extensions import db
 
 
