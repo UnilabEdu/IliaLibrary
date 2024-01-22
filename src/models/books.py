@@ -1,6 +1,9 @@
 from src.extensions import db
 from src.models.base import BaseModel
 from datetime import datetime
+from sqlalchemy import func
+
+
 
 class Book(BaseModel):
 
@@ -41,6 +44,7 @@ class Author(BaseModel):
     last_name = db.Column(db.String)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     book_count = db.Column(db.Integer)
+    image =  db.Column(db.String)
     book = db.relationship("Book", back_populates="author", secondary="book_author")
 
 
@@ -58,9 +62,10 @@ class Series(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     book = db.relationship("Book", back_populates="series", secondary="book_series")
-    book_count = db.Column(db.Integer)
+    image =  db.Column(db.String)
+    book_count = db.Column(db.Integer, default=0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
+    
     def __repr__(self):
         return self.name
 
@@ -77,8 +82,10 @@ class Theme(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     book = db.relationship("Book", back_populates="theme", secondary="book_theme")
+    image =  db.Column(db.String)
     book_count = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
 
     def __repr__(self):
         return self.name
@@ -103,6 +110,7 @@ class Publisher(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     book = db.relationship("Book", back_populates="publisher")
+    image =  db.Column(db.String)
     book_count = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -117,8 +125,10 @@ class Collection(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     book = db.relationship("Book", back_populates="collections", secondary="book_collection")
+    image =  db.Column(db.String)
     book_count = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
 
     def __repr__(self):
         return self.name

@@ -1,4 +1,8 @@
 from src.config import Config
+from src.admin.utils import ViewRowAction
+from src.admin.base import SecureModelView, SecureIndexView
+from src.models import Bookcontent
+
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.form.upload import ImageUploadField, FileUploadField
 from flask_admin.model.form import InlineFormAdmin
@@ -6,23 +10,9 @@ from flask_admin.form import rules
 from flask_admin.model.form import InlineFormAdmin
 from wtforms import StringField, IntegerField
 from flask_admin.model.template import BaseListRowAction, LinkRowAction
-
-
 from wtforms.validators import DataRequired
 from wtforms.fields import SelectField
 
-from src.models import Bookcontent
-
-class ViewRowAction(LinkRowAction):
-
-    def __init__(self, icon_class, url = None):
-        super(ViewRowAction, self).__init__(icon_class, url)
-
-
-
-    def render(self, context, row_id, row):
-        n = self._resolve_symbol(context, 'row_actions.link')
-        return n(self, f"/book/{row.id}")
 
 
 class InlineBookcontentView(InlineFormAdmin):

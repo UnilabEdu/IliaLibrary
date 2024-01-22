@@ -4,12 +4,17 @@ from flask_admin.contrib.sqla import ModelView
 from src.config import Config
 from src.extensions import db, login_manager, migrate
 from src.admin import admin, BookView,  AuthorView, SeriesView, ThemeView, PublisherView, CollectionView
-from src.commands import init_db_command
+from src.commands import init_db_command, populate_db_command
 from src.models import Book, Author, Series, BookSeries, Theme, BookTheme, Publisher,  Collection, BookCollection, User
-
+from src.views import auth_blueprint
 
 COMMANDS = [
-    init_db_command
+    init_db_command,
+    populate_db_command
+]
+
+BLUEPRINTS = [
+    auth_blueprint
 ]
 
 
@@ -45,8 +50,10 @@ def register_extenstions(app):
     admin.add_view(CollectionView(Collection, db.session, category = "წიგნის მახასიათებლები", name =  "კოლექციები"))
 
 
-   
-    
+def register_blueprints(app):
+    for blueprint in BLUEPRINTS:
+        app.register_blueprint(blueprint)   
+
 
 
 def register_commands(app):
