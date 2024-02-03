@@ -19,7 +19,7 @@ class Book(BaseModel):
     view_count = db.Column(db.Integer)
     edition = db.Column(db.Integer)
     copies = db.Column(db.Integer)
-    publish_location = db.Column(db.String)
+   
     publish_year = db.Column(db.Integer)
     editor = db.Column(db.String)
     page_count = db.Column(db.Integer)
@@ -30,13 +30,18 @@ class Book(BaseModel):
 
     publisher_id = db.Column(db.Integer, db.ForeignKey("publisher.id"))
     publisher = db.relationship("Publisher", back_populates="book")
+
+
+    publish_location_id = db.Column(db.Integer, db.ForeignKey("publish_location.id"))
+    publish_location = db.relationship("PublishLocation", back_populates="book")
+
     
     series = db.relationship("Series", back_populates="book", secondary="book_series")
 
     theme = db.relationship("Theme", back_populates="book", secondary="book_theme")
-    collections = db.relationship("Collection", back_populates="book", secondary="book_collection")
+    collections = db.relationship("Collection", back_populates="books", secondary="book_collection")
     book_content = db.relationship("Bookcontent", back_populates = "book")
-    author = db.relationship("Author", back_populates="book", secondary="book_author")
+    author = db.relationship("Author", back_populates="books", secondary="book_author")
 
 class Author(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
@@ -45,7 +50,7 @@ class Author(BaseModel):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     book_count = db.Column(db.Integer)
     image =  db.Column(db.String)
-    book = db.relationship("Book", back_populates="author", secondary="book_author")
+    books = db.relationship("Book", back_populates="author", secondary="book_author")
 
 
     def __repr__(self):
@@ -114,8 +119,19 @@ class Publisher(BaseModel):
     book_count = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+class PublishLocation(BaseModel):
+
+    id = db.Column(db.Integer, primary_key = True)
+    location = db.Column(db.String, unique = True)
+    book = db.relationship("Book", back_populates="publish_location")
+    image =  db.Column(db.String)
+    book_count = db.Column(db.Integer)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+
     def __repr__(self):
-        return self.name
+        return self.location
 
 
 
@@ -124,7 +140,7 @@ class Collection(BaseModel):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
-    book = db.relationship("Book", back_populates="collections", secondary="book_collection")
+    books = db.relationship("Book", back_populates="collections", secondary="book_collection")
     image =  db.Column(db.String)
     book_count = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

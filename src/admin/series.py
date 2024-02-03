@@ -14,19 +14,23 @@ class SeriesView(ModelView):
 
     form_overrides = {"image" : ImageUploadField}
 
-    form_args = {"image" : {"base_path": Config.UPLOAD_PATH}}
+    form_args = {"image" : {"base_path": Config.UPLOAD_PATH, "url_relative_path": "upload/"}}
 
     column_extra_row_actions = [ViewRowAction("fa fa-eye")]
+
+    column_formatters = {"book_count" : lambda v, c, m, p: len(m.book)}
 
     column_default_sort = ("created_at", True)
 
     page_size = 15
 
-    column_labels = {"name" : "სერიები", "book_count" : "წიგნების რაოდენობა ამ მახასიათებლით", "image" : "სურათის დამატება"}
+    column_labels = {"name" : "სერიები", "book_count" : "წიგნების რაოდენობა ამ მახასიათებლით", "image" : "აიქონის დამატება"}
 
     column_list = ["name", "book_count"]
 
     column_searchable_list = ["name"]
 
     form_columns = ["name", "image"]
+
+    
 

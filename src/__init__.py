@@ -3,9 +3,9 @@ from flask_admin.contrib.sqla import ModelView
 
 from src.config import Config
 from src.extensions import db, login_manager, migrate
-from src.admin import admin, BookView,  AuthorView, SeriesView, ThemeView, PublisherView, CollectionView
+from src.admin import admin, BookView,  AuthorView, SeriesView, ThemeView, PublisherView, CollectionView, PublishLocationView
 from src.commands import init_db_command, populate_db_command
-from src.models import Book, Author, Series, BookSeries, Theme, BookTheme, Publisher,  Collection, BookCollection, User
+from src.models import Book, Author, Series, BookSeries, Theme, BookTheme, Publisher,  Collection, BookCollection, User, PublishLocation
 from src.views import auth_blueprint
 
 COMMANDS = [
@@ -24,6 +24,7 @@ def create_app():
 
     register_extenstions(app)
     register_commands(app)
+    register_blueprints(app)
     
 
     return app
@@ -43,11 +44,12 @@ def register_extenstions(app):
 
     admin.add_view(BookView(Book, db.session, name = "წიგნები"))
 
-    admin.add_view(AuthorView(Author, db.session, category = "წიგნის მახასიათებლები", name = "ავტორები"))
+    admin.add_view(AuthorView(Author, db.session, category = "წიგნის მახასიათებლები", name = "რედაქტორები"))
     admin.add_view(SeriesView(Series, db.session, category = "წიგნის მახასიათებლები", name = "სერიები"))
     admin.add_view(PublisherView(Publisher, db.session,  category = "წიგნის მახასიათებლები", name = "გამომცემლობის სახელები"))
     admin.add_view(ThemeView(Theme, db.session, category = "წიგნის მახასიათებლები", name =  "თემატიკები"))
     admin.add_view(CollectionView(Collection, db.session, category = "წიგნის მახასიათებლები", name =  "კოლექციები"))
+    admin.add_view(PublishLocationView(PublishLocation, db.session, category =  "წიგნის მახასიათებლები", name = "გამოცემის ადგილები"))
 
 
 def register_blueprints(app):

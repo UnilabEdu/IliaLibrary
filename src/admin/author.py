@@ -9,7 +9,9 @@ class AuthorView(ModelView):
 
     form_overrides = {"image" : ImageUploadField}
 
-    form_args = {"image" : {"base_path": Config.UPLOAD_PATH}}
+    form_args = {"image" : {"base_path": Config.UPLOAD_PATH, "url_relative_path": "upload/"}}
+
+    column_formatters = {"book_count" : lambda v, c, m, p: len(m.books)}
 
     column_extra_row_actions = [ViewRowAction("fa fa-eye")]
 
