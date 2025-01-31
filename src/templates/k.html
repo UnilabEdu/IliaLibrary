@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body class="landing-page">
+    <!-- Header -->
+    <header>
+      <div class="container header_wrapper">
+        <div class="header_components">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="index.html"
+              ><img src="./assets/index.html/logo.svg" alt="logo"
+            /></a>
+          </div>
+
+          <!-- Navigation -->
+          <div class="navigation">
+            <nav>
+              <ul>
+                <li>
+                  <a href="./index.html" class="active-header">მთავარი</a>
+                </li>
+                <li>
+                  <a href="./view/about-project.html">პროექტის შესახებ</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <!-- Burger Menu Icon -->
+          <div class="burger_menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="landing-photo-wrapper">
+        <img
+          src="./assets/landing-photo.png"
+          alt="landing-photo"
+          class="landing-photo"
+        />
+      </div>
+      <div class="main-content-wrapper">
+        <div class="filter-books-wrapper">
+          <aside class="filter-section">
+            <section class="buttons-section">
+              <div class="search-container">
+                <img
+                  src="./assets/search-icon.svg"
+                  alt="search-icon"
+                  class="search-icon"
+                />
+                <input type="text" placeholder="ძიება" />
+              </div>
+
+              <button class="blue-button">ძებნა</button>
+
+              <button class="dropdown-button">
+                <p class="dropdown-text">სორტირება</p>
+                <img
+                  src="./assets/blue-dropdown-icon.svg"
+                  alt="dropdown-icon"
+                  class="dropdown-icon"
+                />
+              </button>
+
+              <section>
+                <ul class="dropdown-options">
+                  <li class="option" data-value="name-asc">დასახელება (ა-ჰ)</li>
+                  <li class="option" data-value="name-desc">
+                    დასახელება (ჰ-ა)
+                  </li>
+                  <li class="option" data-value="year-asc">
+                    მონაცემთა წელი (ზრდადი)
+                  </li>
+                  <li class="option" data-value="year-desc">
+                    მონაცემთა წელი (კლებადი)
+                  </li>
+                </ul>
+              </section>
+            </section>
+
+            <div class="dropdownUnderline"></div>
+
+            <div class="clean-filters">
+              <img
+                src="./assets/trash-icon.svg"
+                alt="trash-icon"
+                class="trash-icon"
+              />
+              <p class="clean-filters-text">ფილტრაციის გასუფთავება</p>
+            </div>
+
+            <section class="media-type-section">
+              <div class="dropdown-section-wrapper">
+                <h2>მედიის ტიპი</h2>
+                <div class="dropdownUnderline"></div>
+
+                <div class="dropdown">
+                  <label>
+                    წიგნები
+                    <input type="checkbox" name="option1" value="1" />
+                  </label>
+                  <label>
+                    პერიოდიკა
+                    <input type="checkbox" name="option2" value="2" />
+                  </label>
+                  <label>
+                    წერილები
+                    <input type="checkbox" name="option3" value="3" />
+                  </label>
+                  <label>
+                    ხელნაწერები
+                    <input type="checkbox" name="option1" value="1" />
+                  </label>
+                  <label>
+                    აუდიო
+                    <input type="checkbox" name="option2" value="2" />
+                  </label>
+                  <label>
+                    ფოტო
+                    <input type="checkbox" name="option3" value="3" />
+                  </label>
+                </div>
+              </div>
+
+              <div class="dropdown-section-wrapper">
+                <h2>გამოცემის წელი</h2>
+                <div class="dropdownUnderline"></div>
+
+                <div class="publish-date">
+                  <div class="date-wrapper">
+                    <div class="date-input-container">
+                      <label for="date-input">
+                        <img
+                          src="./assets/calendar-icon.svg"
+                          alt="calendar-icon"
+                          class="calendar-icon"
+                        />
+                        <p id="date-text">-დან</p>
+                        <input type="date" id="date-input" name="date" />
+                      </label>
+                    </div>
+
+                    <img src="./assets/dropdown-icon.svg" alt="dropdown-icon" />
+
+                    <div class="date-input-container">
+                      <label for="date-input">
+                        <img
+                          src="./assets/calendar-icon.svg"
+                          alt="calendar-icon"
+                          class="calendar-icon"
+                        />
+                        <p id="date-text">-მდე</p>
+                        <input type="date" id="date-input" name="date" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dropdown-section-wrapper">
+                <h2>ჟანრი</h2>
+                <div class="dropdownUnderline"></div>
+
+                <div class="dropdown">
+                  <label>
+                    პოეზია
+                    <input type="checkbox" name="option1" value="1" />
+                  </label>
+                  <label>
+                    პროზა
+                    <input type="checkbox" name="option2" value="2" />
+                  </label>
+                  <label>
+                    წერილები
+                    <input type="checkbox" name="option3" value="3" />
+                  </label>
+                  <label>
+                    სხვა
+                    <input type="checkbox" name="option1" value="1" />
+                  </label>
+                </div>
+              </div>
+
+              <div class="dropdown-section-wrapper">
+                <h2>ენა</h2>
+                <div class="dropdownUnderline"></div>
+
+                <div class="dropdown">
+                  <label>
+                    ქართული
+                    <input type="checkbox" name="option1" value="1" />
+                  </label>
+                  <label>
+                    ინგლისური
+                    <input type="checkbox" name="option2" value="2" />
+                  </label>
+                  <label>
+                    რუსული
+                    <input type="checkbox" name="option3" value="3" />
+                  </label>
+                </div>
+              </div>
+
+              <div class="dropdown-section-wrapper">
+                <h2>ფონდი</h2>
+                <div class="dropdownUnderline"></div>
+
+                <div class="dropdown">
+                  <label>
+                    საჯარო
+                    <input type="checkbox" name="option1" value="1" />
+                  </label>
+                  <label>
+                    ილიას სახელმწიფო უნივ...
+                    <input type="checkbox" name="option2" value="2" />
+                  </label>
+                  <label>
+                    ხელნაწერები
+                    <input type="checkbox" name="option3" value="3" />
+                  </label>
+                  <label>
+                    მუზეუმი
+                    <input type="checkbox" name="option1" value="1" />
+                  </label>
+                  <label>
+                    სხვა
+                    <input type="checkbox" name="option2" value="2" />
+                  </label>
+                </div>
+              </div>
+            </section>
+          </aside>
+
+          <section class="books-section">
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/gandegili.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>განდეგილი</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>საბჭოთა მწერალი</p>
+                      <span>1957</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/mepe-demetre-tavdadebuli.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>მეფე დემეტრე თავდადებული</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>საბას წიგნები</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/ilia-chavchavadze.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>საქართველოს ილუსტრირებული ისტორია</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>პალიტრა L</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/sarchobelazed.png"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>სახრჩობელაზედ</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>საბას წიგნები</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/poezia-targmanebi-werilebi.png"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>პოეზია, თარგმანები, წერილები</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>პალიტრა L</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/leqsebi.png"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>ლექსები</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>საბას წიგნები</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/sagandzuri.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>საბავშვო ლექსები და მოთხრობები</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>საქართველოს მაცნე</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/saskolo-biblioteka.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>პროზა, წერილები, პოეზია</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>ბაკმი</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/motkhrobebi.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>მოთხრობები</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>პალიტრა L</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/kacia-adamiani.png"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>კაცია-ადამიანი?!</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>პალიტრა L</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/qvata-ghaghadi.png"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>ქვათა ღაღადი</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>საბას წიგნები</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/otaraant-qvrivi.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>ოთარაანთ ქვრივი</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>თბილისი</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/tserilebi-da-motxrobebi.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>წერილები და მოთხრობები</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>ბაკურ სულაკაურის გამომცემლობა</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/katsia-adamiani.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>კაცია-ადამიანი?!</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>საქართველოს მაცნე</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/tserilebi.jpg"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>წერილები</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>ილიაუნის გამომცემლობა</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+            <a href="./view/book-details.html">
+              <article class="card">
+                <img
+                  src="./assets/landing-page-cards/motxrobebi.png"
+                  alt="book-cover"
+                  class="book-cover"
+                />
+                <div class="book-info">
+                  <div class="book-views">
+                    <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                    <p>29</p>
+                  </div>
+
+                  <div class="title-share">
+                    <div class="title-share-default">
+                      <h2>მოთხრობები</h2>
+                      <img src="./assets/share-icon.svg" alt="share-icon" />
+                    </div>
+                    <div class="title-share-hover">
+                      <p>iBooks</p>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </a>
+          </section>
+        </div>
+        <div class="pagination-container">
+          <div class="pagination-wrapper">
+            <img src="./assets/pagination-arrow.svg" alt="pagination-arrow" />
+            <div class="pagination-numbers">
+              <p>1</p>
+              <p class="active">2</p>
+              <p>3</p>
+              <p>...</p>
+              <p>9</p>
+            </div>
+            <img src="./assets/pagination-arrow.svg" alt="pagination-arrow" />
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="about-project-footer">
+      <section class="footer-main-info">
+        <div class="container">
+          <div class="contacts-container">
+            <h2>კონტაქტი</h2>
+            <div class="contacts-wrapper">
+              <ul>
+                <li>
+                  <a href="tel:(+995-32)222-00-09">
+                    <img src="./assets/phone-icon.svg" alt="phone icon" />(+995
+                    32) 222 00 09 <span>(116)</span></a
+                  >
+                </li>
+                <li>
+                  <a href="mailto:library@iliauni@edu.ge">
+                    <img
+                      id="css-email"
+                      src="./assets/email-icon.svg"
+                      alt="email icon"
+                    />library@iliauni@edu.ge</a
+                  >
+                </li>
+
+                <li>
+                  <a
+                    href="https://www.google.com/maps/place/%E1%83%98%E1%83%9A%E1%83%98%E1%83%90%E1%83%A1+%E1%83%A1%E1%83%90%E1%83%AE%E1%83%94%E1%83%9A%E1%83%9B%E1%83%AC%E1%83%98%E1%83%A4%E1%83%9D+%E1%83%A3%E1%83%9C%E1%83%98%E1%83%95%E1%83%94%E1%83%A0%E1%83%A1%E1%83%98%E1%83%A2%E1%83%94%E1%83%A2%E1%83%98/@41.7085521,44.7691021,17z/data=!4m6!3m5!1s0x40447332ce83ce27:0x88f10503a3a86e1d!8m2!3d41.7088973!4d44.7708867!16s%2Fm%2F02pmq51?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="./assets/location-icon.svg" alt="location-icon" />
+                    ილიას სახელმწიფო უნივერსიტეტი, ქაქუცა ჩოლოყაშვილის 3/5
+                  </a>
+                </li>
+                <li>
+                  <a href="">
+                    <img
+                      src="./assets/link-icon.svg"
+                      alt="link icon"
+                    />library.iliauni.edu.ge</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="usage-container">
+            <a href="#">კონფიდენციალურობის პოლიტიკა</a>
+            <a href="#">გამოყენების წესები</a>
+          </div>
+          <div class="unilab-team-container">
+            <div class="logo-container">
+              <a
+                href="https://iliauni.edu.ge/ge"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="./assets/iliauni-logo.svg" alt="iliauni-logo"
+              /></a>
+              <a
+                href="https://unilab.iliauni.edu.ge/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="./assets/unilab-logo.svg" alt="unilab-logo"
+              /></a>
+            </div>
+            <p>ვებგვერდზე იმუშავა უნილაბის გუნდმა</p>
+          </div>
+        </div>
+      </section>
+      <section class="footer-additional-info">
+        <aside class="container">
+          <p>ილიას სახელმწიფო უნივერსიტეტი 2024. ყველა უფლება დაცულია.</p>
+        </aside>
+      </section>
+    </footer>
+
+    <!-- JavaScript link -->
+    <script src="./js/script.js"></script>
+  </body>
+</html>
