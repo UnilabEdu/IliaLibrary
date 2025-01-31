@@ -2,12 +2,11 @@
 <!--  -->
 {% block title %} --title- {% endblock %}
 <!--  -->
-{% block body %}
-
+{% block main_section %}
 <main>
   <div class="landing-photo-wrapper">
     <img
-      src="./assets/landing-photo.png"
+      src="{{ url_for('static', filename='images/landing-photo.png') }}"
       alt="landing-photo"
       class="landing-photo"
     />
@@ -20,7 +19,7 @@
             <div class="search-container">
               <label for="search-input">
                 <img
-                  src="./assets/search-icon.svg"
+                  src="{{ url_for('static', filename='icons/search-icon.svg') }}"
                   alt="search-icon"
                   class="search-icon"
                 />
@@ -38,7 +37,7 @@
             <button type="button" class="dropdown-button">
               <p class="dropdown-text">სორტირება</p>
               <img
-                src="./assets/blue-dropdown-icon.svg"
+                src="{{ url_for('static', filename='icons/blue-dropdown-icon.svg') }}"
                 alt="dropdown-icon"
                 class="dropdown-icon"
               />
@@ -63,7 +62,7 @@
           <div class="clean-filters">
             <button type="reset" class="resetBTN">
               <img
-                src="./assets/trash-icon.svg"
+                src="{{ url_for('static', filename='icons/trash-icon.svg') }}"
                 alt="trash-icon"
                 class="trash-icon"
               />
@@ -113,7 +112,7 @@
                   <div class="date-input-container">
                     <label for="date-from-input">
                       <img
-                        src="./assets/calendar-icon.svg"
+                        src="{{ url_for('static', filename='icons/calendar-icon.svg') }}"
                         alt="calendar-icon"
                         class="calendar-icon"
                       />
@@ -122,12 +121,15 @@
                     </label>
                   </div>
 
-                  <img src="./assets/dropdown-icon.svg" alt="dropdown-icon" />
+                  <img
+                    src="{{ url_for('static', filename='icons/dropdown-icon.svg') }}"
+                    alt="dropdown-icon"
+                  />
 
                   <div class="date-input-container">
                     <label for="date-to-input" name="dateTo">
                       <img
-                        src="./assets/calendar-icon.svg"
+                        src="{{ url_for('static', filename='icons/calendar-icon.svg') }}"
                         alt="calendar-icon"
                         class="calendar-icon"
                       />
@@ -224,14 +226,20 @@
             />
             <div class="book-info">
               <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                <img
+                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
+                  alt="eye-icon"
+                />
                 <p>29</p>
               </div>
 
               <div class="title-share">
                 <div class="title-share-default">
                   <h2>განდეგილი</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
+                  <img
+                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
+                    alt="share-icon"
+                  />
                 </div>
                 <div class="title-share-hover">
                   <p>საბჭოთა მწერალი</p>
@@ -250,14 +258,20 @@
             />
             <div class="book-info">
               <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                <img
+                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
+                  alt="eye-icon"
+                />
                 <p>29</p>
               </div>
 
               <div class="title-share">
                 <div class="title-share-default">
                   <h2>მეფე დემეტრე თავდადებული</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
+                  <img
+                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
+                    alt="share-icon"
+                  />
                 </div>
                 <div class="title-share-hover">
                   <p>საბას წიგნები</p>
@@ -276,14 +290,20 @@
             />
             <div class="book-info">
               <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                <img
+                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
+                  alt="eye-icon"
+                />
                 <p>29</p>
               </div>
 
               <div class="title-share">
                 <div class="title-share-default">
                   <h2>საქართველოს ილუსტრირებული ისტორია</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
+                  <img
+                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
+                    alt="share-icon"
+                  />
                 </div>
                 <div class="title-share-hover">
                   <p>პალიტრა L</p>
@@ -302,14 +322,20 @@
             />
             <div class="book-info">
               <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                <img
+                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
+                  alt="eye-icon"
+                />
                 <p>29</p>
               </div>
 
               <div class="title-share">
                 <div class="title-share-default">
                   <h2>სახრჩობელაზედ</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
+                  <img
+                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
+                    alt="share-icon"
+                  />
                 </div>
                 <div class="title-share-hover">
                   <p>საბას წიგნები</p>
@@ -328,14 +354,20 @@
             />
             <div class="book-info">
               <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                <img
+                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
+                  alt="eye-icon"
+                />
                 <p>29</p>
               </div>
 
               <div class="title-share">
                 <div class="title-share-default">
                   <h2>პოეზია, თარგმანები, წერილები</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
+                  <img
+                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
+                    alt="share-icon"
+                  />
                 </div>
                 <div class="title-share-hover">
                   <p>პალიტრა L</p>
@@ -354,14 +386,20 @@
             />
             <div class="book-info">
               <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
+                <img
+                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
+                  alt="eye-icon"
+                />
                 <p>29</p>
               </div>
 
               <div class="title-share">
                 <div class="title-share-default">
                   <h2>ლექსები</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
+                  <img
+                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
+                    alt="share-icon"
+                  />
                 </div>
                 <div class="title-share-hover">
                   <p>საბას წიგნები</p>
@@ -635,7 +673,10 @@
     </div>
     <div class="pagination-container">
       <div class="pagination-wrapper">
-        <img src="./assets/pagination-arrow.svg" alt="pagination-arrow" />
+        <img
+          src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
+          alt="pagination-arrow"
+        />
         <div class="pagination-numbers">
           <p>1</p>
           <p class="active">2</p>
@@ -643,7 +684,10 @@
           <p>...</p>
           <p>9</p>
         </div>
-        <img src="./assets/pagination-arrow.svg" alt="pagination-arrow" />
+        <img
+          src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
+          alt="pagination-arrow"
+        />
       </div>
     </div>
   </div>
