@@ -7,7 +7,7 @@
   <section class="book-container container">
     <div class="cover-wrapper">
       <img
-        src="../assets/landing-page-cards/gandegili.jpg"
+        src="{{ url_for('static', filename='images/gandegili.jpg') }}"
         alt="book cover image"
       />
       <a href="flip-page.html">წაკითხვა (PDF)</a>
@@ -18,15 +18,24 @@
         <p>ილია ჭავჭავაძე | 1957</p>
         <div class="book-info">
           <div>
-            <img src="../assets/book-icon.svg" alt="book icon" />
+            <img
+              src="{{ url_for('static', filename='icons/book-icon.svg') }}"
+              alt="book icon"
+            />
             <span>გვერდების რადენობა: 23</span>
           </div>
           <div>
-            <img src="../assets/language-icon.svg" alt="language icon" />
+            <img
+              src="{{ url_for('static', filename='icons/language-icon.svg') }}"
+              alt="language icon"
+            />
             <span>ენა: ქართული</span>
           </div>
           <div>
-            <img src="../assets/book-check-icon.svg" alt="book check icon" />
+            <img
+              src="{{ url_for('static', filename='icons/book-check-icon.svg') }}"
+              alt="book check icon"
+            />
             <span>გამომცემლობა: საბჭოთა მწერალი</span>
           </div>
         </div>

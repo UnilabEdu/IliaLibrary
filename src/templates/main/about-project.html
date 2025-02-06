@@ -7,7 +7,7 @@
 <main class="about-main">
   <div class="landing-photo-wrapper">
     <img
-      src="../assets/about-project-page/landing-photo.jpg"
+      src="{{ url_for('static', filename='images/a-p-landing-photo.jpg') }}"
       class="landing-photo"
       alt="landing-photo"
     />
@@ -82,7 +82,7 @@
             <li>
               <a href="tel:(+995-32)222-00-09">
                 <img
-                  src="../assets/phone-icon--blue.svg"
+                  src="{{ url_for('static', filename='icons/phone-icon--blue.svg') }}"
                   alt="phone icon"
                 />(+995 32) 222 00 09 (116)</a
               >
@@ -91,7 +91,7 @@
               <a href="mailto:library@iliauni@edu.ge">
                 <img
                   id="css-email"
-                  src="../assets/email-icon--blue.svg"
+                  src="{{ url_for('static', filename='icons/email-icon--blue.svg') }}"
                   alt="email icon"
                 />library@iliauni@edu.ge</a
               >
@@ -103,7 +103,7 @@
                 rel="noopener noreferrer"
               >
                 <img
-                  src="../assets/location-icon--blue.svg"
+                  src="{{ url_for('static', filename='icons/location-icon--blue.svg') }}"
                   alt="location icon"
                 />ქაქუცა ჩოლოყაშვილის 3/5</a
               >
@@ -111,7 +111,7 @@
             <li>
               <a href="library.iliauni.edu.ge">
                 <img
-                  src="../assets/link-icon--blue.svg"
+                  src="{{ url_for('static', filename='icons/link-icon--blue.svg') }}"
                   alt="link icon"
                 />library.iliauni.edu.ge</a
               >
