@@ -52,7 +52,7 @@ function initializeElements() {
   state.main = document.getElementById("main");
   state.currentPageElement = document.getElementById("current-page");
   state.totalPagesElement = document.getElementById("total-pages");
-  state.mainHeader = document.getElementById("main-header");
+  // state.mainHeader = document.getElementById("main-header");
   state.flipHeader = document.getElementById("flip-page-header");
 }
 
@@ -247,7 +247,7 @@ function showLoader() {
 function hideLoader() {
   state.loader.style.display = "none";
   state.main.style.display = "block";
-  state.mainHeader.style.display = "none";
+  // state.mainHeader.style.display = "none";
   state.flipHeader.style.display = "flex";
   state.bookContainer.style.visibility = "visible";
 }
@@ -296,7 +296,7 @@ async function initializeViewer(pdfUrl) {
 
 // Initialize when PDF.js is available
 if (typeof pdfjsLib !== "undefined") {
-  initializeViewer("./src/static/book/განდეგილი 1957.pdf");
+  initializeViewer("gandegili-1957.pdf");
 } else {
   console.error("PDF.js is not available");
 }
