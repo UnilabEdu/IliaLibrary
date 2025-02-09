@@ -1,0 +1,537 @@
+{% extends "base.html" %}
+<!--  -->
+{% block title %} --book 1-- {% endblock %}
+<!--  -->
+{% block main_section %}
+<main class="book-main">
+  <section class="book-container container">
+    <div class="cover-wrapper">
+      <img
+        src="{{ url_for('static', filename='images/gandegili.jpg') }}"
+        alt="book cover image"
+      />
+      <a href="{{ url_for('main.read_book') }}">წაკითხვა (PDF)</a>
+    </div>
+    <div class="info-wrapper">
+      <div class="main-info">
+        <h3>განდეგილი</h3>
+        <p>ილია ჭავჭავაძე | 1957</p>
+        <div class="book-info">
+          <div>
+            <img
+              src="{{ url_for('static', filename='icons/book-icon.svg') }}"
+              alt="book icon"
+            />
+            <span>გვერდების რადენობა: 23</span>
+          </div>
+          <div>
+            <img
+              src="{{ url_for('static', filename='icons/language-icon.svg') }}"
+              alt="language icon"
+            />
+            <span>ენა: ქართული</span>
+          </div>
+          <div>
+            <img
+              src="{{ url_for('static', filename='icons/book-check-icon.svg') }}"
+              alt="book check icon"
+            />
+            <span>გამომცემლობა: საბჭოთა მწერალი</span>
+          </div>
+        </div>
+      </div>
+      <div class="button-wrapper">
+        <button id="anotation">ანოტაცია</button>
+        <button id="search">სარჩევი</button>
+        <button id="feature">მახასიათებლები</button>
+      </div>
+      <div class="anotation-section open">
+        <p>
+          ილია ჭავჭავაძის გამომცემლობის ვებ-გვერდი, სახელწოდება და ქვედა ტექსტი:
+          ილია ჭავჭავაძის გამომცემლობის ვებ-გვერდი - არის ონლაინ ბიბლიოთეკა,
+          რომელშიც თავმოყრილი იქნება ილია ჭავჭავაძის წიგნები. ონლაინ წიგნების
+          საცავი საშუალებას მისცემს უნივერსიტეტში არსებულ მკლევარებს,
+          სტუდენტებსა და პროფესორებს, რომ წაიკითხონ, გაეცნონ და გამოიკვლიონ,
+          ილია ჭავჭავაძის წიგნები და სამომავლოდ დაემატება, ნათარგმნები,
+          ხელწერები, ჟურნალები, წერილები და ა.შ. ონლაინ ბიბლიოთეკა იქნება
+          ელექტრონული საცავი, რომელიც გაამარტივებს წვდომას ილია ჭავჭავაძის
+          რესურსებთან.
+        </p>
+        <div>
+          <span> &copy; ააიპ ილიას სახელმწიფო უნივერსიტეტის ბიბლიოთეკა </span>
+          <span> Ilia State University Library </span>
+          <span> გ.წერეთლის აღმოსვლეთმცოდნეობის ინსტიტუტი </span>
+        </div>
+      </div>
+
+      <!-- სარჩევის დიზაინი არაა -->
+      <div class="searching-section">
+        <div class="each_content_line">
+          <p>თავი I</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.3</p>
+        </div>
+
+        <div class="each_content_line">
+          <p>თავი II</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.3</p>
+        </div>
+
+        <div class="each_content_line">
+          <p>თავი III</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.4</p>
+        </div>
+
+        <!-- Hard-coded divs for chapters 4 to 28 -->
+        <div class="each_content_line">
+          <p>თავი IV</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.5</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი V</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.5</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი VI</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.6</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი VII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.7</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი VIII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.7</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი IX</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.8</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი X</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.9</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XI</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.9</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.10</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XIII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.10</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XIV</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.11</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XV</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.12</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XVI</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.12</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XVII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.13</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XVIII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.14</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XIX</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.14</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XX</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.15</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XXI</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.16</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XXII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.16</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XXIII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.17</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XXIV</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.17</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XXV</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.18</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XXVI</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.19</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XXVII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.19</p>
+        </div>
+        <div class="each_content_line">
+          <p>თავი XXVIII</p>
+          <p class="dotted-line">
+            <span
+              >........................................................</span
+            >
+          </p>
+          <p>გვ.20</p>
+        </div>
+      </div>
+
+      <!-- feature section -->
+      <div class="feature-section">
+        <ul>
+          <li>ავტორი:</li>
+          <li>სათაური:</li>
+          <li>გამოცემის ადგილი:</li>
+          <li>გამომცემლობა:</li>
+          <li>გამოცემის წელი:</li>
+          <li>ენა:</li>
+          <li>ISBN:</li>
+          <li>ISSN:</li>
+          <li>ჟურნალის სახელწოდება:</li>
+          <li>კრებულის სახელწოდება:</li>
+          <li>ნომერი:</li>
+          <li>სერია:</li>
+          <li>ჟანრი:</li>
+          <li>გამოცემა:</li>
+          <li>პასუხისმგებელი პირი:</li>
+          <li>პასუხისმგებელი ორგანიზაცია:</li>
+          <li>ტომი:</li>
+          <li>ტირაჟი:</li>
+          <li>წინასიტყვაობა:</li>
+          <li>ფიზიკური აღწერილობა:</li>
+          <li>სარჩევი:</li>
+          <li>ბმული:</li>
+          <li>ანოტაცია:</li>
+          <li>დამატებითი ინფორმაცია:</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="similar-books">
+    <div class="main-content-wrapper similar-books-container">
+      <h3>მსგავსი წიგნები</h3>
+      <div class="books-box books-section">
+        <a href="#">
+          <article class="card">
+            <img
+              src="../assets/landing-page-cards/mepe-demetre-tavdadebuli.jpg"
+              alt="book-cover"
+              class="book-cover"
+            />
+            <div class="book-info">
+              <div class="book-views">
+                <img src="../assets/mdi_eye.svg" alt="eye-icon" />
+                <p>29</p>
+              </div>
+
+              <div class="title-share">
+                <div class="title-share-default">
+                  <h2>მეფე დემეტრე თავდადებული</h2>
+                  <img src="../assets/share-icon.svg" alt="share-icon" />
+                </div>
+                <div class="title-share-hover">
+                  <p>გამომცემელი</p>
+                  <span>2024</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </a>
+        <a href="#">
+          <article class="card">
+            <img
+              src="../assets/landing-page-cards/gandegili.jpg"
+              alt="book-cover"
+              class="book-cover"
+            />
+            <div class="book-info">
+              <div class="book-views">
+                <img src="../assets/mdi_eye.svg" alt="eye-icon" />
+                <p>29</p>
+              </div>
+
+              <div class="title-share">
+                <div class="title-share-default">
+                  <h2>განდეგილი</h2>
+                  <img src="../assets/share-icon.svg" alt="share-icon" />
+                </div>
+                <div class="title-share-hover">
+                  <p>გამომცემელი</p>
+                  <span>2024</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </a>
+        <a href="#">
+          <article class="card">
+            <img
+              src="../assets/landing-page-cards/mepe-demetre-tavdadebuli.jpg"
+              alt="book-cover"
+              class="book-cover"
+            />
+            <div class="book-info">
+              <div class="book-views">
+                <img src="../assets/mdi_eye.svg" alt="eye-icon" />
+                <p>29</p>
+              </div>
+
+              <div class="title-share">
+                <div class="title-share-default">
+                  <h2>მეფე დემეტრე თავდადებული</h2>
+                  <img src="../assets/share-icon.svg" alt="share-icon" />
+                </div>
+                <div class="title-share-hover">
+                  <p>გამომცემელი</p>
+                  <span>2024</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </a>
+        <a href="#">
+          <article class="card">
+            <img
+              src="../assets/landing-page-cards/ilia-chavchavadze.jpg"
+              alt="book-cover"
+              class="book-cover"
+            />
+            <div class="book-info">
+              <div class="book-views">
+                <img src="../assets/mdi_eye.svg" alt="eye-icon" />
+                <p>29</p>
+              </div>
+
+              <div class="title-share">
+                <div class="title-share-default">
+                  <h2>კაკო ყაჩაღი</h2>
+                  <img src="../assets/share-icon.svg" alt="share-icon" />
+                </div>
+                <div class="title-share-hover">
+                  <p>გამომცემელი</p>
+                  <span>2024</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </a>
+        <a href="#">
+          <article class="card">
+            <img
+              src="../assets/landing-page-cards/poezia-targmanebi-werilebi.png"
+              alt="book-cover"
+              class="book-cover"
+            />
+            <div class="book-info">
+              <div class="book-views">
+                <img src="../assets/mdi_eye.svg" alt="eye-icon" />
+                <p>29</p>
+              </div>
+
+              <div class="title-share">
+                <div class="title-share-default">
+                  <h2>კაკო ყაჩაღი</h2>
+                  <img src="../assets/share-icon.svg" alt="share-icon" />
+                </div>
+                <div class="title-share-hover">
+                  <p>გამომცემელი</p>
+                  <span>2024</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </a>
+        <a href="#">
+          <article class="card">
+            <img
+              src="../assets/landing-page-cards/leqsebi.png"
+              alt="book-cover"
+              class="book-cover"
+            />
+            <div class="book-info">
+              <div class="book-views">
+                <img src="../assets/mdi_eye.svg" alt="eye-icon" />
+                <p>29</p>
+              </div>
+
+              <div class="title-share">
+                <div class="title-share-default">
+                  <h2>კაკო ყაჩაღი</h2>
+                  <img src="../assets/share-icon.svg" alt="share-icon" />
+                </div>
+                <div class="title-share-hover">
+                  <p>გამომცემელი</p>
+                  <span>2024</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+{%endblock%}
+<!--  -->
+{%block script%}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/book-details.js') }}"></script>
+
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+></script>
+{%endblock%}

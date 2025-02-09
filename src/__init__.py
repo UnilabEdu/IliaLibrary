@@ -6,7 +6,7 @@ from src.extensions import db, login_manager, migrate
 from src.admin import admin, BookView,  AuthorView, SeriesView, ThemeView, PublisherView, CollectionView, PublishLocationView
 from src.commands import init_db_command, populate_db_command
 from src.models import Book, Author, Series, BookSeries, Theme, BookTheme, Publisher,  Collection, BookCollection, User, PublishLocation
-from src.views import auth_blueprint
+from src.views import auth_blueprint, main_blueprint
 
 COMMANDS = [
     init_db_command,
@@ -14,7 +14,8 @@ COMMANDS = [
 ]
 
 BLUEPRINTS = [
-    auth_blueprint
+    auth_blueprint,
+    main_blueprint
 ]
 
 

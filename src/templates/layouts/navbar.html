@@ -1,0 +1,22 @@
+<div class="navigation">
+  <nav>
+    <ul>
+      <li>
+        <a
+          href="{{ url_for('main.index') }}"
+          class="{% if request.endpoint == 'main.index' %}active-header{% endif %}"
+        >
+          მთავარი
+        </a>
+      </li>
+      <li>
+        <a
+          href="{{ url_for('main.about') }}"
+          class="{% if request.endpoint == 'main.about' %}active-header{% endif %}"
+        >
+          პროექტის შესახებ
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
