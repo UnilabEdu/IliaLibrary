@@ -296,7 +296,9 @@ async function initializeViewer(pdfUrl) {
 
 // Initialize when PDF.js is available
 if (typeof pdfjsLib !== "undefined") {
-  initializeViewer("gandegili-1957.pdf");
+  // src/static/book/gandegili-1957.pdf
+  initializeViewer("../book/gandegili-1957.pdf");
+  // initializeViewer("src/static/book/gandegili-1957.pdf");
 } else {
   console.error("PDF.js is not available");
 }
