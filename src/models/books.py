@@ -43,6 +43,15 @@ class Book(BaseModel):
     book_content = db.relationship("Bookcontent", back_populates = "book")
     author = db.relationship("Author", back_populates="books", secondary="book_author")
 
+    # new
+    language = db.Column(db.String)
+    isbn = db.Column(db.String, unique=True, nullable=True)
+    issn = db.Column(db.String, unique=True, nullable=True)
+    journal = db.Column(db.String, nullable=True)
+    collection = db.Column(db.String, nullable=True)
+    person_liable = db.Column(db.String, nullable=True)
+    organization_liable = db.Column(db.String, nullable=True)
+
 class Author(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
