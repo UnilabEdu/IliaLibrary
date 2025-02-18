@@ -1,0 +1,16 @@
+.pagination-container .pagination-wrapper .page-next {
+  rotate: 180deg;
+}
+
+.pagination-container .pagination-wrapper a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  width: 38px;
+  font-size: 24px;
+  font-family: FiraGO700;
+  color: rgba(60, 60, 67, 0.6);
+  padding: 5px 10px;
+  border-radius: 8px;
+}
