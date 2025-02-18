@@ -37,6 +37,18 @@ def populate_db_command():
                       book_file = "motxrobebi.pdf")
     book1.create()
 
+    # for test #############################
+    book2 = Book(title="მოთხრობები", media_type="წიგნი", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+                    publish_year = "2012",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
+                    book_file = "motxrobebi.pdf")
+    book2.create()
+    
+    book3 = Book(title="მოთხრობები", media_type="წიგნი", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+                    publish_year = "2012",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
+                    book_file = "motxrobebi.pdf")
+    book3.create()
+    ########################################
+
     click.echo("populate editor")
     editor1 = Author(name = "სერგეი", last_name =  "მესხი")
     editor1.create()
