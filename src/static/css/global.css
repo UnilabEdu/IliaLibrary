@@ -973,7 +973,7 @@ body {
   background-color: #0077ff;
   color: white;
 }
-.pagination-container .pagination-wrapper img:last-child {
+.pagination-container .pagination-wrapper .page-next {
   rotate: 180deg;
 }
 
