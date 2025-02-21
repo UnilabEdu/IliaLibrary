@@ -3,7 +3,6 @@ from sqlalchemy import or_
 
 from flask import request
 from src.models.books import Book
-from src.views.main.pagination import paginate_query
 
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
@@ -11,13 +10,15 @@ main_blueprint = Blueprint('main', __name__, template_folder='templates')
 @main_blueprint.route('/', methods=['GET', 'POST']) 
 def index():
     page = request.args.get("page", 1, type=int)
-    pagination = paginate_query(Book.query, page)
-    books = pagination.items
     
 # ----------------------
     query = Book.query 
+    search_text = request.args.get('searchQuery')
     media_type = request.args.getlist('mediaType')  
-    genre = request.args.getlist('genre')  
+    genre = request.args.getlist('genre') 
+    language = request.args.getlist('language')  
+    date_from = request.args.get('dateFrom')  
+    date_to = request.args.get('dateTo')  
 
     if media_type and len(media_type) > 0:
         refine = {
@@ -34,12 +35,7 @@ def index():
         if conditions:
             query = query.filter(or_(*conditions))  
 
-        books = query.all()
-        print('media got:', books)
-        
     if genre and len(genre)>0:
-        print(books)
-
         refine = {
             "1":"პოეზია",
             "2":"პროზა",
@@ -52,11 +48,31 @@ def index():
         if conditions:
             query = query.filter(or_(*conditions))  
 
-        books = query.all()
-        print('genre got:', books)
+    if language and len(language)>0:
+        refine = {
+            "1":"ქართული",
+            "2":"ინგლისური",
+            "3":"რუსული",
+        }
 
+        conditions = [Book.language == refine.get(el) for el in language if refine.get(el)]
+
+        if conditions:
+            query = query.filter(or_(*conditions))  
+
+    if date_from and date_to :
+        conditions = [Book.publish_year >= date_from[:4], Book.publish_year <= date_to[:4]]
+        query = query.filter(*conditions)
+
+    if search_text is not None:
+        query = query.filter(or_(Book.title.ilike(f"%{search_text}%"),
+        Book.genre.ilike(f"%{search_text}%"),
+        Book.media_type.ilike(f"%{search_text}%"),
+        Book.language.ilike(f"%{search_text}%")))
 # ----------------------
-    return render_template('main/index.html',books=books, pagination=pagination) 
+
+    books = query.paginate(page=page, per_page=16, error_out=False)
+    return render_template('main/index.html',books=books) 
 
 
 @main_blueprint.route('/about-page',methods=['GET'])

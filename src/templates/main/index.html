@@ -217,7 +217,7 @@
       </aside>
 
       <section class="books-section">
-        {% for book in books %}
+        {% for book in books.items %}
         <a href="{{ url_for('main.book', id=book.id)}}">
           <article class="card">
             <img
@@ -255,8 +255,8 @@
     </div>
     <div class="pagination-container">
       <div class="pagination-wrapper">
-        {% if pagination.has_prev %}
-        <a href="{{ url_for('main.index', page=pagination.prev_num) }}">
+        {% if books.has_prev %}
+        <a href="{{ url_for('main.index', page=books.prev_num) }}">
           <img
             class="page-prev"
             src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
@@ -265,14 +265,14 @@
         </a>
         {%endif%}
         <div class="pagination-numbers">
-          {%if pagination.pages >1%}
+          {%if books.pages >1%}
           <!--  -->
-          {% for num in pagination.iter_pages(left_edge=1, left_current=2,
+          {% for num in books.iter_pages(left_edge=1, left_current=2,
           right_current=2, right_edge=1) %}
           <!--  -->
           {% if num %}
           <!--  -->
-          {% if num == pagination.page and pagination.pages >1 %}
+          {% if num == books.page and books.pages >1 %}
           <p class="active">{{ num }}</p>
           <!-- Highlight active page -->
           {% else %}
@@ -287,8 +287,8 @@
           <!--  -->
           {%endif%}
         </div>
-        {% if pagination.has_next %}
-        <a href="{{ url_for('main.index', page=pagination.next_num) }}">
+        {% if books.has_next %}
+        <a href="{{ url_for('main.index', page=books.next_num) }}">
           <img
             class="page-next"
             src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
