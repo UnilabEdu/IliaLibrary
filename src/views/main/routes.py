@@ -12,11 +12,12 @@ main_blueprint = Blueprint('main', __name__, template_folder='templates')
 def index():
     page = request.args.get("page", 1, type=int)
     pagination = paginate_query(Book.query, page)
+    books = pagination.items
     
 # ----------------------
-    books = pagination.items
     query = Book.query 
     media_type = request.args.getlist('mediaType')  
+    genre = request.args.getlist('genre')  
 
     if media_type and len(media_type) > 0:
         refine = {
@@ -34,7 +35,26 @@ def index():
             query = query.filter(or_(*conditions))  
 
         books = query.all()
-        print('Got:', books)
+        print('media got:', books)
+        
+    if genre and len(genre)>0:
+        print(books)
+
+        refine = {
+            "1":"პოეზია",
+            "2":"პროზა",
+            "3":"წერილები",
+            "4":"სხვა"
+        }
+
+        conditions = [Book.genre == refine.get(el) for el in genre if refine.get(el)]
+
+        if conditions:
+            query = query.filter(or_(*conditions))  
+
+        books = query.all()
+        print('genre got:', books)
+
 # ----------------------
     return render_template('main/index.html',books=books, pagination=pagination) 
 

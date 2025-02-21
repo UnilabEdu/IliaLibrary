@@ -12,6 +12,7 @@ class Book(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     volume_name = db.Column(db.String)
     title = db.Column(db.String)
+    genre= db.Column(db.String)
     media_type = db.Column(db.String)
     cover_image = db.Column(db.String)
     annotation = db.Column(db.String)
