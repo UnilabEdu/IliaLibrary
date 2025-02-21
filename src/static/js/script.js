@@ -97,7 +97,7 @@ var formObject = {
 };
 
 form.addEventListener("submit", (e) => {
-  e.preventDefault();
+  // e.preventDefault();
   const data = new FormData(form);
 
   data.forEach((value, key) => {
