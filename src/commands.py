@@ -33,7 +33,7 @@ def populate_db_command():
 
     click.echo("populate book")
     book1 = Book(title="განდეგილი", media_type="წიგნი", cover_image =  "gandegili.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
-                       publish_year = "2022",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
+                       publish_year = "1957",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
                       book_file = "motxrobebi.pdf", language = "ქართული")
     book1.create()
 
