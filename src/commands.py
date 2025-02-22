@@ -33,9 +33,36 @@ def populate_db_command():
 
     click.echo("populate book")
     book1 = Book(title="მოთხრობები", media_type="წიგნი", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
-                       publish_year = "2012",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
-                      book_file = "motxrobebi.pdf")
+                       publish_year = "2022",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
+                      book_file = "motxrobebi.pdf", language = "ქართული")
     book1.create()
+
+    # for test #############################
+    book2 = Book(title="123", genre="პოეზია", media_type="წერილები", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+                    publish_year = "2002",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
+                    book_file = "motxrobebi.pdf", language = "ქართული")
+    book2.create()
+    
+    book3 = Book(title="qwerty", genre="პროზა", media_type="პერიოდიკა", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+                    publish_year = "2015",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
+                    book_file = "motxrobebi.pdf", language = "რუსული")
+    book3.create()
+    
+    book4 = Book(title="მოთხრობები", genre="წერილები", media_type="ხელნაწერები", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+                    publish_year = "2015",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
+                    book_file = "motxrobebi.pdf", language = "ქართული")
+    book4.create()  
+
+    book5 = Book(title="მოთხრობები", genre="სხვა", media_type="აუდიო", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+                    publish_year = "2012",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
+                    book_file = "motxrobebi.pdf", language = "ინგლისური")
+    book5.create()  
+
+    book6 = Book(title="მოთხრობები", genre="პოეზია", media_type="ფოტო", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+                    publish_year = "2012",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
+                    book_file = "motxrobebi.pdf", language = "ქართული")
+    book6.create()
+    ########################################
 
     click.echo("populate editor")
     editor1 = Author(name = "სერგეი", last_name =  "მესხი")

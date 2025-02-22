@@ -37,7 +37,7 @@
             <button type="button" class="dropdown-button">
               <p class="dropdown-text">სორტირება</p>
               <img
-                src="{{ url_for('static', filename='icons/blue-dropdown-icon.svg') }}"
+                src="{{ url_for('static', filename='icons/green-dropdown-icon.svg') }}"
                 alt="dropdown-icon"
                 class="dropdown-icon"
               />
@@ -184,43 +184,16 @@
                 </label>
               </div>
             </fieldset>
-
-            <fieldset class="dropdown-section-wrapper">
-              <legend>ფონდი</legend>
-              <div class="dropdownUnderline"></div>
-
-              <div class="dropdown">
-                <label>
-                  საჯარო
-                  <input type="checkbox" name="fund" value="1" />
-                </label>
-                <label>
-                  ილიას სახელმწიფო უნივ...
-                  <input type="checkbox" name="fund" value="2" />
-                </label>
-                <label>
-                  ხელნაწერები
-                  <input type="checkbox" name="fund" value="3" />
-                </label>
-                <label>
-                  მუზეუმი
-                  <input type="checkbox" name="fund" value="4" />
-                </label>
-                <label>
-                  სხვა
-                  <input type="checkbox" name="fund" value="5" />
-                </label>
-              </div>
-            </fieldset>
           </section>
         </form>
       </aside>
 
       <section class="books-section">
-        <a href="{{ url_for('main.book') }}">
+        {% for book in books.items %}
+        <a href="{{ url_for('main.book', id=book.id)}}">
           <article class="card">
             <img
-              src="./assets/landing-page-cards/gandegili.jpg"
+              src="static/upload/{{book.cover_image}}"
               alt="book-cover"
               class="book-cover"
             />
@@ -230,464 +203,71 @@
                   src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
                   alt="eye-icon"
                 />
-                <p>29</p>
+                <p>{{book.page_count}}</p>
               </div>
 
               <div class="title-share">
                 <div class="title-share-default">
-                  <h2>განდეგილი</h2>
+                  <h2>{{book.title}}</h2>
                   <img
                     src="{{ url_for('static', filename='icons/share-icon.svg') }}"
                     alt="share-icon"
                   />
                 </div>
                 <div class="title-share-hover">
-                  <p>საბჭოთა მწერალი</p>
-                  <span>1957</span>
+                  <p>{{book.publisher_id or "--publisher here--"}}</p>
+                  <span>{{book.publish_year}}</span>
                 </div>
               </div>
             </div>
           </article>
         </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/mepe-demetre-tavdadebuli.jpg"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img
-                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
-                  alt="eye-icon"
-                />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>მეფე დემეტრე თავდადებული</h2>
-                  <img
-                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
-                    alt="share-icon"
-                  />
-                </div>
-                <div class="title-share-hover">
-                  <p>საბას წიგნები</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/ilia-chavchavadze.jpg"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img
-                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
-                  alt="eye-icon"
-                />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>საქართველოს ილუსტრირებული ისტორია</h2>
-                  <img
-                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
-                    alt="share-icon"
-                  />
-                </div>
-                <div class="title-share-hover">
-                  <p>პალიტრა L</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/sarchobelazed.png"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img
-                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
-                  alt="eye-icon"
-                />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>სახრჩობელაზედ</h2>
-                  <img
-                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
-                    alt="share-icon"
-                  />
-                </div>
-                <div class="title-share-hover">
-                  <p>საბას წიგნები</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/poezia-targmanebi-werilebi.png"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img
-                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
-                  alt="eye-icon"
-                />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>პოეზია, თარგმანები, წერილები</h2>
-                  <img
-                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
-                    alt="share-icon"
-                  />
-                </div>
-                <div class="title-share-hover">
-                  <p>პალიტრა L</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/leqsebi.png"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img
-                  src="{{ url_for('static', filename='icons/mdi_eye.svg') }}"
-                  alt="eye-icon"
-                />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>ლექსები</h2>
-                  <img
-                    src="{{ url_for('static', filename='icons/share-icon.svg') }}"
-                    alt="share-icon"
-                  />
-                </div>
-                <div class="title-share-hover">
-                  <p>საბას წიგნები</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/sagandzuri.jpg"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>საბავშვო ლექსები და მოთხრობები</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>საქართველოს მაცნე</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/saskolo-biblioteka.jpg"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>პროზა, წერილები, პოეზია</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>ბაკმი</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/motkhrobebi.jpg"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>მოთხრობები</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>პალიტრა L</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/kacia-adamiani.png"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>კაცია-ადამიანი?!</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>პალიტრა L</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/qvata-ghaghadi.png"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>ქვათა ღაღადი</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>საბას წიგნები</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/otaraant-qvrivi.jpg"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>ოთარაანთ ქვრივი</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>თბილისი</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/tserilebi-da-motxrobebi.jpg"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>წერილები და მოთხრობები</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>ბაკურ სულაკაურის გამომცემლობა</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/katsia-adamiani.jpg"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>კაცია-ადამიანი?!</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>საქართველოს მაცნე</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/tserilebi.jpg"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>წერილები</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>ილიაუნის გამომცემლობა</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <a href="{{ url_for('main.book') }}">
-          <article class="card">
-            <img
-              src="./assets/landing-page-cards/motxrobebi.png"
-              alt="book-cover"
-              class="book-cover"
-            />
-            <div class="book-info">
-              <div class="book-views">
-                <img src="./assets/mdi_eye.svg" alt="eye-icon" />
-                <p>29</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>მოთხრობები</h2>
-                  <img src="./assets/share-icon.svg" alt="share-icon" />
-                </div>
-                <div class="title-share-hover">
-                  <p>iBooks</p>
-                  <span>2024</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </a>
+        {% endfor %}
       </section>
     </div>
     <div class="pagination-container">
       <div class="pagination-wrapper">
-        <img
-          src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
-          alt="pagination-arrow"
-        />
+        {% if books.has_prev %}
+        <a href="{{ url_for('main.index', page=books.prev_num) }}">
+          <img
+            class="page-prev"
+            src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
+            alt="pagination-arrow"
+          />
+        </a>
+        {%endif%}
         <div class="pagination-numbers">
-          <p>1</p>
-          <p class="active">2</p>
-          <p>3</p>
+          {%if books.pages >1%}
+          <!--  -->
+          {% for num in books.iter_pages(left_edge=1, left_current=2,
+          right_current=2, right_edge=1) %}
+          <!--  -->
+          {% if num %}
+          <!--  -->
+          {% if num == books.page and books.pages >1 %}
+          <p class="active">{{ num }}</p>
+          <!-- Highlight active page -->
+          {% else %}
+          <a href="{{ url_for('main.index', page=num) }}">{{ num }}</a>
+          {% endif %}
+          <!--  -->
+          {% else %}
           <p>...</p>
-          <p>9</p>
+          {% endif %}
+          <!--  -->
+          {% endfor %}
+          <!--  -->
+          {%endif%}
         </div>
-        <img
-          src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
-          alt="pagination-arrow"
-        />
+        {% if books.has_next %}
+        <a href="{{ url_for('main.index', page=books.next_num) }}">
+          <img
+            class="page-next"
+            src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
+            alt="pagination-arrow"
+          />
+        </a>
+        {% endif %}
       </div>
     </div>
   </div>

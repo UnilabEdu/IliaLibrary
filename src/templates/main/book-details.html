@@ -10,7 +10,7 @@
         src="{{ url_for('static', filename='images/gandegili.jpg') }}"
         alt="book cover image"
       />
-      <a href="{{ url_for('main.read_book') }}">წაკითხვა (PDF)</a>
+      <a href="{{ url_for('main.read_book', id=id) }}">წაკითხვა (PDF)</a>
     </div>
     <div class="info-wrapper">
       <div class="main-info">
@@ -60,7 +60,6 @@
         <div>
           <span> &copy; ააიპ ილიას სახელმწიფო უნივერსიტეტის ბიბლიოთეკა </span>
           <span> Ilia State University Library </span>
-          <span> გ.წერეთლის აღმოსვლეთმცოდნეობის ინსტიტუტი </span>
         </div>
       </div>
 
@@ -327,30 +326,26 @@
       <!-- feature section -->
       <div class="feature-section">
         <ul>
-          <li>ავტორი:</li>
-          <li>სათაური:</li>
-          <li>გამოცემის ადგილი:</li>
-          <li>გამომცემლობა:</li>
-          <li>გამოცემის წელი:</li>
-          <li>ენა:</li>
-          <li>ISBN:</li>
-          <li>ISSN:</li>
-          <li>ჟურნალის სახელწოდება:</li>
-          <li>კრებულის სახელწოდება:</li>
-          <li>ნომერი:</li>
-          <li>სერია:</li>
-          <li>ჟანრი:</li>
-          <li>გამოცემა:</li>
-          <li>პასუხისმგებელი პირი:</li>
-          <li>პასუხისმგებელი ორგანიზაცია:</li>
-          <li>ტომი:</li>
-          <li>ტირაჟი:</li>
-          <li>წინასიტყვაობა:</li>
-          <li>ფიზიკური აღწერილობა:</li>
-          <li>სარჩევი:</li>
-          <li>ბმული:</li>
-          <li>ანოტაცია:</li>
-          <li>დამატებითი ინფორმაცია:</li>
+          <li><span> ავტორი: </span> <span>ჭავჭავაძე, ილია</span></li>
+          <li><span> სათაური:</span> <span>განდეგილი</span></li>
+          <li><span> გამოცემის ადგილი:</span> <span>თბილისი</span></li>
+          <li><span> გამომცემლობა:</span> <span>საბჭოთა მწერალი</span></li>
+          <li><span> გამოცემის წელი: </span> <span>1957</span></li>
+          <li><span> ენა:</span> <span>ქართული</span></li>
+          <!-- <li><span> ISBN:</span> <span></span></li>
+              <li><span> ISSN:</span> <span></span></li> -->
+          <!-- <li><span> ჟურნალის სახელწოდება:</span> <span></span></li>
+              <li><span> კრებულის სახელწოდება:</span> <span></span></li>
+              <li><span> ნომერი:</span> <span></span></li>
+              <li><span> სერია:</span> <span></span></li>
+              <li><span> ჟანრი:</span> <span></span></li>
+              <li><span> გამოცემა:</span> <span></span></li> -->
+          <li><span> პასუხისმგებელი პირი:</span> <span>იოსელიანი, თ.</span></li>
+          <!-- <li><span> პასუხისმგებელი ორგანიზაცია:</span> <span></span></li>
+              <li><span> ტომი:</span> <span></span></li>
+              <li><span> ტირაჟი:</span> <span></span></li>
+              <li><span> ფიზიკური აღწერილობა:</span> <span></span></li>
+              <li><span> დამატებითი ინფორმაცია:</span> <span></span></li> -->
         </ul>
       </div>
     </div>
