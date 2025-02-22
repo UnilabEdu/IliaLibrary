@@ -61,7 +61,7 @@ dropdownBTN.addEventListener("click", () => {
     dropdownBTN
       .querySelector("img")
       // .setAttribute("src", "./assets/");
-      .setAttribute("src", "static/icons/blue-dropdown-icon.svg");
+      .setAttribute("src", "static/icons/green-dropdown-icon.svg");
   }
 });
 
@@ -77,7 +77,7 @@ dropdownOptions.forEach((option) => {
     dropdownBTN.classList.remove("active-btn");
     dropdownBTN
       .querySelector("img")
-      .setAttribute("src", "static/icons/blue-dropdown-icon.svg");
+      .setAttribute("src", "static/icons/green-dropdown-icon.svg");
     // dropdownTextEl.style.fontSize = "18px";
   });
 });

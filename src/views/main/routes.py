@@ -71,7 +71,7 @@ def index():
         Book.language.ilike(f"%{search_text}%")))
 # ----------------------
 
-    books = query.paginate(page=page, per_page=1, error_out=False)
+    books = query.paginate(page=page, per_page=16, error_out=False)
     return render_template('main/index.html',books=books) 
 
 
