@@ -18,7 +18,7 @@
     <!-- main header -->
     <header class="flip-page-header" id="flip-page-header">
       <div class="flip-page-header-container container">
-        <a href="{{ url_for('main.book') }}">
+        <a href="{{ url_for('main.book',id=id) }}">
           <img
             src="{{ url_for('static', filename='icons/back.svg') }}"
             alt="გადადით უკან"

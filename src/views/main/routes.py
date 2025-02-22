@@ -71,7 +71,7 @@ def index():
         Book.language.ilike(f"%{search_text}%")))
 # ----------------------
 
-    books = query.paginate(page=page, per_page=16, error_out=False)
+    books = query.paginate(page=page, per_page=1, error_out=False)
     return render_template('main/index.html',books=books) 
 
 
@@ -83,6 +83,6 @@ def about():
 def book(id):
     return render_template('main/book-details.html', id=id)
 
-@main_blueprint.route('/read-book/1', methods=['GET'])
-def read_book():
-    return render_template('main/flip-page.html')
+@main_blueprint.route('/read-book/<int:id>', methods=['GET'])
+def read_book(id):
+    return render_template('main/flip-page.html', id=id)
