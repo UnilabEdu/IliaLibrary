@@ -100,5 +100,17 @@
 
     <!-- <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script> -->
     <script src="{{ url_for('static', filename='js/flip-page.js') }}"></script>
+    <script>
+      if (typeof pdfjsLib !== "undefined") {
+        const pdfPath =
+          "{{ url_for('static', filename='book/' + book.book_file) }}";
+
+        console.log(pdfPath);
+
+        initializeViewer(pdfPath);
+      } else {
+        console.error("PDF.js is not available");
+      }
+    </script>
   </body>
 </html>

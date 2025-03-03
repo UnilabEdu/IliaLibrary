@@ -44,6 +44,9 @@ class Book(BaseModel):
     book_content = db.relationship("Bookcontent", back_populates = "book")
     author = db.relationship("Author", back_populates="books", secondary="book_author")
 
+    author_id = db.Column(db.Integer, db.ForeignKey("author.id"), nullable=True)
+    author = db.relationship("Author", back_populates="books")
+
     # new
     language = db.Column(db.String)
     isbn = db.Column(db.String, unique=True, nullable=True)

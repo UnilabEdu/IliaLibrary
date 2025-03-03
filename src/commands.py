@@ -32,41 +32,45 @@ def populate_db_command():
     user2.create()
 
     click.echo("populate book")
-    book1 = Book(title="განდეგილი", media_type="წიგნი", cover_image =  "gandegili.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+    book1 = Book(title="განდეგილი", media_type="წიგნი", publisher_id= 3 ,cover_image =  "gandegili.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
                        publish_year = "1957",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
-                      book_file = "motxrobebi.pdf", language = "ქართული")
+                      book_file = "gandegili-1957.pdf", language = "ქართული", author_id=2, publish_location_id=1, person_liable='იოსელიანი, თ.')
     book1.create()
 
     # for test #############################
-    book2 = Book(title="123", genre="პოეზია", media_type="წერილები", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+    book2 = Book(title="123", genre="პოეზია", publisher_id= 3, media_type="წერილები", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
                     publish_year = "2002",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
-                    book_file = "motxrobebi.pdf", language = "ქართული")
+                    book_file = "motxrobebi.pdf", language = "ქართული", author_id=2, publish_location_id=1, person_liable='იოსელიანი, თ.')
     book2.create()
     
-    book3 = Book(title="qwerty", genre="პროზა", media_type="პერიოდიკა", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+    book3 = Book(title="qwerty", genre="პროზა", publisher_id= 3, media_type="პერიოდიკა", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
                     publish_year = "2015",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
-                    book_file = "motxrobebi.pdf", language = "რუსული")
+                    book_file = "motxrobebi.pdf", language = "რუსული", author_id=2, publish_location_id=1, person_liable='იოსელიანი, თ.')
     book3.create()
     
-    book4 = Book(title="მოთხრობები", genre="წერილები", media_type="ხელნაწერები", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+    book4 = Book(title="მოთხრობები", genre="წერილები", publisher_id= 3, media_type="ხელნაწერები", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
                     publish_year = "2015",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
-                    book_file = "motxrobebi.pdf", language = "ქართული")
+                    book_file = "motxrobebi.pdf", language = "ქართული", author_id=2, publish_location_id=1, person_liable='იოსელიანი, თ.')
     book4.create()  
 
-    book5 = Book(title="მოთხრობები", genre="სხვა", media_type="აუდიო", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+    book5 = Book(title="მოთხრობები", genre="სხვა", publisher_id= 3, media_type="აუდიო", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
                     publish_year = "2012",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
-                    book_file = "motxrobebi.pdf", language = "ინგლისური")
+                    book_file = "motxrobebi.pdf", language = "ინგლისური", author_id=2, publish_location_id=1, person_liable='იოსელიანი, თ.')
     book5.create()  
 
-    book6 = Book(title="მოთხრობები", genre="პოეზია", media_type="ფოტო", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
+    book6 = Book(title="მოთხრობები", genre="პოეზია", publisher_id= 3, media_type="ფოტო", cover_image =  "motxrobebi.jpg", annotation =  "ილია ჭავჭავაძის მოთხრობები", edition =  "1", copies = "62445", 
                     publish_year = "2012",  page_count = "284", book_height = "15.5", additional_information =  "დამატებითი ტექსტური ინფორმაცია", 
-                    book_file = "motxrobebi.pdf", language = "ქართული")
+                    book_file = "motxrobebi.pdf", language = "ქართული", author_id=2, publish_location_id=1, person_liable='იოსელიანი, თ.')
     book6.create()
     ########################################
 
     click.echo("populate editor")
     editor1 = Author(name = "სერგეი", last_name =  "მესხი")
     editor1.create()
+
+    click.echo("populate author")
+    author1 = Author(name = "ილია", last_name =  "ჭავჭავაძე")
+    author1.create()
 
     click.echo("populate series")
     series1 = Series(name = "50 წიგნი", image = "50_wigni.jpg")
@@ -77,8 +81,10 @@ def populate_db_command():
     click.echo("populate publisher")
     publisher1 = Publisher(name = "დიოგენე", image = "diogene.jpg")
     publisher2 = Publisher(name = "პალიტრა L", image = "palitra.png")
+    publisher3 = Publisher(name = "საბჭოთა მწერალი", image = "palitra.png")
     publisher1.create()
     publisher2.create()
+    publisher3.create()
 
     click.echo("populate publish location")
     location1 = PublishLocation(location = "თბილისი")

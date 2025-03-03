@@ -294,10 +294,10 @@ async function initializeViewer(pdfUrl) {
   }
 }
 
-if (typeof pdfjsLib !== "undefined") {
-  const pdfPath = "/static/book/gandegili-1957.pdf";
+// if (typeof pdfjsLib !== "undefined") {
+//   const pdfPath = "/static/book/gandegili-1957.pdf";
 
-  initializeViewer(window.location.origin + pdfPath);
-} else {
-  console.error("PDF.js is not available");
-}
+//   initializeViewer(window.location.origin + pdfPath);
+// } else {
+//   console.error("PDF.js is not available");
+// }

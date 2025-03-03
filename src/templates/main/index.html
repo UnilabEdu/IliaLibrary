@@ -193,7 +193,7 @@
         <a href="{{ url_for('main.book', id=book.id)}}">
           <article class="card">
             <img
-              src="static/upload/{{book.cover_image}}"
+              src="static/images/{{book.cover_image}}"
               alt="book-cover"
               class="book-cover"
             />
@@ -215,7 +215,7 @@
                   />
                 </div>
                 <div class="title-share-hover">
-                  <p>{{book.publisher_id or "საბჭოთა მწერალი"}}</p>
+                  <p>{{book.publisher.name}}</p>
                   <span>{{book.publish_year}}</span>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, url_for
 from sqlalchemy import or_
 
 from flask import request
@@ -81,8 +81,11 @@ def about():
 
 @main_blueprint.route('/book/<int:id>', methods=['GET'])
 def book(id):
-    return render_template('main/book-details.html', id=id)
+    book = Book.query.get(id)
+    return render_template('main/book-details.html', id=id, book=book)
 
 @main_blueprint.route('/read-book/<int:id>', methods=['GET'])
 def read_book(id):
-    return render_template('main/flip-page.html', id=id)
+    book = Book.query.get(id)
+
+    return render_template('main/flip-page.html', id=id, book=book)
