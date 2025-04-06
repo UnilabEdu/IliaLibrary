@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, url_for
 from sqlalchemy import or_
 
 from flask import request
-from src.models.books import Book
+from src.models.book import Book
 
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 

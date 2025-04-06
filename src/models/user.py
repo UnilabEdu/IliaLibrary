@@ -6,7 +6,6 @@ from src.extensions import db
 from src.models.base import BaseModel
 
 
-
 class User(BaseModel, UserMixin):
 
     __tablename__ = "users"
@@ -15,9 +14,6 @@ class User(BaseModel, UserMixin):
     username = db.Column(db.String)
     _password = db.Column(db.String)
 
-
-
-  
     @property
     def password(self):
         return self._password
@@ -25,7 +21,6 @@ class User(BaseModel, UserMixin):
     @password.setter
     def password(self, value):
         self._password = generate_password_hash(value)
-
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
