@@ -1,259 +1,53 @@
 {% extends "base.html" %}
-<!--  -->
+
 {% block title %} Ilia Library {% endblock %}
-<!--  -->
+
 {% block content %}
-<main>
-    <div class="landing-photo-wrapper">
-        <img
-                src="{{ url_for('static', filename='images/landing-photo.png') }}"
-                alt="landing-photo"
-                class="landing-photo"
-        />
-    </div>
-    <div class="main-content-wrapper">
-        <div class="filter-books-wrapper">
-            <aside class="filter-section">
-                <form action="" id="main-form">
-                    <section class="buttons-section">
-                        <div class="search-container">
-                            <label for="search-input">
-                                <img
-                                        src="{{ url_for('static', filename='icons/search-icon.svg') }}"
-                                        alt="search-icon"
-                                        class="search-icon"
-                                />
-                            </label>
-                            <input
-                                    id="search-input"
-                                    type="text"
-                                    placeholder="ძიება"
-                                    name="searchQuery"
-                            />
-                        </div>
-
-                        <button type="submit" class="blue-button">ძებნა</button>
-
-                        <button type="button" class="dropdown-button">
-                            <p class="dropdown-text">სორტირება</p>
-                            <img
-                                    src="{{ url_for('static', filename='icons/green-dropdown-icon.svg') }}"
-                                    alt="dropdown-icon"
-                                    class="dropdown-icon"
-                            />
-                        </button>
-
-                        <fieldset>
-                            <ul class="dropdown-options">
-                                <li class="option" data-value="name-asc">დასახელება (ა-ჰ)</li>
-                                <li class="option" data-value="name-desc">დასახელება (ჰ-ა)</li>
-                                <li class="option" data-value="year-asc">
-                                    მონაცემთა წელი (ზრდადი)
-                                </li>
-                                <li class="option" data-value="year-desc">
-                                    მონაცემთა წელი (კლებადი)
-                                </li>
-                            </ul>
-                        </fieldset>
-                    </section>
-
-                    <div class="dropdownUnderline"></div>
-
-                    <div class="clean-filters">
-                        <button type="reset" class="resetBTN">
-                            <img
-                                    src="{{ url_for('static', filename='icons/trash-icon.svg') }}"
-                                    alt="trash-icon"
-                                    class="trash-icon"
-                            />
-                            <span class="clean-filters-text">ფილტრაციის გასუფთავება</span>
-                        </button>
-                    </div>
-
-                    <section class="media-type-section">
-                        <fieldset class="dropdown-section-wrapper">
-                            <legend>მედიის ტიპი</legend>
-                            <div class="dropdownUnderline"></div>
-
-                            <div class="dropdown">
-                                <label>
-                                    წიგნები
-                                    <input type="checkbox" name="mediaType" value="1"/>
-                                </label>
-                                <label>
-                                    პერიოდიკა
-                                    <input type="checkbox" name="mediaType" value="2"/>
-                                </label>
-                                <label>
-                                    წერილები
-                                    <input type="checkbox" name="mediaType" value="3"/>
-                                </label>
-                                <label>
-                                    ხელნაწერები
-                                    <input type="checkbox" name="mediaType" value="4"/>
-                                </label>
-                                <label>
-                                    აუდიო
-                                    <input type="checkbox" name="mediaType" value="5"/>
-                                </label>
-                                <label>
-                                    ფოტო
-                                    <input type="checkbox" name="mediaType" value="6"/>
-                                </label>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="dropdown-section-wrapper">
-                            <legend>გამოცემის წელი</legend>
-                            <div class="dropdownUnderline"></div>
-
-                            <div class="publish-date">
-                                <div class="date-wrapper">
-                                    <div class="date-input-container">
-                                        <label for="date-from-input">
-                                            <img
-                                                    src="{{ url_for('static', filename='icons/calendar-icon.svg') }}"
-                                                    alt="calendar-icon"
-                                                    class="calendar-icon"
-                                            />
-                                            <p class="date-text">-დან</p>
-                                            <input type="date" id="date-input" name="dateFrom"/>
-                                        </label>
-                                    </div>
-
-                                    <img
-                                            src="{{ url_for('static', filename='icons/dropdown-icon.svg') }}"
-                                            alt="dropdown-icon"
-                                    />
-
-                                    <div class="date-input-container">
-                                        <label for="date-to-input" name="dateTo">
-                                            <img
-                                                    src="{{ url_for('static', filename='icons/calendar-icon.svg') }}"
-                                                    alt="calendar-icon"
-                                                    class="calendar-icon"
-                                            />
-                                            <p class="date-text">-მდე</p>
-                                            <input name="dateTo" type="date" id="date-input"/>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="dropdown-section-wrapper">
-                            <legend>ჟანრი</legend>
-                            <div class="dropdownUnderline"></div>
-
-                            <div class="dropdown">
-                                <label>
-                                    პოეზია
-                                    <input type="checkbox" name="genre" value="1"/>
-                                </label>
-                                <label>
-                                    პროზა
-                                    <input type="checkbox" name="genre" value="2"/>
-                                </label>
-                                <label>
-                                    წერილები
-                                    <input type="checkbox" name="genre" value="3"/>
-                                </label>
-                                <label>
-                                    სხვა
-                                    <input type="checkbox" name="genre" value="1"/>
-                                </label>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="dropdown-section-wrapper">
-                            <legend>ენა</legend>
-                            <div class="dropdownUnderline"></div>
-
-                            <div class="dropdown">
-                                <label>
-                                    ქართული
-                                    <input type="checkbox" name="language" value="1"/>
-                                </label>
-                                <label>
-                                    ინგლისური
-                                    <input type="checkbox" name="language" value="2"/>
-                                </label>
-                                <label>
-                                    რუსული
-                                    <input type="checkbox" name="language" value="3"/>
-                                </label>
-                            </div>
-                        </fieldset>
-                    </section>
-                </form>
-            </aside>
-
-            <section class="books-section">
-                {% for book in books.items %}
-                <a href="{{ url_for('main.book', id=book.id)}}">
-                    <article class="card">
-                        <img src="static/images/{{book.cover_image}}" alt="book-cover" class="book-cover"/>
-                        <div class="book-info">
-                            <div class="book-views">
-                                <img src="{{ url_for('static', filename='icons/mdi_eye.svg') }}" alt="eye-icon"/>
-                                <p>{{book.view_count}}</p>
-                            </div>
-
-                            <div class="title-share">
-                                <div class="title-share-default">
-                                    <h2>{{ book.title }}</h2>
-                                    <img src="{{ url_for('static', filename='icons/share-icon.svg') }}" alt="share-icon"/>
-                                </div>
-                                <div class="title-share-hover">
-                                    <p>{{ book.publisher.name }}</p>
-                                    <span>{{ book.publish_year }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </a>
-                {% endfor %}
-            </section>
+    <main>
+        <div class="landing-photo-wrapper">
+            <img src="{{ url_for('static', filename='assets/landing-photo.png') }}"
+                 alt="landing-photo"
+                 class="landing-photo"/>
         </div>
-        <div class="pagination-container">
-            <div class="pagination-wrapper">
-                {% if books.has_prev %}
-                <a href="{{ url_for('main.index', page=books.prev_num) }}">
-                    <img class="page-prev" src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
-                            alt="pagination-arrow"/>
-                </a>
-                {% endif %}
-                <div class="pagination-numbers">
-                    {% if books.pages > 1 %}
-                        {% for num in books.iter_pages(left_edge=1, left_current=2, right_current=2, right_edge=1) %}
+        <div class="main-content-wrapper">
+            <div class="filter-books-wrapper">
+            {% include "main/_index_sidebar.html" %}
 
-                            {% if num %}
-                                {% if num == books.page and books.pages >1 %}
-                                    <p class="active">{{ num }}</p>
-                                {% else %}
-                                    <a href="{{ url_for('main.index', page=num) }}">{{ num }}</a>
-                                {% endif %}
+                <section class="books-section">
+                    {% for book in books.items %}
+                        <a href="{{ url_for('main.view_book', id=book.id) }}">
+                            <article class="card">
+                                <img src="/static/upload/{{ book.cover_image }}" alt="book-cover" class="book-cover"/>
+                                <div class="book-info">
+                                    <div class="book-views">
+                                        <img src="{{ url_for('static', filename='assets/mdi_eye.svg') }}"
+                                             alt="eye-icon"/>
+                                        <p>{{ book.view_count }}</p>
+                                    </div>
 
-                            {% else %}
-                                <p>...</p>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </div>
-
-                {% if books.has_next %}
-                <a href="{{ url_for('main.index', page=books.next_num) }}">
-                    <img class="page-next" src="{{ url_for('static', filename='icons/pagination-arrow.svg') }}"
-                         alt="pagination-arrow"/>
-                </a>
-                {% endif %}
-
+                                    <div class="title-share">
+                                        <div class="title-share-default">
+                                            <h2>{{ book.title }}</h2>
+                                            <img src="{{ url_for('static', filename='assets/share-icon.svg') }}"
+                                                 alt="share-icon"/>
+                                        </div>
+                                        <div class="title-share-hover">
+                                            <p>{{ book.publisher.name }}</p>
+                                            <span>{{ book.publish_year }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
+                    {% endfor %}
+                </section>
             </div>
+
+        {% include "main/_index_pagination.html" %}
         </div>
-    </div>
-</main>
+    </main>
 {% endblock %}
 
-{%block script%}
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-{%endblock%}
+{% block script %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}

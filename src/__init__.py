@@ -2,7 +2,7 @@ from flask import Flask
 
 from src.config import Config
 from src.extensions import db, login_manager, migrate
-from src.admin import admin, BookView
+from src.admin import admin, BookView, GenericView
 from src.admin.book import SecureModelView
 from src.commands import init_db_command, populate_db_command
 from src.models import MediaType, Language, Genre, Book, BookContent, User
@@ -44,9 +44,9 @@ def register_extenstions(app):
     admin.init_app(app)
 
     admin.add_view(BookView(Book, db.session, name="წიგნები"))
-    admin.add_view(SecureModelView(MediaType, db.session, name="მედიის ტიპი", category="ფილტრაცია"))
-    admin.add_view(SecureModelView(Genre, db.session, name="ჟანრი", category="ფილტრაცია"))
-    admin.add_view(SecureModelView(Language, db.session, name="ენა", category="ფილტრაცია"))
+    admin.add_view(GenericView(MediaType, db.session, name="მედიის ტიპი", category="ფილტრაცია"))
+    admin.add_view(GenericView(Genre, db.session, name="ჟანრი", category="ფილტრაცია"))
+    admin.add_view(GenericView(Language, db.session, name="ენა", category="ფილტრაცია"))
 
 
 

@@ -13,38 +13,6 @@ const state = {
   isAnimating: false,
 };
 
-const chapterToPageMap = {
-  0: 0, // Chapter 0 starts at page 0
-  1: 3, // Chapter 1 starts at page 3
-  2: 3, // Chapter 2 starts at page 3
-  3: 4, // Chapter 3 starts at page 4
-  4: 5,
-  5: 5,
-  6: 6,
-  7: 7,
-  8: 7,
-  9: 8,
-  10: 9,
-  11: 9,
-  12: 10,
-  13: 10,
-  14: 11,
-  15: 12,
-  16: 12,
-  17: 13,
-  18: 14,
-  19: 14,
-  20: 15,
-  21: 16,
-  22: 16,
-  23: 17,
-  24: 17,
-  25: 18,
-  26: 19,
-  27: 19,
-  28: 20,
-};
-
 // Initialize DOM elements
 function initializeElements() {
   state.bookContainer = document.getElementById("pdf-container");

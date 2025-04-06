@@ -1,0 +1,35 @@
+<div class="pagination-container">
+    <div class="pagination-wrapper">
+        {% if books.has_prev %}
+            <a href="{{ url_for('main.index', page=books.prev_num) }}">
+                <img class="page-prev" src="{{ url_for('static', filename='assets/pagination-arrow.svg') }}"
+                     alt="pagination-arrow"/>
+            </a>
+        {% endif %}
+        <div class="pagination-numbers">
+            {% if books.pages > 1 %}
+                {% for num in books.iter_pages(left_edge=1, left_current=2, right_current=2, right_edge=1) %}
+
+                    {% if num %}
+                        {% if num == books.page and books.pages >1 %}
+                            <p class="active">{{ num }}</p>
+                        {% else %}
+                            <a href="{{ url_for('main.index', page=num) }}">{{ num }}</a>
+                        {% endif %}
+
+                    {% else %}
+                        <p>...</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {% if books.has_next %}
+            <a href="{{ url_for('main.index', page=books.next_num) }}">
+                <img class="page-next" src="{{ url_for('static', filename='assets/pagination-arrow.svg') }}"
+                     alt="pagination-arrow"/>
+            </a>
+        {% endif %}
+
+    </div>
+</div>
