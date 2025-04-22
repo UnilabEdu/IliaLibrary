@@ -18,9 +18,7 @@ class ViewRowAction(LinkRowAction):
 
 class GenericEqualFilter(FilterEqual):
     def apply(self, query, value, alias=None):
-        if value:
-            return query.filter(self.name == value)
-        return query
+        return query.filter(self.get_column(alias) == value)
 
     def operation(self):
         return "არის"

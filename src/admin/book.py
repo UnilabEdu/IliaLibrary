@@ -2,6 +2,7 @@ from flask_admin import expose
 from flask_admin.contrib.sqla.filters import FilterEqual
 from flask_admin.form.upload import ImageUploadField, FileUploadField
 from flask_admin.model.form import InlineFormAdmin
+from markupsafe import Markup
 from wtforms.fields import TextAreaField
 
 from src.config import Config
@@ -16,16 +17,16 @@ class InlineBookcontentView(InlineFormAdmin):
 
 class BookView(SecureModelView):
     page_size = 15
-    column_list = ["media_type", "author", "title", "page_count", "language", "publisher", "publish_location",
+    column_list = ["cover_image", "media_type", "author", "title", "page_count", "language", "publisher", "publish_location",
                    "publish_year", "isbn", "issn", "journal_name", "volume_name", "id_number", "edition", "genre",
                    "issue_number", "liable_person", "liable_organization", "volume_number", "copies",
-                   "physical_description", "cover_image", "book_file", "annotation"]
+                   "physical_description", "annotation"]
 
     column_extra_row_actions = [ViewRowAction("fa fa-eye")]
     column_default_sort = ("created_at", True)
     column_labels = {"media_type": "მედიის ტიპი",
                      "author": "ავტორი",
-                     "title": "სახელი",
+                     "title": "სათაური",
                      "page_count": "გვერდების რაოდენობა",
                      "language": "ენა",
                      "publisher": "გამომცემლობა",
@@ -50,6 +51,8 @@ class BookView(SecureModelView):
                      "view_count": "ნახვები",
                      "created_at": "ატვირთვის თარიღი"}
     column_searchable_list = ["author", "title", "isbn", "issn", "journal_name", "volume_name"]
+    column_formatters = {"annotation": lambda v,c,m,n: f"{m.annotation[0:50]}..." if len(m.annotation) > 50 else m.annotation,
+                         "cover_image": lambda v,c,m,n: Markup(f"<img src=/static/upload/{m.cover_image} style='width: 80px; height: 100px; border-radius: 16px;'/>")}
 
     form_overrides = {"cover_image": ImageUploadField,
                       "book_file": FileUploadField,
@@ -77,4 +80,4 @@ class BookView(SecureModelView):
             GenericEqualFilter(column=Book.media_type_id, name='მედიის ტიპი', options=_get_filter_options(MediaType)),
         ])
         self._refresh_filters_cache()
-        return super(BookView, self).index_view()
+        return super(SecureModelView, self).index_view()
