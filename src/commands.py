@@ -49,5 +49,5 @@ def populate_db_command():
     book2 = Book(title="განდეგილი", media_type_id=1, cover_image="gandegili.jpg",
                  annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
                  publish_year="2012", page_count=15, language_id=1, genre_id=1,
-                 book_file="gandegili.pdf")
+                 book_file="gandegili-1957.pdf")
     book2.create()
