@@ -106,7 +106,7 @@ function setupNavigation() {
 
   // Update UI to reflect the current page count
   const updatePageCountUI = () => {
-    state.currentPageElement.innerText = state.currentPage + 1; // Display as 1-based index
+    state.currentPageElement.innerText = state.currentPage;
   };
 
   // Add event listeners for the buttons
