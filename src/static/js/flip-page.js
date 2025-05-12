@@ -262,6 +262,16 @@ async function initializeViewer(pdfUrl) {
     setupNavigation();
     setupChapterMenu();
     hideLoader();
+
+    //---------------------------------------------
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams) {
+      const page = parseInt(urlParams.get("page")) || 1;
+
+      state.pageFlip.flip(page);
+      console.log("Go to page:", page);
+    }
+    //---------------------------------------------
   } catch (error) {
     console.error("Error initializing book viewer:", error);
     hideLoader();
