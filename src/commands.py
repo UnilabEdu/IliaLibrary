@@ -42,14 +42,14 @@ def populate_db_command():
     book1 = Book(title="მოთხრობები", media_type_id=1, cover_image="diogene.jpg",
                  annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
                  publish_year="2012", page_count=20, language_id=1, genre_id=1,
-                 book_file="motxrobebi.pdf",book_content=[BookContent(name="თავი 1 - შესავალი", page_number=1),
-        BookContent(name="თავი 2 - განდეგილი", page_number=5)])
+                 book_file="motxrobebi.pdf",book_content=[BookContent(name="თავი 1", page_number=3),
+        BookContent(name="თავი 2", page_number=35)])
     book1.create()
 
     # for test #############################
     book2 = Book(title="განდეგილი", media_type_id=1, cover_image="gandegili.jpg",
                  annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
                  publish_year="2012", page_count=15, language_id=1, genre_id=1,
-                 book_file="gandegili-1957.pdf",book_content=[BookContent(name="თავი 1 - შესავალი", page_number=1),
-        BookContent(name="თავი 2 - განდეგილი", page_number=5)])
+                 book_file="gandegili-1957.pdf",book_content=[BookContent(name="თავი 1", page_number=2),
+        BookContent(name="თავი 2", page_number=15)])
     book2.create()
