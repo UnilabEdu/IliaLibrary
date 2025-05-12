@@ -266,10 +266,8 @@ async function initializeViewer(pdfUrl) {
     //---------------------------------------------
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams) {
-      const page = parseInt(urlParams.get("page")) || 1;
-
+      const page = parseInt(urlParams.get("page"));
       state.pageFlip.flip(page);
-      console.log("Go to page:", page);
     }
     //---------------------------------------------
   } catch (error) {
