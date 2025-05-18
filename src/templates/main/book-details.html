@@ -1,140 +1,132 @@
-{% extends "base.html" %} {% block title %} დეტალები {% endblock %} {% block
-content %}
-<main class="book-main">
-  <section class="book-container container">
-    <div class="cover-wrapper">
-      <img
-        src="{{ url_for('static', filename='upload/' + book.cover_image) }}"
-        alt="{{ book.title }} cover"
-      />
-      <a href="{{ url_for('main.read_book', id=book.id) }}">წაკითხვა (PDF)</a>
-    </div>
-    <div class="info-wrapper">
-      <div class="main-info">
-        <h3>{{ book.title }}</h3>
-        <p>{{ book.author }} | {{ book.publish_year }}</p>
-        <div class="book-info">
-          <div>
-            <img
-              src="{{ url_for('static', filename='assets/book-icon.svg') }}"
-              alt="book icon"
-            />
-            <span>გვერდების რადენობა: {{ book.page_count }}</span>
-          </div>
-          <div>
-            <img
-              src="{{ url_for('static', filename='assets/language-icon.svg') }}"
-              alt="language icon"
-            />
-            <span>ენა: {{ book.language }}</span>
-          </div>
-          <div>
-            <img
-              src="{{ url_for('static', filename='assets/book-check-icon.svg') }}"
-              alt="book check icon"
-            />
-            <span>გამომცემლობა: {{ book.publisher }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="button-wrapper">
-        <button id="anotation">ანოტაცია</button>
-        <button id="search">სარჩევი</button>
-        <button id="feature">მახასიათებლები</button>
-      </div>
-      <div class="anotation-section open">
-        <p>{{ book.annotation }}</p>
-      </div>
+{% extends "base.html" %}
+{% block title %}
+    დეტალები
+{% endblock %}
 
-      <div class="searching-section">
-        {% for content in book.book_content %}
-        <div class="each_content_line">
-          <!-- <p>{{ content.name }}</p> -->
-          <a
-            href="{{ url_for('main.read_book', id=book.id) }}?page={{ content.page_number }}"
-          >
-            {{ content.name }}
-          </a>
-          <p class="dotted-line">
-            <span
-              >........................................................</span
-            >
-          </p>
-          <p>გვ. {{ content.page_number }}</p>
-        </div>
-        {% endfor %}
-      </div>
-
-      <!-- feature section -->
-      <div class="feature-section">
-        <ul>
-          {% for column in book.__table__.columns %} {% if book |
-          attr(column.name) and column.comment %} {% if column.foreign_keys %}
-          {% set foreign_key = column.foreign_keys | list %} {% set foreign_key
-          = foreign_key[0].target_fullname.split('.')[0] %} {% for relationship
-          in book.__mapper__.relationships %} {% if relationship.target.name ==
-          foreign_key %}
-          <li>
-            <span> {{ column.comment }}: </span
-            ><span> {{ book | attr(relationship.key) }}</span>
-          </li>
-
-          {% endif %} {% endfor %} {% else %}
-          <li>
-            <span> {{ column.comment }}: </span
-            ><span> {{ book | attr(column.name) }}</span>
-          </li>
-          {% endif %} {% endif %} {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="similar-books">
-    <div class="main-content-wrapper similar-books-container">
-      <h3>მსგავსი წიგნები</h3>
-      <div class="books-box books-section">
-        {% for book in other_books %}
-        <a href="{{ url_for('main.view_book', id=book.id) }}">
-          <article class="card">
-            <img src="{{ url_for('static', filename="upload/" +
-            book.cover_image) }}" alt="book-cover" class="book-cover"/>
-            <div class="book-info">
-              <div class="book-views">
-                <img src="{{ url_for('static', filename="assets/mdi_eye.svg")
-                }}" alt="eye-icon"/>
-                <p>{{ book.view_count }}</p>
-              </div>
-
-              <div class="title-share">
-                <div class="title-share-default">
-                  <h2>{{ book.title }}</h2>
-                  <img src="{{ url_for('static',
-                  filename="assets/share-icon.svg") }}" alt="share-icon"/>
-                </div>
-                <div class="title-share-hover">
-                  <p>{{ book.publisher }}</p>
-                  <span>{{ book.publish_year }}</span>
-                </div>
-              </div>
+{% block content %}
+    <main class="book-main">
+        <section class="book-container container">
+            <div class="cover-wrapper">
+                <img src="{{ url_for('static', filename='upload/' + book.cover_image) }}" alt="{{ book.title }} cover"/>
+                <a href="{{ url_for('main.read_book', id=book.id) }}">წაკითხვა (PDF)</a>
             </div>
-          </article>
-        </a>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-</main>
-{% endblock %} {% block script %}
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-<script src="{{ url_for('static', filename='js/book-details.js') }}"></script>
+            <div class="info-wrapper">
+                <div class="main-info">
+                    <h3>{{ book.title }}</h3>
+                    <p>{{ book.author }} | {{ book.publish_year }}</p>
+                    <div class="book-info">
+                        <div>
+                            <img src="{{ url_for('static', filename='assets/book-icon.svg') }}" alt="book icon"/>
+                            <span>გვერდების რადენობა: {{ book.page_count }}</span>
+                        </div>
+                        <div>
+                            <img src="{{ url_for('static', filename='assets/language-icon.svg') }}"
+                                 alt="language icon"/>
+                            <span>ენა: {{ book.language }}</span>
+                        </div>
+                        <div>
+                            <img src="{{ url_for('static', filename='assets/book-check-icon.svg') }}"
+                                 alt="book check icon"/>
+                            <span>გამომცემლობა: {{ book.publisher }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-wrapper">
+                    <button id="anotation">ანოტაცია</button>
+                    <button id="search">სარჩევი</button>
+                    <button id="feature">მახასიათებლები</button>
+                </div>
+                <div class="anotation-section open">
+                    <p>{{ book.annotation }}</p>
+                </div>
 
-<script
-  type="module"
-  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-></script>
-<script
-  nomodule
-  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-></script>
+                <div class="searching-section">
+                    {% for content in book.book_content %}
+                        <div class="each_content_line">
+                            <p>
+                                <a href="{{ url_for('main.read_book', id=book.id) }}?page={{ content.page_number }}" style="color: inherit">
+                                    {{ content.name }}
+                                </a>
+                            </p>
+
+                            <p class="dotted-line">
+                                <span>........................................................</span>
+                            </p>
+                            <p>გვ. {{ content.page_number }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- feature section -->
+                <div class="feature-section">
+                    <ul>
+                        {% for column in book.__table__.columns %}
+                            {% if book | attr(column.name) and column.comment %}
+                                {% if column.foreign_keys %}
+                                    {% set foreign_key = column.foreign_keys | list %}
+                                    {% set foreign_key= foreign_key[0].target_fullname.split('.')[0] %}
+                                    {% for relationship in book.__mapper__.relationships %}
+                                        {% if relationship.target.name == foreign_key %}
+                                            <li>
+                                                <span> {{ column.comment }}: </span>
+                                                <span> {{ book | attr(relationship.key) }}</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <li>
+                                        <span> {{ column.comment }}: </span>
+                                        <span> {{ book | attr(column.name) }}</span>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="similar-books">
+            <div class="main-content-wrapper similar-books-container">
+                <h3>მსგავსი წიგნები</h3>
+                <div class="books-box books-section">
+                    {% for book in other_books %}
+                        <a href="{{ url_for('main.view_book', id=book.id) }}">
+                            <article class="card">
+                                <img src="{{ url_for('static', filename="upload/" + book.cover_image) }}"
+                                     alt="book-cover" class="book-cover"/>
+                                <div class="book-info">
+                                    <div class="book-views">
+                                        <img src="{{ url_for('static', filename="assets/mdi_eye.svg") }}"
+                                             alt="eye-icon"/>
+                                        <p>{{ book.view_count }}</p>
+                                    </div>
+
+                                    <div class="title-share">
+                                        <div class="title-share-default">
+                                            <h2>{{ book.title }}</h2>
+                                            <img src="{{ url_for('static', filename="assets/share-icon.svg") }}"
+                                                 alt="share-icon"/>
+                                        </div>
+                                        <div class="title-share-hover">
+                                            <p>{{ book.publisher }}</p>
+                                            <span>{{ book.publish_year }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/book-details.js') }}"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 {% endblock %}

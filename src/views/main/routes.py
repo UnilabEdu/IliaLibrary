@@ -18,6 +18,7 @@ def index():
     languages = request.args.getlist('language')
     date_from = request.args.get('dateFrom')
     date_to = request.args.get('dateTo')
+    sort_by = request.args.get("sortedBy")
 
     if media_types and len(media_types) > 0:
         conditions = [Book.media_type_id == media_type_id for media_type_id in media_types]
@@ -40,6 +41,16 @@ def index():
 
     if search_text is not None:
         query = query.filter(or_(Book.title.ilike(f"%{search_text}%")))
+
+    if sort_by is not None:
+        if sort_by == 'name-asc':
+            query = query.order_by(Book.title.asc())
+        elif sort_by == 'name-desc':
+            query = query.order_by(Book.title.desc())
+        elif sort_by == "year-asc":
+            query = query.order_by(Book.publish_year.asc())
+        elif sort_by == "year-desc":
+            query = query.order_by(Book.publish_year.desc())
 
     books = query.paginate(page=page, per_page=16, error_out=False)
     return render_template('main/index.html', books=books,

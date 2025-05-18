@@ -47,6 +47,7 @@ const dropdownBTN = document.querySelector(".dropdown-button");
 const dropdownOptionsEl = document.querySelector(".dropdown-options");
 const dropdownTextEl = document.querySelector(".dropdown-text");
 const dropdownOptions = document.querySelectorAll(".option");
+const hiddenDropdownSelector= document.getElementById("sortSelector")
 
 dropdownBTN?.addEventListener("click", () => {
   dropdownOptionsEl.classList.toggle("displayed");
@@ -70,7 +71,7 @@ dropdownOptions.forEach((option) => {
     const selectedOption = option.target.textContent;
     //----
     const value = option.target.getAttribute("data-value");
-    formObject.sortedBy = value;
+    hiddenDropdownSelector.value = value;
     //----
     dropdownTextEl.textContent = selectedOption;
     dropdownOptionsEl.classList.remove("displayed");
@@ -99,7 +100,6 @@ var formObject = {
 form?.addEventListener("submit", (e) => {
   // e.preventDefault();
   const data = new FormData(form);
-
   data.forEach((value, key) => {
     const arrayTypes = ["mediaType", "genre", "language", "fund"];
     if (arrayTypes.includes(key)) {

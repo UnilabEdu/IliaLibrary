@@ -25,7 +25,7 @@ def populate_db_command():
     user1.create()
 
     click.echo("Populating Media types")
-    media_types = ["წიგნები", "პერიოდიცა", "წერილები", "ხელნაწერები", "აუდიო", "ფოტო"]
+    media_types = ["წიგნები", "პერიოდიკა", "წერილები", "ხელნაწერები", "აუდიო", "ფოტო"]
     for media in media_types:
         MediaType(name=media).create()
 
