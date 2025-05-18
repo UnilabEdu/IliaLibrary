@@ -17,7 +17,7 @@ class InlineBookcontentView(InlineFormAdmin):
 
 class BookView(SecureModelView):
     page_size = 15
-    column_list = ["cover_image", "media_type","book_file", "author", "title", "page_count", "language", "publisher", "publish_location",
+    column_list = ["cover_image", "media_type", "author", "title", "page_count", "language", "publisher", "publish_location",
                    "publish_year", "isbn", "issn", "journal_name", "volume_name", "id_number", "edition", "genre",
                    "issue_number", "liable_person", "liable_organization", "volume_number", "copies",
                    "physical_description", "annotation"]
@@ -62,7 +62,7 @@ class BookView(SecureModelView):
     form_args = {"cover_image": {"base_path": Config.UPLOAD_PATH, "url_relative_path": "upload/"},
                  "book_file": {"base_path": Config.UPLOAD_PATH, "label": "pdf-ის ატვირთვა"}}
 
-    form_columns = column_list
+    form_columns = ["book_file",] + column_list
     inline_models = [InlineBookcontentView(BookContent)]
 
     def get_filters(self):
