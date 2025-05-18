@@ -48,7 +48,7 @@ const dropdownOptionsEl = document.querySelector(".dropdown-options");
 const dropdownTextEl = document.querySelector(".dropdown-text");
 const dropdownOptions = document.querySelectorAll(".option");
 
-dropdownBTN.addEventListener("click", () => {
+dropdownBTN?.addEventListener("click", () => {
   dropdownOptionsEl.classList.toggle("displayed");
   dropdownBTN.classList.toggle("active-btn");
 
@@ -96,7 +96,7 @@ var formObject = {
   fund: [],
 };
 
-form.addEventListener("submit", (e) => {
+form?.addEventListener("submit", (e) => {
   // e.preventDefault();
   const data = new FormData(form);
 
@@ -113,7 +113,7 @@ form.addEventListener("submit", (e) => {
 });
 
 const resetBtn = document.querySelector(".resetBTN");
-resetBtn.addEventListener("click", () => {
+resetBtn?.addEventListener("click", () => {
   formObject = {
     searchQuery: "",
     sortedBy: "",

@@ -106,7 +106,7 @@ function setupNavigation() {
 
   // Update UI to reflect the current page count
   const updatePageCountUI = () => {
-    state.currentPageElement.innerText = state.currentPage + 1; // Display as 1-based index
+    state.currentPageElement.innerText = state.currentPage;
   };
 
   // Add event listeners for the buttons
@@ -129,8 +129,9 @@ function setupChapterMenu() {
     const ul = document.createElement("ul");
     ul.className = "menu-ul";
     ul.style.display = "none";
+    console.log(chapterToPageMap);
 
-    const chapters = Object.keys(chapterToPageMap).length; // Total number of chapters
+    const chapters = Object.keys(chapterToPageMap).length + 1; // Total number of chapters + დასაწყისი
     Array.from({ length: chapters }, (_, i) => {
       const li = document.createElement("li");
       li.className = "menu-li";
@@ -196,9 +197,14 @@ async function changeChapter(chapter, index, ul) {
 
   if (!state.isAnimating) {
     const targetPage = chapterToPageMap[index];
+
+    if (targetPage === undefined) {
+      state.pageFlip.flip(0, true);
+    }
+
     if (targetPage !== undefined) {
       state.currentPage = targetPage; // Update current page
-      state.currentPageElement.innerText = state.currentPage + 1; // Display as 1-based index
+      state.currentPageElement.innerText = state.currentPage;
       state.pageFlip.flip(state.currentPage, true); // Flip instantly to the page
     } else {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
@@ -256,6 +262,14 @@ async function initializeViewer(pdfUrl) {
     setupNavigation();
     setupChapterMenu();
     hideLoader();
+
+    //---------------------------------------------
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams) {
+      const page = parseInt(urlParams.get("page"));
+      state.pageFlip.flip(page);
+    }
+    //---------------------------------------------
   } catch (error) {
     console.error("Error initializing book viewer:", error);
     hideLoader();
