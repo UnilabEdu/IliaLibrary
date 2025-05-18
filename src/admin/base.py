@@ -15,6 +15,8 @@ class SecureModelView(ModelView):
 
 
 class SecureIndexView(AdminIndexView):
+    def is_visible(self):
+        return False
 
     def is_accessible(self):
         return current_user.is_authenticated
@@ -23,4 +25,6 @@ class SecureIndexView(AdminIndexView):
         if not self.is_accessible():
             return redirect(url_for('auth.login'))
 
-    
+    @expose('/')
+    def index(self):
+        return redirect(url_for('book.index_view'))
