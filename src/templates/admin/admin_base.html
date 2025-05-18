@@ -7,6 +7,22 @@
         .list-buttons-column {
             width: 100px !important;
         }
+
+        #filter_form {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+
+            .pull-right {
+                margin: 12px 0 20px 0;
+                display: block;
+            }
+
+            .pull-right:has(.btn-secondary):has(+ .filters:empty) {
+                margin-top: 12px;
+                margin-bottom: 25px;
+            }
+        }
     </style>
 {% endblock %}
 {% block page_body %}
