@@ -54,7 +54,7 @@ def index():
 
     books = query.paginate(page=page, per_page=16, error_out=False)
     return render_template('main/index.html', books=books,
-                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all())
+                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text)
 
 
 @main_blueprint.route('/about', methods=['GET'])
