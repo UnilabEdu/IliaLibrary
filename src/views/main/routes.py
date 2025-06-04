@@ -36,8 +36,8 @@ def index():
             query = query.filter(or_(*conditions))
 
     if date_from and date_to:
-        conditions = [Book.publish_year >= date_from[:4], Book.publish_year <= date_to[:4]]
-        # conditions = [Book.publish_year >= date_from, Book.publish_year <= date_to] # switch to this when form is updated on front-side
+        # conditions = [Book.publish_year >= date_from[:4], Book.publish_year <= date_to[:4]]
+        conditions = [Book.publish_year >= date_from, Book.publish_year <= date_to] # switch to this when form is updated on front-side
         query = query.filter(*conditions)
 
     if search_text is not None:
