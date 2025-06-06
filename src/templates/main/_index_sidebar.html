@@ -19,6 +19,7 @@
 
       <button type="submit" class="blue-button">ძებნა</button>
 
+      <input type="hidden" name="sortedBy" id="sortSelector" />
       <button type="button" class="dropdown-button">
         <p class="dropdown-text">სორტირება</p>
         <img
@@ -98,15 +99,18 @@
                 <img
                   src="{{ url_for('static', filename='assets/calendar-icon.svg') }}"
                   alt="calendar-icon"
+                  name="yearTo"
                   class="calendar-icon"
                 />
-                <p class="date-text">-დან</p>
+
                 <input
-                  type="date"
-                  id="date-input"
-                  name="dateFrom"
-                  value="{{ date_from }}"
+                  type="text"
+                  class="year-input"
+                  id="year-input-from"
+                  name="yearFrom"
+                  placeholder="-დან"
                 />
+                <!-- value="{{ date_from }}" -->
               </label>
             </div>
 
@@ -116,19 +120,21 @@
             />
 
             <div class="date-input-container">
-              <label for="date-to-input" name="dateTo">
+              <label for="year-input-to">
                 <img
                   src="{{ url_for('static', filename='assets/calendar-icon.svg') }}"
                   alt="calendar-icon"
                   class="calendar-icon"
                 />
-                <p class="date-text">-მდე</p>
+
                 <input
-                  name="dateTo"
-                  type="date"
-                  id="date-input"
-                  value="{{ date_to }}"
+                  type="text"
+                  class="year-input"
+                  id="year-input-to"
+                  name="yearTo"
+                  placeholder="-მდე"
                 />
+                <!-- value="{{ date_to }}" -->
               </label>
             </div>
           </div>

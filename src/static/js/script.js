@@ -9,23 +9,6 @@
 //   });
 // });
 
-const dateContainer = document.querySelectorAll(".date-input-container");
-
-dateContainer.forEach((container) => {
-  container.addEventListener("click", () => {
-    const dateInput = container.querySelector("#date-input");
-
-    dateInput.showPicker();
-
-    const dateText = container.querySelector(".date-text");
-
-    dateInput.addEventListener("change", () => {
-      const date = dateInput.value;
-      dateText.textContent = date;
-    });
-  });
-});
-
 //Hover on main page cards
 
 const bookCards = document.querySelectorAll(".card");
@@ -47,7 +30,7 @@ const dropdownBTN = document.querySelector(".dropdown-button");
 const dropdownOptionsEl = document.querySelector(".dropdown-options");
 const dropdownTextEl = document.querySelector(".dropdown-text");
 const dropdownOptions = document.querySelectorAll(".option");
-const hiddenDropdownSelector= document.getElementById("sortSelector")
+const hiddenDropdownSelector = document.getElementById("sortSelector");
 
 dropdownBTN?.addEventListener("click", () => {
   dropdownOptionsEl.classList.toggle("displayed");
@@ -108,8 +91,6 @@ form?.addEventListener("submit", (e) => {
       formObject[key] = value;
     }
   });
-
-  console.log(formObject);
 });
 
 const resetBtn = document.querySelector(".resetBTN");

@@ -16,9 +16,13 @@ def index():
     media_types = request.args.getlist('mediaType')
     genres = request.args.getlist('genre')
     languages = request.args.getlist('language')
-    date_from = request.args.get('dateFrom')
-    date_to = request.args.get('dateTo')
+    date_from = request.args.get('yearFrom')
+    date_to = request.args.get('yearTo')
+
     sort_by = request.args.get("sortedBy")
+
+
+    print('--->',sort_by)
 
     if media_types and len(media_types) > 0:
         conditions = [Book.media_type_id == media_type_id for media_type_id in media_types]

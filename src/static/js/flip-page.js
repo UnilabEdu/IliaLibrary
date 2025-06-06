@@ -283,3 +283,31 @@ async function initializeViewer(pdfUrl) {
 // } else {
 //   console.error("PDF.js is not available");
 // }
+
+// ------ zoom ----------
+const zoomInBTN = document.getElementById("zoom_in");
+const zoomOutBTN = document.getElementById("zoom_out");
+let zoomLevel = 1;
+
+function updateZoom() {
+  zoomLevel > 1
+    ? (document.getElementById("pdf-container").style.overflow = "scroll")
+    : (document.getElementById("pdf-container").style.overflow = null);
+
+  console.log(document.getElementById("pdf-container").style.overflow);
+
+  document.querySelector(".stf__block").style.transform = `scale(${zoomLevel})`;
+}
+
+zoomInBTN.addEventListener("click", () => {
+  if (zoomLevel >= 1.4) return;
+
+  zoomLevel += 0.1;
+  updateZoom();
+});
+zoomOutBTN.addEventListener("click", () => {
+  if (zoomLevel <= 0.7) return;
+
+  zoomLevel -= 0.1;
+  updateZoom();
+});
