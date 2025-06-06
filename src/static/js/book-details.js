@@ -6,10 +6,6 @@ const featureSection = document.querySelector(".feature-section");
 const searchingSection = document.querySelector(".searching-section");
 const dots = document.querySelectorAll(".dotted-line");
 
-// dots.forEach((el) => {
-//   console.log(el.textContent.length);
-// });
-
 const btns = [anotationBtn, featureBtn, searchBtn];
 btns[0].classList.add("focused");
 

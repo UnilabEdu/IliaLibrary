@@ -1,16 +1,3 @@
-// const dropdownButton = document.querySelectorAll(".dropdown-head");
-// const dropdownContent = document.querySelector(".dropdown-container");
-
-// dropdownButton.forEach((button) => {
-//   button.addEventListener("click", () => {
-//     button.nextElementSibling.classList.toggle("active");
-//     const arrow = button.querySelector("img");
-//     arrow.classList.toggle("rotate");
-//   });
-// });
-
-//Hover on main page cards
-
 const bookCards = document.querySelectorAll(".card");
 
 bookCards.forEach((card) => {
@@ -64,50 +51,4 @@ dropdownOptions.forEach((option) => {
       .setAttribute("src", "static/assets/green-dropdown-icon.svg");
     // dropdownTextEl.style.fontSize = "18px";
   });
-});
-
-// form events
-const form = document.getElementById("main-form");
-var formObject = {
-  searchQuery: "",
-  sortedBy: "",
-  mediaType: [],
-  dateFrom: "",
-  dateTo: "",
-
-  genre: [],
-  language: [],
-  fund: [],
-};
-
-form?.addEventListener("submit", (e) => {
-  // e.preventDefault();
-  const data = new FormData(form);
-  data.forEach((value, key) => {
-    const arrayTypes = ["mediaType", "genre", "language", "fund"];
-    if (arrayTypes.includes(key)) {
-      formObject[key].push(value);
-    } else {
-      formObject[key] = value;
-    }
-  });
-});
-
-const resetBtn = document.querySelector(".resetBTN");
-resetBtn?.addEventListener("click", () => {
-  formObject = {
-    searchQuery: "",
-    sortedBy: "",
-    mediaType: [],
-    dateFrom: "",
-    dateTo: "",
-
-    genre: [],
-    language: [],
-    fund: [],
-  };
-
-  document.querySelectorAll(".date-text")[0].textContent = "-დან";
-  document.querySelectorAll(".date-text")[1].textContent = "-მდე";
-  document.querySelector(".dropdown-text").textContent = "სორტირება";
 });

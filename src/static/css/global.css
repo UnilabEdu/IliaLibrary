@@ -1901,7 +1901,6 @@ a#menu:hover .svg-path {
   grid-template-rows: repeat(4, 367px);
 }
 
-/* ----to not forget to include in front-end css----- */
 
 .filter-books-wrapper .search-results-info {
   display: flex;
@@ -1976,4 +1975,4 @@ a#menu:hover .svg-path {
   font-size: 24px;
   color: #022859;
 }
-/* --------- */
+
