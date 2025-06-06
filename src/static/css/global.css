@@ -1901,7 +1901,6 @@ a#menu:hover .svg-path {
   grid-template-rows: repeat(4, 367px);
 }
 
-
 .filter-books-wrapper .search-results-info {
   display: flex;
   flex-direction: column;
@@ -1976,3 +1975,6 @@ a#menu:hover .svg-path {
   color: #022859;
 }
 
+#pdf-container {
+  overflow: visible !important;
+}

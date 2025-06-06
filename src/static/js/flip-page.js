@@ -300,14 +300,14 @@ function updateZoom() {
 }
 
 zoomInBTN.addEventListener("click", () => {
-  if (zoomLevel >= 1.4) return;
+  if (zoomLevel >= 1.15) return;
 
-  zoomLevel += 0.1;
+  zoomLevel += 0.05;
   updateZoom();
 });
 zoomOutBTN.addEventListener("click", () => {
-  if (zoomLevel <= 0.7) return;
+  if (zoomLevel <= 0.85) return;
 
-  zoomLevel -= 0.1;
+  zoomLevel -= 0.05;
   updateZoom();
 });
