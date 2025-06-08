@@ -1,127 +1,203 @@
 <aside class="filter-section">
-    <form action="" id="main-form">
-        <section class="buttons-section">
-            <div class="search-container">
-                <label for="search-input">
-                    <img src="{{ url_for('static', filename='assets/search-icon.svg') }}" alt="search-icon"
-                         class="search-icon"/>
-                </label>
-                <input id="search-input" type="text" placeholder="ძიება" name="searchQuery"/>
+  <form action="" id="main-form">
+    <section class="buttons-section">
+      <div class="search-container">
+        <label for="search-input">
+          <img
+            src="{{ url_for('static', filename='assets/search-icon.svg') }}"
+            alt="search-icon"
+            class="search-icon"
+          />
+        </label>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="ძიება"
+          name="searchQuery"
+        />
+      </div>
+
+      <button type="submit" class="blue-button">ძებნა</button>
+
+      <input type="hidden" name="sortedBy" id="sortSelector" />
+      <button type="button" class="dropdown-button">
+        <p class="dropdown-text">სორტირება</p>
+        <img
+          src="{{ url_for('static', filename='assets/green-dropdown-icon.svg') }}"
+          alt="dropdown-icon"
+          class="dropdown-icon"
+        />
+      </button>
+
+      <fieldset>
+        <ul class="dropdown-options">
+          <li class="option" data-value="name-asc">დასახელება (ა-ჰ)</li>
+          <li class="option" data-value="name-desc">დასახელება (ჰ-ა)</li>
+          <li class="option" data-value="year-asc">გამოცემის წელი (ზრდადი)</li>
+          <li class="option" data-value="year-desc">
+            გამოცემის წელი (კლებადი)
+          </li>
+        </ul>
+      </fieldset>
+    </section>
+
+    <div class="dropdownUnderline"></div>
+
+    <div class="clean-filters">
+      <button type="reset" class="resetBTN">
+        <img
+          src="{{ url_for('static', filename='assets/trash-icon.svg') }}"
+          alt="trash-icon"
+          class="trash-icon"
+        />
+        <a href="{{ url_for('main.index') }}" class="clean-filters-text"
+          >ფილტრაციის გასუფთავება</a
+        >
+      </button>
+    </div>
+
+    <section class="media-type-section">
+      <fieldset class="dropdown-section-wrapper">
+        <legend>მედიის ტიპი</legend>
+        <div class="dropdownUnderline"></div>
+
+        <div class="dropdown">
+          {% set selected_media = request.args.getlist("mediaType", None) %} {%
+          for media in media_types %}
+          <label>
+            {{ media.name }}
+            <input
+              type="checkbox"
+              name="mediaType"
+              value="{{ media.id }}"
+              {%
+              if
+              media.id
+              |
+              string
+              in
+              selected_media
+              %}checked{%
+              endif
+              %}
+            />
+          </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+
+      <fieldset class="dropdown-section-wrapper">
+        <legend>გამოცემის წელი</legend>
+        <div class="dropdownUnderline"></div>
+
+        <div class="publish-date">
+          <div class="date-wrapper">
+            {% set date_from = request.args.get("dateFrom", None) %} {% set
+            date_to = request.args.get("dateTo", None) %}
+            <div class="date-input-container">
+              <label for="date-from-input">
+                <img
+                  src="{{ url_for('static', filename='assets/calendar-icon.svg') }}"
+                  alt="calendar-icon"
+                  name="yearTo"
+                  class="calendar-icon"
+                />
+
+                <input
+                  type="text"
+                  class="year-input"
+                  id="year-input-from"
+                  name="yearFrom"
+                  placeholder="-დან"
+                />
+                <!-- value="{{ date_from }}" -->
+              </label>
             </div>
 
-            {% set sortTypes = {"name-asc": "დასახელება (ა-ჰ)", "name-desc": "დასახელება (ჰ-ა)",
-                                "year-asc": "გამოცემის წელი (ზრდადი)", "year-desc": "გამოცემის წელი (კლებადი)",
-                                None: "სორტირება"} %}
-            {% set selectedType = sortTypes[request.args.get("sortedBy", None)]  %}
-            <button type="submit" class="blue-button">ძებნა</button>
-            <button type="button" class="dropdown-button">
-                <p class="dropdown-text">{{ selectedType }}</p>
-                <img src="{{ url_for('static', filename='assets/green-dropdown-icon.svg') }}" alt="dropdown-icon"
-                     class="dropdown-icon"/>
-            </button>
+            <img
+              src="{{ url_for('static', filename='assets/dropdown-icon.svg') }}"
+              alt="dropdown-icon"
+            />
 
-            <select name="sortedBy" style="display: none" id="sortSelector">
-                {% for value, name in sortTypes.items() %}
-                    <option value="{{ value }}">{{ name }}</option>
-                {% endfor %}>
-            </select>
+            <div class="date-input-container">
+              <label for="year-input-to">
+                <img
+                  src="{{ url_for('static', filename='assets/calendar-icon.svg') }}"
+                  alt="calendar-icon"
+                  class="calendar-icon"
+                />
 
-            <fieldset>
-                <ul class="dropdown-options">
-                    <li class="option" data-value="name-asc">დასახელება (ა-ჰ)</li>
-                    <li class="option" data-value="name-desc">დასახელება (ჰ-ა)</li>
-                    <li class="option" data-value="year-asc">გამოცემის წელი (ზრდადი)</li>
-                    <li class="option" data-value="year-desc">გამოცემის წელი (კლებადი)</li>
-                </ul>
-            </fieldset>
-        </section>
-        <div class="dropdownUnderline"></div>
-        <div class="clean-filters">
-            <button type="reset" class="resetBTN">
-                <img src="{{ url_for('static', filename='assets/trash-icon.svg') }}" alt="trash-icon"
-                     class="trash-icon"/>
-                <span class="clean-filters-text">ფილტრაციის გასუფთავება</span>
-            </button>
+                <input
+                  type="text"
+                  class="year-input"
+                  id="year-input-to"
+                  name="yearTo"
+                  placeholder="-მდე"
+                />
+                <!-- value="{{ date_to }}" -->
+              </label>
+            </div>
+          </div>
         </div>
+      </fieldset>
 
-        <section class="media-type-section">
-            <fieldset class="dropdown-section-wrapper">
-                <legend>მედიის ტიპი</legend>
-                <div class="dropdownUnderline"></div>
+      <fieldset class="dropdown-section-wrapper">
+        <legend>ჟანრი</legend>
+        <div class="dropdownUnderline"></div>
 
-                <div class="dropdown">
-                    {% set selected_media = request.args.getlist("mediaType", None) %} {% for media in media_types %}
-                    <label>
-                        {{ media.name }}
-                        <input type="checkbox" name="mediaType" value="{{ media.id }}"
-                                {% if media.id | string in selected_media %} checked {% endif %}/>
-                    </label>
-                {% endfor %}
-                </div>
-            </fieldset>
+        <div class="dropdown">
+          {% set selected_genre = request.args.getlist("genre", None) %} {% for
+          genre in genres %}
+          <label>
+            {{ genre.name }}
+            <input
+              type="checkbox"
+              name="genre"
+              value="{{ genre.id }}"
+              {%
+              if
+              genre.id
+              |
+              string
+              in
+              selected_genre
+              %}checked{%
+              endif
+              %}
+            />
+          </label>
+          {% endfor %}
+        </div>
+      </fieldset>
 
-            <fieldset class="dropdown-section-wrapper">
-                <legend>გამოცემის წელი</legend>
-                <div class="dropdownUnderline"></div>
+      <fieldset class="dropdown-section-wrapper">
+        <legend>ენა</legend>
+        <div class="dropdownUnderline"></div>
 
-                <div class="publish-date">
-                    <div class="date-wrapper">
-                        {% set date_from = request.args.get("dateFrom", None) %}
-                        {% set date_to = request.args.get("dateTo", None) %}
-                        <div class="date-input-container">
-                            <label for="date-from-input">
-                                <img src="{{ url_for('static', filename='assets/calendar-icon.svg') }}"
-                                     alt="calendar-icon"
-                                     class="calendar-icon"/>
-                                <p class="date-text">-დან</p>
-                                <input type="date" id="date-input" name="dateFrom" value="{{ date_from }}"/>
-                            </label>
-                        </div>
-                        <img src="{{ url_for('static', filename='assets/dropdown-icon.svg') }}" alt="dropdown-icon"/>
-                        <div class="date-input-container">
-                            <label for="date-to-input" name="dateTo">
-                                <img src="{{ url_for('static', filename='assets/calendar-icon.svg') }}"
-                                     alt="calendar-icon"
-                                     class="calendar-icon"/>
-                                <p class="date-text">-მდე</p>
-                                <input name="dateTo" type="date" id="date-input" value="{{ date_to }}"/>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset class="dropdown-section-wrapper">
-                <legend>ჟანრი</legend>
-                <div class="dropdownUnderline"></div>
-
-                <div class="dropdown">
-                    {% set selected_genre = request.args.getlist("genre", None) %}
-                    {% for genre in genres %}
-                        <label>
-                            {{ genre.name }}
-                            <input type="checkbox" name="genre" value="{{ genre.id }}"
-                                    {% if genre.id | string in selected_genre %} checked {% endif %}/>
-                        </label>
-                    {% endfor %}
-                </div>
-            </fieldset>
-
-            <fieldset class="dropdown-section-wrapper">
-                <legend>ენა</legend>
-                <div class="dropdownUnderline"></div>
-
-                <div class="dropdown">
-                    {% set selected_language = request.args.getlist("language", None) %}
-                    {% for language in languages %}
-                        <label>
-                            {{ language.name }}
-                            <input type="checkbox" name="language" value="{{ language.id }}"
-                                   {% if language.id | string in selected_language %}checked{% endif %}/>
-                        </label>
-                    {% endfor %}
-                </div>
-            </fieldset>
-        </section>
-    </form>
+        <div class="dropdown">
+          {% set selected_language = request.args.getlist("language", None) %}
+          {% for language in languages %}
+          <label>
+            {{ language.name }}
+            <input
+              type="checkbox"
+              name="language"
+              value="{{ language.id }}"
+              {%
+              if
+              language.id
+              |
+              string
+              in
+              selected_language
+              %}checked{%
+              endif
+              %}
+            />
+          </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+    </section>
+  </form>
 </aside>

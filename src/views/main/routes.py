@@ -16,9 +16,10 @@ def index():
     media_types = request.args.getlist('mediaType')
     genres = request.args.getlist('genre')
     languages = request.args.getlist('language')
-    date_from = request.args.get('dateFrom')
-    date_to = request.args.get('dateTo')
+    date_from = request.args.get('yearFrom')
+    date_to = request.args.get('yearTo')
     sort_by = request.args.get("sortedBy")
+
 
     if media_types and len(media_types) > 0:
         conditions = [Book.media_type_id == media_type_id for media_type_id in media_types]
@@ -36,7 +37,8 @@ def index():
             query = query.filter(or_(*conditions))
 
     if date_from and date_to:
-        conditions = [Book.publish_year >= date_from[:4], Book.publish_year <= date_to[:4]]
+        # conditions = [Book.publish_year >= date_from[:4], Book.publish_year <= date_to[:4]]
+        conditions = [Book.publish_year >= date_from, Book.publish_year <= date_to] # switch to this when form is updated on front-side
         query = query.filter(*conditions)
 
     if search_text is not None:
@@ -54,7 +56,7 @@ def index():
 
     books = query.paginate(page=page, per_page=16, error_out=False)
     return render_template('main/index.html', books=books,
-                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all())
+                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text)
 
 
 @main_blueprint.route('/about', methods=['GET'])
