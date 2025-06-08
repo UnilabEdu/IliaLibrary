@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html lang="ka">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>{% block title %} {% endblock %}</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/global.css') }}"
-    />
-  </head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}"/>
+</head>
 
-  <body class="landing-page">
-    <header>
-      <div class="container header_wrapper">
+<body class="landing-page">
+<header>
+    <div class="container header_wrapper">
         <div class="header_components">
-          <div class="logo">
-            <a href="{{ url_for('main.index') }}">
-              <img
-                src="{{ url_for('static', filename='assets/logo.svg') }}"
-                alt="logo"
-              />
-            </a>
-          </div>
+            <div class="logo">
+                <a href="{{ url_for('main.index') }}">
+                    <img src="{{ url_for('static', filename='assets/logo.svg') }}" alt="logo"/>
+                </a>
+            </div>
 
-          {% include "layouts/navbar.html" %}
+            {% include "layouts/navbar.html" %}
 
-          <div class="burger_menu">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
+            <div class="burger_menu">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
         </div>
-      </div>
-    </header>
+    </div>
+</header>
 
-    {% block content %} {% endblock %} {%include "layouts/footer.html"%}
-  </body>
+{% block content %}
+{% endblock %}
 
-  {%block script%} {%endblock%}
+{% include "layouts/footer.html" %}
+{% block script %}
+{% endblock %}
+</body>
 </html>
