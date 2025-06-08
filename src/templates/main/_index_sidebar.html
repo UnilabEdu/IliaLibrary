@@ -67,12 +67,12 @@
                         {% set date_from = request.args.get("yearFrom", "") %}
                         {% set date_to = request.args.get("yearTo", "") %}
                         <div class="date-input-container">
-                            <label for="date-from-input">
+                            <label for="year-input-from">
                                 <img src="{{ url_for('static', filename='assets/calendar-icon.svg') }}"
                                      alt="calendar-icon" name="yearTo" class="calendar-icon"/>
 
                                 <input type="text" class="year-input" id="year-input-from" name="yearFrom"
-                                       placeholder="-დან" value="{{ date_from }}"/>
+                                       placeholder="-დან" value="{{ date_from }}" maxlength="4"/>
                             </label>
                         </div>
 
@@ -84,7 +84,7 @@
                                      alt="calendar-icon" class="calendar-icon"/>
 
                                 <input type="text" class="year-input" id="year-input-to" name="yearTo"
-                                       placeholder="-მდე" value="{{ date_to }}"/>
+                                       placeholder="-მდე" value="{{ date_to }}" maxlength="4"/>
                             </label>
                         </div>
                     </div>
