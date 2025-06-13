@@ -81,6 +81,22 @@ async function setupPages(pdf) {
   state.pageFlip.flip(state.currentPage);
 }
 
+function changeChapterHeaderText(page, obj) {
+  const chapterHeader = Object.keys(obj)
+    .sort((a, b) => obj[b] - obj[a])
+    .find((k) => obj[k] <= page);
+
+  const chapterTitle = document.getElementById("main-chapter");
+
+  if (state.currentPage < Object.values(obj)[0]) {
+    chapterTitle.textContent = `დასაწყისი`;
+  }
+
+  if (chapterHeader !== undefined) {
+    chapterTitle.textContent = `თავი ${chapterHeader}`;
+  }
+}
+
 // Setup navigation with passive event listeners
 function setupNavigation() {
   const nextBtn = document.getElementById("next");
@@ -92,15 +108,19 @@ function setupNavigation() {
       state.currentPage += 1; // Update current page immediately
       updatePageCountUI(); // Synchronize UI with the current page
       state.pageFlip.flip(state.currentPage); // Flip the page
+
+      changeChapterHeaderText(state.currentPage, chapterToPageMap);
     }
   };
 
   // Handle "Prev" button click
   const handlePrev = () => {
     if (state.currentPage > 0) {
-      state.currentPage -= 1; // Update current page immediately
+      state.currentPage -= 1;
       updatePageCountUI(); // Synchronize UI with the current page
       state.pageFlip.flip(state.currentPage); // Flip the page
+
+      changeChapterHeaderText(state.currentPage, chapterToPageMap);
     }
   };
 
@@ -129,7 +149,7 @@ function setupChapterMenu() {
     const ul = document.createElement("ul");
     ul.className = "menu-ul";
     ul.style.display = "none";
-    console.log(chapterToPageMap);
+    // console.log(chapterToPageMap);
 
     const chapters = Object.keys(chapterToPageMap).length + 1; // Total number of chapters + დასაწყისი
     Array.from({ length: chapters }, (_, i) => {
