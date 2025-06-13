@@ -20,6 +20,17 @@ def index():
     date_to = request.args.get('yearTo')
     sort_by = request.args.get("sortedBy")
 
+    filters_used = any([
+    search_text,
+    media_types,
+    genres,
+    languages,
+    date_from,
+    date_to,
+    sort_by
+])
+
+
 
     if media_types and len(media_types) > 0:
         conditions = [Book.media_type_id == media_type_id for media_type_id in media_types]
@@ -56,7 +67,7 @@ def index():
 
     books = query.paginate(page=page, per_page=16, error_out=False)
     return render_template('main/index.html', books=books,
-                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text)
+                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text,filters_used=filters_used)
 
 
 @main_blueprint.route('/about', methods=['GET'])
