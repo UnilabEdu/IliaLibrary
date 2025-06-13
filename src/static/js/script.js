@@ -43,7 +43,20 @@ dropdownOptions.forEach((option) => {
     const value = option.target.getAttribute("data-value");
     hiddenDropdownSelector.value = value;
     //----
-    dropdownTextEl.textContent = selectedOption;
+
+    //for ui
+    if (value === "year-desc") {
+      dropdownTextEl.innerHTML = `<p class="dropdown-text">
+                                      გამოცემის წელი <br/> (კლებადი)
+                                  </p>`;
+    } else if (value === "year-asc") {
+      dropdownTextEl.innerHTML = `<p class="dropdown-text">
+                                      გამოცემის წელი <br/> (ზრდადი)
+                                  </p>`;
+    } else {
+      dropdownTextEl.textContent = selectedOption;
+    }
+
     dropdownOptionsEl.classList.remove("displayed");
     dropdownBTN.classList.remove("active-btn");
     dropdownBTN
