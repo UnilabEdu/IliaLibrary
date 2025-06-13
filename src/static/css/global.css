@@ -792,6 +792,8 @@ body {
   padding: 15px 12px 0 0;
 }
 .main-content-wrapper .books-section .card .book-info .book-views p {
+  display: inline;
+  max-width: min-content;
   color: #ffffff;
   font-family: FiraGo700;
   font-size: 1rem;
