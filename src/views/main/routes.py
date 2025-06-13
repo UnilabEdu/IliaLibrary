@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, session
 from sqlalchemy import or_, func
+from datetime import datetime
 
 from flask import request
 from src.models import Book, MediaType, Language, Genre
@@ -47,9 +48,14 @@ def index():
         if conditions:
             query = query.filter(or_(*conditions))
 
-    if date_from and date_to:
-        # conditions = [Book.publish_year >= date_from[:4], Book.publish_year <= date_to[:4]]
-        conditions = [Book.publish_year >= date_from, Book.publish_year <= date_to] # switch to this when form is updated on front-side
+    if date_from:
+        if not date_to:
+            date_to = str(datetime.now().year)
+
+        conditions = [
+            Book.publish_year >= date_from,
+            Book.publish_year <= date_to
+        ]
         query = query.filter(*conditions)
 
     if search_text is not None:
