@@ -137,6 +137,7 @@ function setupNavigation() {
   state.pageFlip.on("flip", (event) => {
     state.currentPage = event.data; // Update current page based on the event
     updatePageCountUI(); // Synchronize UI with the current page
+    changeChapterHeaderText(state.currentPage, chapterToPageMap);
   });
 }
 
