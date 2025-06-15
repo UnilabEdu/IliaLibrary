@@ -1924,6 +1924,7 @@ a#menu:hover .svg-path {
   font-family: FiraGo700;
   display: flex;
   align-items: center;
+  text-align: center;
 }
 #loader h1 .dots {
   margin-left: 8px;
