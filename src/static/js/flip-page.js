@@ -8,9 +8,11 @@ const state = {
   main: null,
   currentPageElement: null,
   totalPagesElement: null,
+  totalPagesElementMobile: null,
   pageFlip: null,
   currentPage: 0,
   isAnimating: false,
+  isMobile: window.innerWidth <= 390,
 };
 
 // Initialize DOM elements
@@ -20,6 +22,7 @@ function initializeElements() {
   state.main = document.getElementById("main");
   state.currentPageElement = document.getElementById("current-page");
   state.totalPagesElement = document.getElementById("total-pages");
+  state.totalPagesElementMobile = document.getElementById("total-pages-mobile");
   // state.mainHeader = document.getElementById("main-header");
   state.flipHeader = document.getElementById("flip-page-header");
 }
@@ -27,7 +30,7 @@ function initializeElements() {
 // Optimized page creation with proper cleanup
 async function createPage(pdf, pageNum) {
   const page = await pdf.getPage(pageNum);
-  const scale = 2;
+  const scale = state.isMobile ? 4 : 2;
   const viewport = page.getViewport({ scale });
 
   const canvas = document.createElement("canvas");
@@ -43,7 +46,8 @@ async function createPage(pdf, pageNum) {
     height: `${viewport.height}px`,
     background: "#fff",
     overflow: "hidden",
-    willChange: "transform", // Optimize animations
+    willChange: "transform",
+    display: "flex",
   });
 
   await page.render({
@@ -57,9 +61,16 @@ async function createPage(pdf, pageNum) {
   img.loading = "eager";
 
   return new Promise((resolve) => {
+    //images load here
     img.onload = () => {
-      img.style.width = "100%";
-      img.style.height = "100%";
+      console.log(pageNum);
+      if (pageNum === 1) {
+        img.style.width = "100%";
+        img.style.height = "100%";
+      } else {
+        img.style.width = "100%";
+        img.style.height = state.isMobile ? "85%" : "100%"; //temp number
+      }
       pageContainer.appendChild(img);
       canvas.remove();
       resolve(pageContainer);
@@ -71,6 +82,7 @@ async function createPage(pdf, pageNum) {
 async function setupPages(pdf) {
   const numPages = pdf.numPages;
   state.totalPagesElement.innerText = numPages;
+  state.totalPagesElementMobile.innerText = numPages;
 
   const pages = await Promise.all(
     Array.from({ length: numPages }, (_, i) => createPage(pdf, i + 1))
@@ -100,7 +112,9 @@ function changeChapterHeaderText(page, obj) {
 // Setup navigation with passive event listeners
 function setupNavigation() {
   const nextBtn = document.getElementById("next");
+  const nextBtnMobile = document.getElementById("next-mobile");
   const prevBtn = document.getElementById("prev");
+  const prevBtnMobile = document.getElementById("prev-mobile");
 
   // Handle "Next" button click
   const handleNext = () => {
@@ -131,7 +145,9 @@ function setupNavigation() {
 
   // Add event listeners for the buttons
   nextBtn.addEventListener("click", handleNext, { passive: true });
+  nextBtnMobile.addEventListener("click", handleNext, { passive: true });
   prevBtn.addEventListener("click", handlePrev, { passive: true });
+  prevBtnMobile.addEventListener("click", handlePrev, { passive: true });
 
   // Listen for manual page flips and synchronize the page count
   state.pageFlip.on("flip", (event) => {
@@ -264,16 +280,17 @@ async function initializeViewer(pdfUrl) {
 
     // Initialize PageFlip with optimized settings
     state.pageFlip = new St.PageFlip(state.bookContainer, {
-      width: 700,
-      height: 1000,
+      width: state.isMobile ? 352 : 700,
+      height: state.isMobile ? window.innerHeight - 100 : 1000,
       showCover: true,
       drawShadow: true,
       flippingTime: 600, // Reduced flip animation time
-      usePortrait: false,
+      usePortrait: state.isMobile,
       startZIndex: 0,
       minWidth: 300,
       maxWidth: 1000,
       useMouseEvents: true,
+      // useMouseEvents: state.isMobile,
       swipeDistance: 30,
       preventTouchEvents: false,
     });
