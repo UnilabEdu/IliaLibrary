@@ -11,6 +11,7 @@
         <div class="filter-books-wrapper">
             {% include "main/_index_sidebar.html" %}
             <div class="search-results-info">
+                {% if filters_used %}
                 <aside>
                     {% if not books.items %}
                         <div class="go-back-container">
@@ -23,12 +24,14 @@
                     <p {% if not books.items %} style="flex: unset" {% endif %}>
                         {% if search_text %}
                             <span>
-                                საძიებო სოტყვა <span class="search-text-line">"{{ search_text }}"</span>
+                                საძიებო სიტყვა <span class="search-text-line">"{{ search_text }}"</span>
                             </span>
                         {% endif %}
+                        
                         <span> მოიძებნა {{ books.items | length }} ჩანაწერი </span>
                     </p>
                 </aside>
+                {% endif %}
 
                 {% if not books.items %}
                     <section id="no-books-found">

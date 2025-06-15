@@ -97,9 +97,12 @@
                                      alt="book-cover" class="book-cover"/>
                                 <div class="book-info">
                                     <div class="book-views">
-                                        <img src="{{ url_for('static', filename="assets/mdi_eye.svg") }}"
-                                             alt="eye-icon"/>
-                                        <p>{{ book.view_count }}</p>
+                                        <div>
+
+                                            <img src="{{ url_for('static', filename="assets/mdi_eye.svg") }}"
+                                            alt="eye-icon"/>
+                                            <p>{{ book.view_count }}</p>
+                                        </div>
                                     </div>
 
                                     <div class="title-share">

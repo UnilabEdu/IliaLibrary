@@ -275,6 +275,12 @@ body {
     max-width: 1264px;
   }
 }
+@media only screen and (max-width: 390px) {
+  .container {
+    width: 100%;
+    margin: 0 24px;
+  }
+}
 
 .main-content-wrapper {
   max-width: 1680px;
@@ -394,7 +400,7 @@ body {
   .buttons-section
   .dropdown-button {
   width: 100%;
-  height: 59px;
+  min-height: 59px;
   border: 2px solid #95b48a;
   border-radius: 10px;
   background-color: #ffffff;
@@ -412,6 +418,7 @@ body {
   .dropdown-text {
   color: #95b48a;
   font-size: 22px;
+  width: max-content;
   font-family: FiraGo400;
   transition: color 0.2s;
 }
@@ -487,7 +494,7 @@ body {
 .main-content-wrapper .filter-books-wrapper .dropdownUnderline {
   width: 100%;
   height: 2px;
-  background-color: #d8ebfc;
+  background-color: rgba(220, 240, 212, 1);
   border-radius: 2px;
 }
 .main-content-wrapper .filter-books-wrapper .media-type-section {
@@ -792,6 +799,8 @@ body {
   padding: 15px 12px 0 0;
 }
 .main-content-wrapper .books-section .card .book-info .book-views p {
+  display: inline;
+  max-width: min-content;
   color: #ffffff;
   font-family: FiraGo700;
   font-size: 1rem;
@@ -1446,6 +1455,7 @@ header .header_wrapper .burger_menu .line {
 .book-main .book-container .info-wrapper .feature-section ul li {
   display: flex;
   justify-content: space-between;
+  gap: 5px;
   font-size: 14px;
   font-weight: 350;
   color: rgba(60, 60, 67, 0.6);
@@ -1663,6 +1673,12 @@ body {
   background-color: #edf6fb !important;
 }
 
+@media (max-width: 390px) {
+  .flip-page-main {
+    background-color: rgba(207, 222, 201, 1) !important;
+  }
+}
+
 a#menu .svg-path {
   fill: rgba(255, 255, 255, 0.3764705882);
   transition: fill 0.3s ease;
@@ -1696,6 +1712,13 @@ a#menu:hover .svg-path {
   width: auto;
   max-width: 250px;
 }
+
+@media (max-width: 390px) {
+  .flip-page-header .flip-page-header-container .download_book {
+    display: none;
+  }
+}
+
 .flip-page-header .flip-page-header-container .flip-navbar-right p {
   font-family: FiraGo400;
   font-size: 24px;
@@ -1758,12 +1781,24 @@ a#menu:hover .svg-path {
   position: relative;
 }
 
+.mobile-flip-pages-container {
+  min-height: 42px;
+  max-width: 100%;
+  background-color: #95b48a;
+  padding: 12px 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #flip-pages .page .zoom-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
 }
+
 #flip-pages .page .zoom-container #zoom-icon-container {
   position: relative;
   display: flex;
@@ -1806,6 +1841,31 @@ a#menu:hover .svg-path {
   left: 50%;
   transform: translateX(-50%);
 }
+
+#mobile-flip-pages {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+}
+
+#mobile-flip-pages .container.page {
+  margin: 0; /* for bugfix */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  gap: 10px;
+}
+
+#mobile-flip-pages .download_book {
+  text-align: end;
+}
+#mobile-flip-pages .download_book svg {
+  height: 24px;
+  width: 24px;
+}
+
 #flip-pages .page {
   display: flex;
   align-items: center;
@@ -1814,10 +1874,33 @@ a#menu:hover .svg-path {
   font-size: 26px;
   gap: 22px;
 }
+
+@media (max-width: 390px) {
+  #flip-pages .page {
+    display: none;
+  }
+}
+
 #flip-pages .page .current-page {
   padding: 4px 8px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
+}
+
+.mobile-flip-pages-container {
+  display: none;
+}
+
+@media (max-width: 390px) {
+  .mobile-flip-pages-container {
+    display: block;
+  }
+
+  #mobile-flip-pages {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+  }
 }
 
 #loader {
@@ -1841,6 +1924,7 @@ a#menu:hover .svg-path {
   font-family: FiraGo700;
   display: flex;
   align-items: center;
+  text-align: center;
 }
 #loader h1 .dots {
   margin-left: 8px;
@@ -1872,6 +1956,10 @@ a#menu:hover .svg-path {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   backface-visibility: hidden;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .main-chapter {
@@ -1880,6 +1968,12 @@ a#menu:hover .svg-path {
   margin-top: 30px;
   text-align: center;
 } /*# sourceMappingURL=global.css.map */
+
+@media (max-width: 390px) {
+  .main-chapter {
+    display: none;
+  }
+}
 
 .pagination-container .pagination-wrapper .page-next {
   rotate: 180deg;

@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, session
 from sqlalchemy import or_, func
+from datetime import datetime
 
 from flask import request
 from src.models import Book, MediaType, Language, Genre
@@ -20,6 +21,17 @@ def index():
     date_to = request.args.get('yearTo')
     sort_by = request.args.get("sortedBy")
 
+    filters_used = any([
+    search_text,
+    media_types,
+    genres,
+    languages,
+    date_from,
+    date_to,
+    sort_by
+])
+
+
 
     if media_types and len(media_types) > 0:
         conditions = [Book.media_type_id == media_type_id for media_type_id in media_types]
@@ -36,9 +48,14 @@ def index():
         if conditions:
             query = query.filter(or_(*conditions))
 
-    if date_from and date_to:
-        # conditions = [Book.publish_year >= date_from[:4], Book.publish_year <= date_to[:4]]
-        conditions = [Book.publish_year >= date_from, Book.publish_year <= date_to] # switch to this when form is updated on front-side
+    if date_from:
+        if not date_to:
+            date_to = str(datetime.now().year)
+
+        conditions = [
+            Book.publish_year >= date_from,
+            Book.publish_year <= date_to
+        ]
         query = query.filter(*conditions)
 
     if search_text is not None:
@@ -56,7 +73,7 @@ def index():
 
     books = query.paginate(page=page, per_page=16, error_out=False)
     return render_template('main/index.html', books=books,
-                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text)
+                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text,filters_used=filters_used)
 
 
 @main_blueprint.route('/about', methods=['GET'])
