@@ -1,4 +1,3 @@
-// Set up PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js";
 
@@ -7,6 +6,7 @@ const state = {
   loader: null,
   main: null,
   currentPageElement: null,
+  currentPageElementMobile: null,
   totalPagesElement: null,
   totalPagesElementMobile: null,
   pageFlip: null,
@@ -21,11 +21,45 @@ function initializeElements() {
   state.loader = document.getElementById("loader");
   state.main = document.getElementById("main");
   state.currentPageElement = document.getElementById("current-page");
+  state.currentPageElementMobile = document.getElementById(
+    "current-page-mobile"
+  );
   state.totalPagesElement = document.getElementById("total-pages");
   state.totalPagesElementMobile = document.getElementById("total-pages-mobile");
-  // state.mainHeader = document.getElementById("main-header");
   state.flipHeader = document.getElementById("flip-page-header");
 }
+
+//--------------
+async function loadVisiblePages(pdf, currentPage) {
+  const pagesToLoad = [
+    currentPage - 3,
+    currentPage - 2,
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    currentPage + 2,
+    currentPage + 3,
+  ];
+
+  const pageElements = document.querySelectorAll(".my-page");
+
+  for (const el of pageElements) {
+    const pageNum = parseInt(el.dataset.pageNum);
+
+    // Load only if not already loaded
+    if (pagesToLoad.includes(pageNum) && el.childNodes.length === 0) {
+      const img = await createPage(pdf, pageNum);
+      el.appendChild(img);
+    }
+
+    //removing old pages
+    // if (!pagesToLoad.includes(pageNum) && el.childNodes.length > 0) {
+    //   el.innerHTML = ""; // Clear to free memory
+    // }
+  }
+}
+
+//--------------
 
 // Optimized page creation with proper cleanup
 async function createPage(pdf, pageNum) {
@@ -35,35 +69,20 @@ async function createPage(pdf, pageNum) {
 
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d", { alpha: false }); // Optimize canvas
+
   canvas.width = viewport.width;
   canvas.height = viewport.height;
 
   const pageContainer = document.createElement("div");
-  pageContainer.className = "my-page";
-  Object.assign(pageContainer.style, {
-    position: "relative",
-    width: `${viewport.width}px`,
-    height: `${viewport.height}px`,
-    background: "#fff",
-    overflow: "hidden",
-    willChange: "transform",
-    display: "flex",
-  });
-
   await page.render({
     canvasContext: context,
     viewport: viewport,
-    intent: "display", // Optimize rendering
+    intent: "display",
   }).promise;
 
   const img = new Image();
-  img.decoding = "async"; // Optimize image loading
-  img.loading = "eager";
-
   return new Promise((resolve) => {
-    //images load here
     img.onload = () => {
-      console.log(pageNum);
       if (pageNum === 1) {
         img.style.width = "100%";
         img.style.height = "100%";
@@ -84,13 +103,25 @@ async function setupPages(pdf) {
   state.totalPagesElement.innerText = numPages;
   state.totalPagesElementMobile.innerText = numPages;
 
-  const pages = await Promise.all(
-    Array.from({ length: numPages }, (_, i) => createPage(pdf, i + 1))
-  );
+  // Create empty page containers
+  for (let i = 1; i <= numPages; i++) {
+    const pageContainer = document.createElement("div");
+    pageContainer.className = "my-page";
+    pageContainer.dataset.pageNum = i; // for tracking
+    state.bookContainer.appendChild(pageContainer);
+  }
 
-  pages.forEach((page) => state.bookContainer.appendChild(page));
+  // Load only the first 2 pages
+  await loadVisiblePages(pdf, 1);
+
+  // Init PageFlip
   state.pageFlip.loadFromHTML(document.querySelectorAll(".my-page"));
-  state.pageFlip.flip(state.currentPage);
+  state.pageFlip.flip(0);
+
+  // Add lazy loading for future pages
+  state.pageFlip.on("flip", async () => {
+    await loadVisiblePages(pdf, state.currentPage + 3);
+  });
 }
 
 function changeChapterHeaderText(page, obj) {
@@ -109,55 +140,48 @@ function changeChapterHeaderText(page, obj) {
   }
 }
 
-// Setup navigation with passive event listeners
 function setupNavigation() {
   const nextBtn = document.getElementById("next");
   const nextBtnMobile = document.getElementById("next-mobile");
   const prevBtn = document.getElementById("prev");
   const prevBtnMobile = document.getElementById("prev-mobile");
 
-  // Handle "Next" button click
   const handleNext = () => {
     if (state.currentPage < state.pageFlip.getPageCount() - 1) {
-      state.currentPage += 1; // Update current page immediately
-      updatePageCountUI(); // Synchronize UI with the current page
-      state.pageFlip.flip(state.currentPage); // Flip the page
+      state.currentPage += 1;
+      updatePageCountUI();
+      state.pageFlip.flip(state.currentPage);
 
       changeChapterHeaderText(state.currentPage, chapterToPageMap);
     }
   };
 
-  // Handle "Prev" button click
   const handlePrev = () => {
     if (state.currentPage > 0) {
       state.currentPage -= 1;
-      updatePageCountUI(); // Synchronize UI with the current page
-      state.pageFlip.flip(state.currentPage); // Flip the page
+      updatePageCountUI();
+      state.pageFlip.flip(state.currentPage);
 
       changeChapterHeaderText(state.currentPage, chapterToPageMap);
     }
   };
 
-  // Update UI to reflect the current page count
   const updatePageCountUI = () => {
     state.currentPageElement.innerText = state.currentPage;
+    state.currentPageElementMobile.innerText = state.currentPage;
   };
 
-  // Add event listeners for the buttons
   nextBtn.addEventListener("click", handleNext, { passive: true });
   nextBtnMobile.addEventListener("click", handleNext, { passive: true });
   prevBtn.addEventListener("click", handlePrev, { passive: true });
   prevBtnMobile.addEventListener("click", handlePrev, { passive: true });
 
-  // Listen for manual page flips and synchronize the page count
-  state.pageFlip.on("flip", (event) => {
-    state.currentPage = event.data; // Update current page based on the event
-    updatePageCountUI(); // Synchronize UI with the current page
+  state.pageFlip.on("flip", () => {
+    updatePageCountUI();
     changeChapterHeaderText(state.currentPage, chapterToPageMap);
   });
 }
 
-// Setup chapter menu with passive event listeners
 function setupChapterMenu() {
   const menu = document.getElementById("menu");
   let menuList = null;
@@ -166,7 +190,6 @@ function setupChapterMenu() {
     const ul = document.createElement("ul");
     ul.className = "menu-ul";
     ul.style.display = "none";
-    // console.log(chapterToPageMap);
 
     const chapters = Object.keys(chapterToPageMap).length + 1; // Total number of chapters + დასაწყისი
     Array.from({ length: chapters }, (_, i) => {
@@ -179,7 +202,6 @@ function setupChapterMenu() {
         li.textContent = `თავი ${i}`;
       }
 
-      // Add click and touch event listeners for chapter selection
       li.addEventListener("click", () => changeChapter(li, i, ul), {
         passive: true,
       });
@@ -240,9 +262,10 @@ async function changeChapter(chapter, index, ul) {
     }
 
     if (targetPage !== undefined) {
-      state.currentPage = targetPage; // Update current page
+      state.currentPage = targetPage;
       state.currentPageElement.innerText = state.currentPage;
-      state.pageFlip.flip(state.currentPage, true); // Flip instantly to the page
+      state.currentPageElementMobile.innerText = state.currentPage;
+      state.pageFlip.flip(state.currentPage, true);
     } else {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
     }
@@ -258,19 +281,9 @@ function showLoader() {
 function hideLoader() {
   state.loader.style.display = "none";
   state.main.style.display = "block";
-  // state.mainHeader.style.display = "none";
   state.flipHeader.style.display = "flex";
   state.bookContainer.style.visibility = "visible";
 }
-
-// function showMainHeader(){
-//   state.flipHeader.style.display = "none";
-//   state.mainHeader.style.display = "flex";
-// }
-// function hideMainHeader(){
-//   state.flipHeader.style.display = "flex";
-//   state.mainHeader.style.display = "none";
-// }
 
 // Main initialization function with performance optimizations
 async function initializeViewer(pdfUrl) {
@@ -301,13 +314,11 @@ async function initializeViewer(pdfUrl) {
     setupChapterMenu();
     hideLoader();
 
-    //---------------------------------------------
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams) {
       const page = parseInt(urlParams.get("page"));
       state.pageFlip.flip(page);
     }
-    //---------------------------------------------
   } catch (error) {
     console.error("Error initializing book viewer:", error);
     hideLoader();
