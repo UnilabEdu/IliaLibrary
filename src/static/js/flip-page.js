@@ -29,7 +29,6 @@ function initializeElements() {
   state.flipHeader = document.getElementById("flip-page-header");
 }
 
-//--------------
 async function loadVisiblePages(pdf, currentPage) {
   const pagesToLoad = [
     currentPage - 3,
@@ -58,8 +57,6 @@ async function loadVisiblePages(pdf, currentPage) {
     // }
   }
 }
-
-//--------------
 
 // Optimized page creation with proper cleanup
 async function createPage(pdf, pageNum) {
@@ -147,36 +144,48 @@ function setupNavigation() {
   const prevBtnMobile = document.getElementById("prev-mobile");
 
   const handleNext = () => {
-    if (state.currentPage < state.pageFlip.getPageCount() - 1) {
-      state.currentPage += 1;
-      updatePageCountUI();
-      state.pageFlip.flip(state.currentPage);
+    const isLastPage = state.currentPage >= state.pageFlip.getPageCount() - 1;
 
-      changeChapterHeaderText(state.currentPage, chapterToPageMap);
+    if (isLastPage) return;
+
+    if (!state.isMobile && state.currentPage !== 0) {
+      state.currentPage += 2;
+    } else if (state.isMobile) {
+      state.currentPage++;
     }
+
+    updatePageCountUI();
+    state.pageFlip.flip(state.currentPage);
+    changeChapterHeaderText(state.currentPage, chapterToPageMap);
   };
 
   const handlePrev = () => {
-    if (state.currentPage > 0) {
-      state.currentPage -= 1;
-      updatePageCountUI();
-      state.pageFlip.flip(state.currentPage);
+    if (state.currentPage <= 0) return;
 
-      changeChapterHeaderText(state.currentPage, chapterToPageMap);
+    if (!state.isMobile) {
+      state.currentPage -= 2;
+    } else {
+      state.currentPage -= 1;
     }
+
+    updatePageCountUI();
+    state.pageFlip.flip(state.currentPage);
+
+    changeChapterHeaderText(state.currentPage, chapterToPageMap);
   };
 
-  const updatePageCountUI = () => {
+  function updatePageCountUI() {
     state.currentPageElement.innerText = state.currentPage;
     state.currentPageElementMobile.innerText = state.currentPage;
-  };
+  }
 
   nextBtn.addEventListener("click", handleNext, { passive: true });
   nextBtnMobile.addEventListener("click", handleNext, { passive: true });
   prevBtn.addEventListener("click", handlePrev, { passive: true });
   prevBtnMobile.addEventListener("click", handlePrev, { passive: true });
 
-  state.pageFlip.on("flip", () => {
+  state.pageFlip.on("flip", (event) => {
+    state.currentPage = event.data;
     updatePageCountUI();
     changeChapterHeaderText(state.currentPage, chapterToPageMap);
   });
@@ -303,7 +312,6 @@ async function initializeViewer(pdfUrl) {
       minWidth: 300,
       maxWidth: 1000,
       useMouseEvents: true,
-      // useMouseEvents: state.isMobile,
       swipeDistance: 30,
       preventTouchEvents: false,
     });
@@ -342,8 +350,6 @@ function updateZoom() {
   zoomLevel > 1
     ? (document.getElementById("pdf-container").style.overflow = "scroll")
     : (document.getElementById("pdf-container").style.overflow = null);
-
-  console.log(document.getElementById("pdf-container").style.overflow);
 
   document.querySelector(".stf__block").style.transform = `scale(${zoomLevel})`;
 }
