@@ -99,8 +99,8 @@ async function createPage(pdf, pageNum) {
 async function setupPages(pdf) {
   const numPages = pdf.numPages;
   state.totalPages = numPages;
-  state.totalPagesElement.innerText = numPages;
-  state.totalPagesElementMobile.innerText = numPages;
+  state.totalPagesElement.innerText = numPages - 1;
+  state.totalPagesElementMobile.innerText = numPages - 1;
 
   // Create empty page containers
   for (let i = 1; i <= numPages; i++) {
@@ -120,6 +120,7 @@ async function setupPages(pdf) {
   // Add lazy loading for future pages
   state.pageFlip.on("flip", async () => {
     await loadVisiblePages(pdf, state.currentPage + 3);
+    await loadVisiblePages(pdf, state.currentPage - 2);
     document.querySelector(".current-page").value = state.currentPage;
   });
 }
@@ -142,18 +143,15 @@ function setupNavigation() {
   const prevBtnMobile = document.getElementById("prev-mobile");
 
   const handleNext = () => {
-    const isLastPage = state.currentPage >= state.pageFlip.getPageCount() - 1;
+    const totalPages = state.pageFlip.getPageCount();
+    const isLastPage = state.currentPage > totalPages - 1;
 
     if (isLastPage) return;
 
-    if (!state.isMobile && state.currentPage !== 0) {
-      state.currentPage += 2;
-    } else if (!state.isMobile && state.currentPage === 0) {
-      state.currentPage += 1;
-    }
-
     if (state.isMobile) {
       state.currentPage += 1;
+    } else {
+      state.currentPage += 2;
     }
 
     state.pageFlip.flip(state.currentPage);
@@ -163,12 +161,11 @@ function setupNavigation() {
 
   const handlePrev = () => {
     if (state.currentPage <= 0) return;
-    if (state.currentPage < 2) state.currentPage -= 1;
 
-    if (!state.isMobile && state.currentPage !== 0) {
-      state.currentPage -= 2;
-    } else if (state.isMobile && state.currentPage !== 0) {
-      state.currentPage -= 1;
+    if (!state.isMobile) {
+      state.currentPage = Math.max(0, state.currentPage - 2);
+    } else {
+      state.currentPage = Math.max(0, state.currentPage - 1);
     }
 
     state.pageFlip.flip(state.currentPage);
@@ -192,7 +189,6 @@ function setupNavigation() {
     state.currentPage = event.data;
 
     changeChapterHeaderText(state.currentPage, pageToChapter);
-
     updatePageCountUI();
   });
 }
@@ -289,7 +285,6 @@ async function changeChapter(chapter, index, ul) {
 // -------------------------
 document.querySelector(".current-page").addEventListener("change", function () {
   const inputPage = parseInt(this.value, 10);
-  console.log(state.currentPage);
   // this.value = state.currentPage;
 
   if (inputPage >= 1 && inputPage <= state.totalPages) {
