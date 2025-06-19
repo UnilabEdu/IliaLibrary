@@ -150,8 +150,12 @@ function setupNavigation() {
 
     if (!state.isMobile && state.currentPage !== 0) {
       state.currentPage += 2;
-    } else if (state.isMobile) {
-      state.currentPage++;
+    } else if (!state.isMobile && state.currentPage === 0) {
+      state.currentPage += 1;
+    }
+
+    if (state.isMobile) {
+      state.currentPage += 1;
     }
 
     updatePageCountUI();
@@ -160,11 +164,11 @@ function setupNavigation() {
   };
 
   const handlePrev = () => {
-    if (state.currentPage <= 0) return;
+    if (state.currentPage < 2) state.currentPage -= 1;
 
-    if (!state.isMobile) {
+    if (!state.isMobile && state.currentPage !== 0) {
       state.currentPage -= 2;
-    } else {
+    } else if (state.isMobile && state.currentPage !== 0) {
       state.currentPage -= 1;
     }
 
@@ -186,6 +190,7 @@ function setupNavigation() {
 
   state.pageFlip.on("flip", (event) => {
     state.currentPage = event.data;
+
     updatePageCountUI();
     changeChapterHeaderText(state.currentPage, chapterToPageMap);
   });
