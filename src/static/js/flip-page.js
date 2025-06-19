@@ -5,6 +5,7 @@ const state = {
   bookContainer: null,
   loader: null,
   main: null,
+  totalPages: null,
   currentPageElement: null,
   currentPageElementMobile: null,
   totalPagesElement: null,
@@ -97,6 +98,7 @@ async function createPage(pdf, pageNum) {
 
 async function setupPages(pdf) {
   const numPages = pdf.numPages;
+  state.totalPages = numPages;
   state.totalPagesElement.innerText = numPages;
   state.totalPagesElementMobile.innerText = numPages;
 
@@ -118,6 +120,7 @@ async function setupPages(pdf) {
   // Add lazy loading for future pages
   state.pageFlip.on("flip", async () => {
     await loadVisiblePages(pdf, state.currentPage + 3);
+    document.querySelector(".current-page").value = state.currentPage;
   });
 }
 
@@ -176,6 +179,8 @@ function setupNavigation() {
   function updatePageCountUI() {
     state.currentPageElement.innerText = state.currentPage;
     state.currentPageElementMobile.innerText = state.currentPage;
+
+    document.querySelector(".current-page").value = state.currentPage;
   }
 
   nextBtn.addEventListener("click", handleNext, { passive: true });
@@ -280,6 +285,25 @@ async function changeChapter(chapter, index, ul) {
     }
   }
 }
+
+// -------------------------
+document.querySelector(".current-page").addEventListener("change", function () {
+  const inputPage = parseInt(this.value, 10);
+  console.log(state.currentPage);
+  // this.value = state.currentPage;
+
+  if (inputPage >= 1 && inputPage <= state.totalPages) {
+    // Navigate to the entered page (convert to 0-based if needed)
+    // changeChapter(inputPage - 1);
+    state.currentPage = inputPage;
+    state.pageFlip.flip(inputPage, true);
+    changeChapterHeaderText(state.currentPage, pageToChapter);
+  } else {
+    alert("Invalid page number");
+    this.value = state.currentPage;
+  }
+});
+// -------------------------
 
 function showLoader() {
   state.loader.style.display = "flex";

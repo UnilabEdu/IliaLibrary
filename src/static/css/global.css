@@ -1884,9 +1884,11 @@ a#menu:hover .svg-path {
 }
 
 #flip-pages .page .current-page {
-  padding: 4px 8px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
+  background-color: transparent;
+  color: white;
+  font-size: inherit;
 }
 
 .mobile-flip-pages-container {
