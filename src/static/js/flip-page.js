@@ -284,19 +284,26 @@ async function changeChapter(chapter, index, ul) {
 
 // -------------------------
 document.querySelector(".current-page").addEventListener("change", function () {
-  const inputPage = parseInt(this.value, 10);
-  // this.value = state.currentPage;
+  const maxPage = state.totalPages;
+  const inputValue = this.value.trim();
 
-  if (inputPage >= 1 && inputPage <= state.totalPages) {
-    // Navigate to the entered page (convert to 0-based if needed)
-    // changeChapter(inputPage - 1);
-    state.currentPage = inputPage;
-    state.pageFlip.flip(inputPage, true);
-    changeChapterHeaderText(state.currentPage, pageToChapter);
-  } else {
-    alert("Invalid page number");
+  if (!/^\d+$/.test(inputValue)) {
+    alert("გთოვთ შეიყვანეთ რიცხვი");
     this.value = state.currentPage;
+    return;
   }
+
+  const inputPage = parseInt(inputValue, 10);
+
+  if (inputPage < 0 || inputPage >= maxPage) {
+    alert(`გვერდი უნდა იყოს 0-სა და ${maxPage - 1}-ს შორის`);
+    this.value = state.currentPage;
+    return;
+  }
+
+  state.currentPage = inputPage;
+  state.pageFlip.flip(inputPage, true);
+  changeChapterHeaderText(state.currentPage, pageToChapter);
 });
 // -------------------------
 

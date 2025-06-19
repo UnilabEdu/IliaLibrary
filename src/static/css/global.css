@@ -1889,6 +1889,10 @@ a#menu:hover .svg-path {
   background-color: transparent;
   color: white;
   font-size: inherit;
+  min-width: 65px;
+}
+#flip-pages .page .current-page:focus {
+  outline: 1px solid #fff;
 }
 
 .mobile-flip-pages-container {
