@@ -124,10 +124,12 @@ async function setupPages(pdf) {
 function changeChapterHeaderText(page, obj) {
   const chapterHeader = Object.entries(obj)
     .reverse()
-    .find(([k, v]) => k <= page)[1];
+    .find(([k, v]) => k <= page)?.[1];
 
   const chapterTitle = document.getElementById("main-chapter");
-  chapterTitle.textContent = chapterHeader;
+  chapterHeader
+    ? (chapterTitle.textContent = chapterHeader)
+    : (chapterTitle.textContent = "დასაწყისი");
 }
 
 function setupNavigation() {
@@ -151,12 +153,13 @@ function setupNavigation() {
       state.currentPage += 1;
     }
 
-    updatePageCountUI();
     state.pageFlip.flip(state.currentPage);
     changeChapterHeaderText(state.currentPage, pageToChapter);
+    // updatePageCountUI();
   };
 
   const handlePrev = () => {
+    if (state.currentPage <= 0) return;
     if (state.currentPage < 2) state.currentPage -= 1;
 
     if (!state.isMobile && state.currentPage !== 0) {
@@ -165,10 +168,9 @@ function setupNavigation() {
       state.currentPage -= 1;
     }
 
-    updatePageCountUI();
     state.pageFlip.flip(state.currentPage);
-
     changeChapterHeaderText(state.currentPage, pageToChapter);
+    // updatePageCountUI();
   };
 
   function updatePageCountUI() {
@@ -184,8 +186,9 @@ function setupNavigation() {
   state.pageFlip.on("flip", (event) => {
     state.currentPage = event.data;
 
-    updatePageCountUI();
     changeChapterHeaderText(state.currentPage, pageToChapter);
+
+    updatePageCountUI();
   });
 }
 
@@ -267,7 +270,6 @@ async function changeChapter(chapter, index, ul) {
     if (targetPage === undefined) {
       state.pageFlip.flip(0, true);
     }
-
     if (targetPage !== undefined) {
       state.currentPage = targetPage;
       state.currentPageElement.innerText = state.currentPage;
