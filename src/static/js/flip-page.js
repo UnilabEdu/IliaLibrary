@@ -357,6 +357,7 @@ function updateZoom() {
     : (document.getElementById("pdf-container").style.overflow = null);
 
   document.querySelector(".stf__block").style.transform = `scale(${zoomLevel})`;
+  document.querySelector(".stf__block").style.transformOrigin = "top center";
 }
 
 zoomInBTN.addEventListener("click", () => {
