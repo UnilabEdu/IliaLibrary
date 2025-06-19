@@ -101,12 +101,36 @@
 </section>
 
 <script>
+    let pageToChapter = {
+        "0": 'დასაწყისი',
+        {%- for content in book.book_content -%}
+            "{{ content.page_number }}": "{{ content.name }}",
+            {%- if not loop.last %}{% endif %}
+        {%- endfor -%}
+    };
+    
+    let indexToPage = {
+        "0": 0,
+        {%- for content in book.book_content -%}
+            "{{ loop.index }}": {{ content.page_number }}{% if not loop.last %},{% endif %}
+        {%- endfor -%}
+    };
+</script>
+<!-- <script>
+    let chapterToPageMap = {
+        {%- for content in book.book_content -%}
+            "{{ content.page_number }}": "{{ content.name }}",
+            "{{ loop.index }}": {{ content.page_number }},
+        {%- endfor -%}
+    };
+</script> -->
+<!-- <script>
     let chapterToPageMap = {
         {%- for content in book.book_content -%}
             {{ loop.index }}: {{ content.page_number }},
         {%- endfor -%}
     }
-</script>
+</script> -->
 <script src="{{ url_for('static', filename='js/flip-page.js') }}"></script>
 <script>
     if (typeof pdfjsLib !== "undefined") {

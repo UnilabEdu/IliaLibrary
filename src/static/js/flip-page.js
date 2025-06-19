@@ -122,19 +122,12 @@ async function setupPages(pdf) {
 }
 
 function changeChapterHeaderText(page, obj) {
-  const chapterHeader = Object.keys(obj)
-    .sort((a, b) => obj[b] - obj[a])
-    .find((k) => obj[k] <= page);
+  const chapterHeader = Object.entries(obj)
+    .reverse()
+    .find(([k, v]) => k <= page)[1];
 
   const chapterTitle = document.getElementById("main-chapter");
-
-  if (state.currentPage < Object.values(obj)[0]) {
-    chapterTitle.textContent = `დასაწყისი`;
-  }
-
-  if (chapterHeader !== undefined) {
-    chapterTitle.textContent = `თავი ${chapterHeader}`;
-  }
+  chapterTitle.textContent = chapterHeader;
 }
 
 function setupNavigation() {
@@ -160,7 +153,7 @@ function setupNavigation() {
 
     updatePageCountUI();
     state.pageFlip.flip(state.currentPage);
-    changeChapterHeaderText(state.currentPage, chapterToPageMap);
+    changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
   const handlePrev = () => {
@@ -175,7 +168,7 @@ function setupNavigation() {
     updatePageCountUI();
     state.pageFlip.flip(state.currentPage);
 
-    changeChapterHeaderText(state.currentPage, chapterToPageMap);
+    changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
   function updatePageCountUI() {
@@ -192,7 +185,7 @@ function setupNavigation() {
     state.currentPage = event.data;
 
     updatePageCountUI();
-    changeChapterHeaderText(state.currentPage, chapterToPageMap);
+    changeChapterHeaderText(state.currentPage, pageToChapter);
   });
 }
 
@@ -205,7 +198,7 @@ function setupChapterMenu() {
     ul.className = "menu-ul";
     ul.style.display = "none";
 
-    const chapters = Object.keys(chapterToPageMap).length + 1; // Total number of chapters + დასაწყისი
+    const chapters = Object.values(pageToChapter).length; // Total number of chapters + დასაწყისი
     Array.from({ length: chapters }, (_, i) => {
       const li = document.createElement("li");
       li.className = "menu-li";
@@ -213,7 +206,7 @@ function setupChapterMenu() {
       if (i === 0) {
         li.textContent = "დასაწყისი";
       } else {
-        li.textContent = `თავი ${i}`;
+        li.textContent = Object.values(pageToChapter)[i];
       }
 
       li.addEventListener("click", () => changeChapter(li, i, ul), {
@@ -269,7 +262,7 @@ async function changeChapter(chapter, index, ul) {
   ul.style.display = "none";
 
   if (!state.isAnimating) {
-    const targetPage = chapterToPageMap[index];
+    const targetPage = Object.values(indexToPage)[index];
 
     if (targetPage === undefined) {
       state.pageFlip.flip(0, true);
