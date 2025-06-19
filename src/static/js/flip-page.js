@@ -242,18 +242,18 @@ function setupChapterMenu() {
     { passive: true }
   );
 
-  menu.addEventListener(
-    "touchstart",
-    () => {
-      if (!menuList) {
-        menuList = createChapterList();
-        menu.parentElement.appendChild(menuList);
-      }
-      menuList.style.display =
-        menuList.style.display === "none" ? "block" : "none";
-    },
-    { passive: true }
-  );
+  // menu.addEventListener(
+  //   "touchstart",
+  //   () => {
+  //     if (!menuList) {
+  //       menuList = createChapterList();
+  //       menu.parentElement.appendChild(menuList);
+  //     }
+  //     menuList.style.display =
+  //       menuList.style.display === "none" ? "block" : "none";
+  //   },
+  //   { passive: true }
+  // );
 }
 
 async function changeChapter(chapter, index, ul) {
