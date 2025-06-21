@@ -1805,17 +1805,7 @@ a#menu:hover .svg-path {
   position: relative;
   display: flex;
 }
-#flip-pages .page .zoom-container #zoom-icon-container #zoom-icon {
-  height: 25px;
-  width: 24px;
-}
-#flip-pages .page .zoom-container #zoom-fragment {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 11px;
-  height: 11px;
-}
+
 #flip-pages .page .zoom-container button {
   display: flex;
   justify-content: center;

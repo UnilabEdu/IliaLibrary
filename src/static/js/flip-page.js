@@ -62,7 +62,7 @@ async function loadVisiblePages(pdf, currentPage) {
 // Optimized page creation with proper cleanup
 async function createPage(pdf, pageNum) {
   const page = await pdf.getPage(pageNum);
-  const scale = state.isMobile ? 4 : 2;
+  const scale = state.isMobile ? 4 : 3;
   const viewport = page.getViewport({ scale });
 
   const canvas = document.createElement("canvas");
@@ -328,14 +328,14 @@ async function initializeViewer(pdfUrl) {
 
     // Initialize PageFlip with optimized settings
     state.pageFlip = new St.PageFlip(state.bookContainer, {
-      width: state.isMobile ? 352 : 700,
-      height: state.isMobile ? window.innerHeight - 100 : 1000,
+      width: state.isMobile ? 352 : 600,
       showCover: true,
       drawShadow: true,
       flippingTime: 600, // Reduced flip animation time
       usePortrait: state.isMobile,
       startZIndex: 0,
       minWidth: 300,
+      height: !state.isMobile ? window.innerHeight - 250 : 1000,
       maxWidth: 1000,
       useMouseEvents: true,
       swipeDistance: 30,
