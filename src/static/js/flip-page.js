@@ -5,6 +5,7 @@ const state = {
   bookContainer: null,
   loader: null,
   main: null,
+  totalPages: null,
   currentPageElement: null,
   currentPageElementMobile: null,
   totalPagesElement: null,
@@ -61,7 +62,7 @@ async function loadVisiblePages(pdf, currentPage) {
 // Optimized page creation with proper cleanup
 async function createPage(pdf, pageNum) {
   const page = await pdf.getPage(pageNum);
-  const scale = state.isMobile ? 4 : 2;
+  const scale = state.isMobile ? 4 : 3;
   const viewport = page.getViewport({ scale });
 
   const canvas = document.createElement("canvas");
@@ -97,8 +98,9 @@ async function createPage(pdf, pageNum) {
 
 async function setupPages(pdf) {
   const numPages = pdf.numPages;
-  state.totalPagesElement.innerText = numPages;
-  state.totalPagesElementMobile.innerText = numPages;
+  state.totalPages = numPages;
+  state.totalPagesElement.innerText = numPages - 1;
+  state.totalPagesElementMobile.innerText = numPages - 1;
 
   // Create empty page containers
   for (let i = 1; i <= numPages; i++) {
@@ -118,23 +120,20 @@ async function setupPages(pdf) {
   // Add lazy loading for future pages
   state.pageFlip.on("flip", async () => {
     await loadVisiblePages(pdf, state.currentPage + 3);
+    await loadVisiblePages(pdf, state.currentPage - 2);
+    document.querySelector(".current-page").value = state.currentPage;
   });
 }
 
 function changeChapterHeaderText(page, obj) {
-  const chapterHeader = Object.keys(obj)
-    .sort((a, b) => obj[b] - obj[a])
-    .find((k) => obj[k] <= page);
+  const chapterHeader = Object.entries(obj)
+    .reverse()
+    .find(([k, v]) => k <= page)?.[1];
 
   const chapterTitle = document.getElementById("main-chapter");
-
-  if (state.currentPage < Object.values(obj)[0]) {
-    chapterTitle.textContent = `დასაწყისი`;
-  }
-
-  if (chapterHeader !== undefined) {
-    chapterTitle.textContent = `თავი ${chapterHeader}`;
-  }
+  chapterHeader
+    ? (chapterTitle.textContent = chapterHeader)
+    : (chapterTitle.textContent = "დასაწყისი");
 }
 
 function setupNavigation() {
@@ -144,39 +143,41 @@ function setupNavigation() {
   const prevBtnMobile = document.getElementById("prev-mobile");
 
   const handleNext = () => {
-    const isLastPage = state.currentPage >= state.pageFlip.getPageCount() - 1;
+    const totalPages = state.pageFlip.getPageCount();
+    const isLastPage = state.currentPage > totalPages - 1;
 
     if (isLastPage) return;
 
-    if (!state.isMobile && state.currentPage !== 0) {
+    if (state.isMobile) {
+      state.currentPage += 1;
+    } else {
       state.currentPage += 2;
-    } else if (state.isMobile) {
-      state.currentPage++;
     }
 
-    updatePageCountUI();
     state.pageFlip.flip(state.currentPage);
-    changeChapterHeaderText(state.currentPage, chapterToPageMap);
+    changeChapterHeaderText(state.currentPage, pageToChapter);
+    // updatePageCountUI();
   };
 
   const handlePrev = () => {
     if (state.currentPage <= 0) return;
 
     if (!state.isMobile) {
-      state.currentPage -= 2;
+      state.currentPage = Math.max(0, state.currentPage - 2);
     } else {
-      state.currentPage -= 1;
+      state.currentPage = Math.max(0, state.currentPage - 1);
     }
 
-    updatePageCountUI();
     state.pageFlip.flip(state.currentPage);
-
-    changeChapterHeaderText(state.currentPage, chapterToPageMap);
+    changeChapterHeaderText(state.currentPage, pageToChapter);
+    // updatePageCountUI();
   };
 
   function updatePageCountUI() {
     state.currentPageElement.innerText = state.currentPage;
     state.currentPageElementMobile.innerText = state.currentPage;
+
+    document.querySelector(".current-page").value = state.currentPage;
   }
 
   nextBtn.addEventListener("click", handleNext, { passive: true });
@@ -186,8 +187,9 @@ function setupNavigation() {
 
   state.pageFlip.on("flip", (event) => {
     state.currentPage = event.data;
+
+    changeChapterHeaderText(state.currentPage, pageToChapter);
     updatePageCountUI();
-    changeChapterHeaderText(state.currentPage, chapterToPageMap);
   });
 }
 
@@ -200,7 +202,7 @@ function setupChapterMenu() {
     ul.className = "menu-ul";
     ul.style.display = "none";
 
-    const chapters = Object.keys(chapterToPageMap).length + 1; // Total number of chapters + დასაწყისი
+    const chapters = Object.values(pageToChapter).length; // Total number of chapters + დასაწყისი
     Array.from({ length: chapters }, (_, i) => {
       const li = document.createElement("li");
       li.className = "menu-li";
@@ -208,7 +210,7 @@ function setupChapterMenu() {
       if (i === 0) {
         li.textContent = "დასაწყისი";
       } else {
-        li.textContent = `თავი ${i}`;
+        li.textContent = Object.values(pageToChapter)[i];
       }
 
       li.addEventListener("click", () => changeChapter(li, i, ul), {
@@ -237,18 +239,18 @@ function setupChapterMenu() {
     { passive: true }
   );
 
-  menu.addEventListener(
-    "touchstart",
-    () => {
-      if (!menuList) {
-        menuList = createChapterList();
-        menu.parentElement.appendChild(menuList);
-      }
-      menuList.style.display =
-        menuList.style.display === "none" ? "block" : "none";
-    },
-    { passive: true }
-  );
+  // menu.addEventListener(
+  //   "touchstart",
+  //   () => {
+  //     if (!menuList) {
+  //       menuList = createChapterList();
+  //       menu.parentElement.appendChild(menuList);
+  //     }
+  //     menuList.style.display =
+  //       menuList.style.display === "none" ? "block" : "none";
+  //   },
+  //   { passive: true }
+  // );
 }
 
 async function changeChapter(chapter, index, ul) {
@@ -264,12 +266,11 @@ async function changeChapter(chapter, index, ul) {
   ul.style.display = "none";
 
   if (!state.isAnimating) {
-    const targetPage = chapterToPageMap[index];
+    const targetPage = Object.values(indexToPage)[index];
 
     if (targetPage === undefined) {
       state.pageFlip.flip(0, true);
     }
-
     if (targetPage !== undefined) {
       state.currentPage = targetPage;
       state.currentPageElement.innerText = state.currentPage;
@@ -280,6 +281,31 @@ async function changeChapter(chapter, index, ul) {
     }
   }
 }
+
+// -------------------------
+document.querySelector(".current-page").addEventListener("change", function () {
+  const maxPage = state.totalPages;
+  const inputValue = this.value.trim();
+
+  if (!/^\d+$/.test(inputValue)) {
+    alert("გთოვთ შეიყვანეთ რიცხვი");
+    this.value = state.currentPage;
+    return;
+  }
+
+  const inputPage = parseInt(inputValue, 10);
+
+  if (inputPage < 0 || inputPage >= maxPage) {
+    alert(`გვერდი უნდა იყოს 0-სა და ${maxPage - 1}-ს შორის`);
+    this.value = state.currentPage;
+    return;
+  }
+
+  state.currentPage = inputPage;
+  state.pageFlip.flip(inputPage, true);
+  changeChapterHeaderText(state.currentPage, pageToChapter);
+});
+// -------------------------
 
 function showLoader() {
   state.loader.style.display = "flex";
@@ -302,14 +328,14 @@ async function initializeViewer(pdfUrl) {
 
     // Initialize PageFlip with optimized settings
     state.pageFlip = new St.PageFlip(state.bookContainer, {
-      width: state.isMobile ? 352 : 700,
-      height: state.isMobile ? window.innerHeight - 100 : 1000,
+      width: state.isMobile ? 352 : 600,
       showCover: true,
       drawShadow: true,
       flippingTime: 600, // Reduced flip animation time
       usePortrait: state.isMobile,
       startZIndex: 0,
       minWidth: 300,
+      height: !state.isMobile ? window.innerHeight - 250 : 1000,
       maxWidth: 1000,
       useMouseEvents: true,
       swipeDistance: 30,
@@ -352,6 +378,7 @@ function updateZoom() {
     : (document.getElementById("pdf-container").style.overflow = null);
 
   document.querySelector(".stf__block").style.transform = `scale(${zoomLevel})`;
+  document.querySelector(".stf__block").style.transformOrigin = "top center";
 }
 
 zoomInBTN.addEventListener("click", () => {

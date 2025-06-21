@@ -1421,6 +1421,7 @@ header .header_wrapper .burger_menu .line {
 .book-main .book-container .info-wrapper .searching-section .each_content_line {
   display: flex;
   gap: 16px;
+  justify-content: space-between;
 }
 .book-main
   .book-container
@@ -1444,6 +1445,7 @@ header .header_wrapper .burger_menu .line {
   p:nth-child(2) {
   letter-spacing: 0.25em;
 }
+
 .book-main .book-container .info-wrapper .anotation-section,
 .book-main .book-container .info-wrapper .feature-section,
 .book-main .book-container .info-wrapper .searching-section {
@@ -1803,17 +1805,7 @@ a#menu:hover .svg-path {
   position: relative;
   display: flex;
 }
-#flip-pages .page .zoom-container #zoom-icon-container #zoom-icon {
-  height: 25px;
-  width: 24px;
-}
-#flip-pages .page .zoom-container #zoom-fragment {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 11px;
-  height: 11px;
-}
+
 #flip-pages .page .zoom-container button {
   display: flex;
   justify-content: center;
@@ -1882,9 +1874,15 @@ a#menu:hover .svg-path {
 }
 
 #flip-pages .page .current-page {
-  padding: 4px 8px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
+  background-color: transparent;
+  color: white;
+  font-size: inherit;
+  min-width: 65px;
+}
+#flip-pages .page .current-page:focus {
+  outline: 1px solid #fff;
 }
 
 .mobile-flip-pages-container {

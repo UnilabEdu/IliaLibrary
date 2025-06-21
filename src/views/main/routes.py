@@ -48,14 +48,16 @@ def index():
         if conditions:
             query = query.filter(or_(*conditions))
 
-    if date_from:
-        if not date_to:
-            date_to = str(datetime.now().year)
 
-        conditions = [
-            Book.publish_year >= date_from,
-            Book.publish_year <= date_to
-        ]
+    conditions = []
+
+    if date_from:
+        conditions.append(Book.publish_year >= date_from)
+
+    if date_to:
+        conditions.append(Book.publish_year <= date_to)
+
+    if conditions:
         query = query.filter(*conditions)
 
     if search_text is not None:
