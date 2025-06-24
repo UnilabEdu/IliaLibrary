@@ -327,7 +327,9 @@ async function initializeViewer(pdfUrl) {
     showLoader();
 
     function assignBookWidth() {
-      if (window.innerWidth > 1440) {
+      if (window.innerWidth >= 1920) {
+        return window.innerWidth * 0.28;
+      } else if (window.innerWidth >= 1440 && window.innerWidth < 1920) {
         return window.innerWidth * 0.33;
       } else if (window.innerWidth <= 1440) {
         return window.innerWidth * 0.35;
