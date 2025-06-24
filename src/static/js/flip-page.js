@@ -326,18 +326,34 @@ async function initializeViewer(pdfUrl) {
     initializeElements();
     showLoader();
 
+    function assignBookWidth() {
+      if (window.innerWidth > 1440) {
+        return window.innerWidth * 0.33;
+      } else if (window.innerWidth <= 1440) {
+        return window.innerWidth * 0.35;
+      }
+    }
+    function assignBookHeight() {
+      if (window.innerHeight >= 1200) {
+        return window.innerHeight * 0.78;
+      } else if (window.innerHeight < 1300) {
+        return window.innerHeight * 0.68;
+      }
+    }
+
     // Initialize PageFlip with optimized settings
     state.pageFlip = new St.PageFlip(state.bookContainer, {
-      width: state.isMobile ? 352 : 600,
+      width: state.isMobile ? 352 : assignBookWidth(),
       showCover: true,
       drawShadow: true,
       flippingTime: 600, // Reduced flip animation time
       usePortrait: state.isMobile,
       startZIndex: 0,
-      minWidth: 300,
-      height: !state.isMobile ? window.innerHeight - 250 : 1000,
-      maxWidth: 1000,
+      // minWidth: 300,
+      height: state.isMobile ? 1000 : assignBookHeight(),
+
       useMouseEvents: true,
+      // useMouseEvents: !state.isMobile, // needs to be done!
       swipeDistance: 30,
       preventTouchEvents: false,
     });
