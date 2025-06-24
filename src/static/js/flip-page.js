@@ -336,10 +336,12 @@ async function initializeViewer(pdfUrl) {
       }
     }
     function assignBookHeight() {
-      if (window.innerHeight >= 1200) {
+      if (window.innerHeight >= 1300) {
         return window.innerHeight * 0.78;
-      } else if (window.innerHeight < 1300) {
+      } else if (window.innerHeight > 1200 && window.innerHeight < 1300) {
         return window.innerHeight * 0.68;
+      } else if (window.innerHeight <= 1200) {
+        return window.innerHeight * 0.7;
       }
     }
 
