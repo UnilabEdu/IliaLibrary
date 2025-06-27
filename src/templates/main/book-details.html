@@ -43,11 +43,12 @@
                 <div class="searching-section">
                     {% for content in book.book_content %}
                         <div class="each_content_line">
-                            <p>
+                            
                                 <a href="{{ url_for('main.read_book', id=book.id) }}?page={{ content.page_number }}" style="color: inherit">
                                     {{ content.name }}
+                    
                                 </a>
-                            </p>
+                            
 
                             <p class="dotted-line">
                                 <span>.......................................................................................................................................................................................</span>
