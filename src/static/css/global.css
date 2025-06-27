@@ -1784,10 +1784,21 @@ a#menu:hover .svg-path {
   position: relative;
 }
 
+@media only screen and (max-width: 1440px) {
+  #main-content {
+    padding-top: 30px;
+  }
+
+  .stf__wrapper {
+    padding-bottom: 70% !important;
+  }
+}
+
 .mobile-flip-pages-container {
   min-height: 42px;
   max-width: 100%;
   background-color: #95b48a;
+  margin-top: 5px;
   padding: 12px 24px;
 
   display: flex;
@@ -1821,7 +1832,7 @@ a#menu:hover .svg-path {
 
 #main-content #pdf-container {
   visibility: hidden;
-  overflow: hidden;
+  overflow: visible !important;
 }
 #main-content #pdf-container .my-page {
   background-color: #fff;
@@ -2067,8 +2078,4 @@ a#menu:hover .svg-path {
   font-family: FiraGO400;
   font-size: 24px;
   color: #022859;
-}
-
-#pdf-container {
-  overflow: visible !important;
 }

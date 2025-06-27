@@ -21,10 +21,10 @@ function initializeElements() {
   state.bookContainer = document.getElementById("pdf-container");
   state.loader = document.getElementById("loader");
   state.main = document.getElementById("main");
-  state.currentPageElement = document.getElementById("current-page");
-  state.currentPageElementMobile = document.getElementById(
-    "current-page-mobile"
-  );
+  state.currentPageElement = document.querySelector(".current-page");
+  state.currentPageElementMobile = state.isMobile
+    ? document.getElementById("current-page-mobile")
+    : null;
   state.totalPagesElement = document.getElementById("total-pages");
   state.totalPagesElementMobile = document.getElementById("total-pages-mobile");
   state.flipHeader = document.getElementById("flip-page-header");
@@ -121,7 +121,6 @@ async function setupPages(pdf) {
   state.pageFlip.on("flip", async () => {
     await loadVisiblePages(pdf, state.currentPage + 3);
     await loadVisiblePages(pdf, state.currentPage - 2);
-    document.querySelector(".current-page").value = state.currentPage;
   });
 }
 
@@ -174,10 +173,11 @@ function setupNavigation() {
   };
 
   function updatePageCountUI() {
-    state.currentPageElement.innerText = state.currentPage;
-    state.currentPageElementMobile.innerText = state.currentPage;
+    if (state.currentPageElement)
+      state.currentPageElement.value = state.currentPage;
 
-    document.querySelector(".current-page").value = state.currentPage;
+    if (state.currentPageElementMobile)
+      state.currentPageElementMobile.value = state.currentPage;
   }
 
   nextBtn.addEventListener("click", handleNext, { passive: true });
@@ -273,9 +273,10 @@ async function changeChapter(chapter, index, ul) {
     }
     if (targetPage !== undefined) {
       state.currentPage = targetPage;
-      state.currentPageElement.innerText = state.currentPage;
-      state.currentPageElementMobile.innerText = state.currentPage;
-      state.pageFlip.flip(state.currentPage, true);
+      // state.currentPageElement.innerText = state.currentPage;
+      if (state.currentPageElementMobile)
+        // state.currentPageElementMobile.innerText = state.currentPage;
+        state.pageFlip.flip(state.currentPage, true);
     } else {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
     }
@@ -283,6 +284,10 @@ async function changeChapter(chapter, index, ul) {
 }
 
 // -------------------------
+window.addEventListener("DOMContentLoaded", function () {
+  document.querySelector(".current-page").value = state.currentPage;
+}); //only way I managed to reset input...
+
 document.querySelector(".current-page").addEventListener("change", function () {
   const maxPage = state.totalPages;
   const inputValue = this.value.trim();
@@ -292,7 +297,6 @@ document.querySelector(".current-page").addEventListener("change", function () {
     this.value = state.currentPage;
     return;
   }
-
   const inputPage = parseInt(inputValue, 10);
 
   if (inputPage < 0 || inputPage >= maxPage) {
@@ -326,35 +330,33 @@ async function initializeViewer(pdfUrl) {
     initializeElements();
     showLoader();
 
-    function assignBookWidth() {
-      if (window.innerWidth >= 1920) {
-        return window.innerWidth * 0.28;
-      } else if (window.innerWidth >= 1440 && window.innerWidth < 1920) {
-        return window.innerWidth * 0.33;
-      } else if (window.innerWidth <= 1440) {
-        return window.innerWidth * 0.35;
+    function getScreenDimensions(ratio = 3 / 4) {
+      const maxWidth = window.innerWidth * 0.5;
+      const maxHeight = window.innerHeight * 0.7;
+
+      let width = maxWidth;
+      let height = width / ratio;
+
+      if (height > maxHeight) {
+        height = maxHeight;
+        width = height * ratio;
       }
+
+      return { width, height };
     }
-    function assignBookHeight() {
-      if (window.innerHeight >= 1300) {
-        return window.innerHeight * 0.78;
-      } else if (window.innerHeight > 1200 && window.innerHeight < 1300) {
-        return window.innerHeight * 0.68;
-      } else if (window.innerHeight <= 1200) {
-        return window.innerHeight * 0.7;
-      }
-    }
+
+    const { width, height } = getScreenDimensions();
 
     // Initialize PageFlip with optimized settings
     state.pageFlip = new St.PageFlip(state.bookContainer, {
-      width: state.isMobile ? 352 : assignBookWidth(),
+      width: state.isMobile ? 318 : width,
       showCover: true,
       drawShadow: true,
       flippingTime: 600, // Reduced flip animation time
       usePortrait: state.isMobile,
       startZIndex: 0,
       // minWidth: 300,
-      height: state.isMobile ? 1000 : assignBookHeight(),
+      height: state.isMobile ? 800 : height,
 
       useMouseEvents: true,
       // useMouseEvents: !state.isMobile, // needs to be done!
