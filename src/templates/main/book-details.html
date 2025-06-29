@@ -60,8 +60,10 @@
                 <!-- feature section -->
                 <div class="feature-section">
                     <ul>
+                        
                         {% for column in book.__table__.columns %}
-                            {% if book | attr(column.name) and column.comment %}
+                            {#% if book | attr(column.name) and column.comment %#}
+                            {% if column.name != 'annotation' and book | attr(column.name) and column.comment %}
                                 {% if column.foreign_keys %}
                                     {% set foreign_key = column.foreign_keys | list %}
                                     {% set foreign_key= foreign_key[0].target_fullname.split('.')[0] %}
