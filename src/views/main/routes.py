@@ -72,16 +72,20 @@ def index():
         elif sort_by == "year-desc":
             query = query.order_by(Book.publish_year.desc())
 
-        conditions.append(sort_by)
+
+    all_found_books_num = None
+    if conditions:
+        all_found_books_num = query.filter(*conditions).count()
 
     preserved_args = dict(request.args)
     preserved_args.pop("page", None)
-    print(preserved_args)
 
-    books = query.paginate(page=page, per_page=16, error_out=False)
+    
+
+    books = query.paginate(page=page, per_page=2, error_out=False)
 
     return render_template('main/index.html', books=books,
-                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text,filters_used=filters_used,preserved_args=preserved_args)
+                           genres=Genre.query.all(),all_found_books_num=all_found_books_num, media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text,filters_used=filters_used,preserved_args=preserved_args)
 
 
 @main_blueprint.route('/about', methods=['GET'])
