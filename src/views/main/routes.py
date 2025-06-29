@@ -31,6 +31,7 @@ def index():
     sort_by
 ])
 
+    conditions = []
 
 
     if media_types and len(media_types) > 0:
@@ -48,8 +49,6 @@ def index():
         if conditions:
             query = query.filter(or_(*conditions))
 
-
-    conditions = []
 
     if date_from:
         conditions.append(Book.publish_year >= date_from)
@@ -73,9 +72,16 @@ def index():
         elif sort_by == "year-desc":
             query = query.order_by(Book.publish_year.desc())
 
+        conditions.append(sort_by)
+
+    preserved_args = dict(request.args)
+    preserved_args.pop("page", None)
+    print(preserved_args)
+
     books = query.paginate(page=page, per_page=16, error_out=False)
+
     return render_template('main/index.html', books=books,
-                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text,filters_used=filters_used)
+                           genres=Genre.query.all(), media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text,filters_used=filters_used,preserved_args=preserved_args)
 
 
 @main_blueprint.route('/about', methods=['GET'])

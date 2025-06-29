@@ -14,7 +14,7 @@
                         {% if num == books.page and books.pages >1 %}
                             <p class="active">{{ num }}</p>
                         {% else %}
-                            <a href="{{ url_for('main.index', page=num) }}">{{ num }}</a>
+                            <a href="{{ url_for('main.index', page=num, **preserved_args) }}">{{ num }}</a>
                         {% endif %}
 
                     {% else %}

@@ -65,3 +65,19 @@ dropdownOptions.forEach((option) => {
     // dropdownTextEl.style.fontSize = "18px";
   });
 });
+
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const sortedBy = params.get("sortedBy");
+
+  const sortTexts = {
+    "year-desc": "გამოცემის წელი <br/> (კლებადი)",
+    "year-asc": "გამოცემის წელი <br/> (ზრდადი)",
+    "name-asc": "დასახელება (ა-ჰ)",
+    "name-desc": "დასახელება (ჰ-ა)",
+  };
+
+  if (sortTexts[sortedBy]) {
+    dropdownTextEl.innerHTML = `<p class="dropdown-text">${sortTexts[sortedBy]}</p>`;
+  }
+});
