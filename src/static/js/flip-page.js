@@ -115,7 +115,7 @@ async function setupPages(pdf) {
 
   // Init PageFlip
   state.pageFlip.loadFromHTML(document.querySelectorAll(".my-page"));
-  state.pageFlip.flip(0);
+  state.pageFlip.flip(0, true);
 
   // Add lazy loading for future pages
   state.pageFlip.on("flip", async () => {
@@ -143,17 +143,20 @@ function setupNavigation() {
 
   const handleNext = () => {
     const totalPages = state.pageFlip.getPageCount();
-    const isLastPage = state.currentPage > totalPages - 1;
+    const isLastPage = state.currentPage + 2 >= totalPages;
 
-    if (isLastPage) return;
-
-    if (state.isMobile) {
-      state.currentPage += 1;
+    if (isLastPage) {
+      state.currentPage = state.totalPages - 1;
+      document.querySelector(".current-page").value = state.currentPage; //temp
     } else {
-      state.currentPage += 2;
+      if (state.isMobile) {
+        state.currentPage += 1;
+      } else {
+        state.currentPage += 2;
+      }
     }
 
-    state.pageFlip.flip(state.currentPage);
+    state.pageFlip.flip(state.currentPage, true);
     changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
@@ -166,13 +169,15 @@ function setupNavigation() {
       state.currentPage = Math.max(0, state.currentPage - 1);
     }
 
-    state.pageFlip.flip(state.currentPage);
+    state.pageFlip.flip(state.currentPage, true);
     changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
   function updatePageCountUI() {
     if (state.currentPageElement) {
       state.currentPageElement.value = state.currentPage;
+      if (state.currentPage === state.totalPages)
+        state.currentPageElement.value = state.totalPages - 1;
     }
     if (state.currentPageElementMobile)
       state.currentPageElementMobile.textContent = state.currentPage;
@@ -184,8 +189,13 @@ function setupNavigation() {
   prevBtnMobile.addEventListener("click", handlePrev, { passive: true });
 
   state.pageFlip.on("flip", (event) => {
+    const isLastPage = state.currentPage > state.totalPages - 2;
+
+    // if (isLastPage) state.currentPage = state.totalPages - 1;
+    if (isLastPage) state.currentPage += 1;
+
     if (!state.isMobile) {
-      state.currentPage = event.data + 1;
+      if (state.currentPage % 2 === 0) state.currentPage = event.data + 1;
     } else {
       state.currentPage = event.data;
     }
@@ -309,7 +319,9 @@ document.querySelector(".current-page").addEventListener("change", function () {
   }
 
   state.currentPage = inputPage;
-  state.pageFlip.flip(inputPage, true);
+
+  state.pageFlip.flip(inputPage % 2 === 0 ? inputPage : inputPage + 1, true);
+
   changeChapterHeaderText(state.currentPage, pageToChapter);
 });
 // -------------------------
@@ -376,7 +388,7 @@ async function initializeViewer(pdfUrl) {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams) {
       const page = parseInt(urlParams.get("page"));
-      state.pageFlip.flip(page);
+      state.pageFlip.flip(page, true);
     }
   } catch (error) {
     console.error("Error initializing book viewer:", error);
