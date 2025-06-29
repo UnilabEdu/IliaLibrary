@@ -23,7 +23,7 @@ function initializeElements() {
   state.main = document.getElementById("main");
   state.currentPageElement = document.querySelector(".current-page");
   state.currentPageElementMobile = state.isMobile
-    ? document.getElementById("current-page-mobile")
+    ? document.getElementById("current-page")
     : null;
   state.totalPagesElement = document.getElementById("total-pages");
   state.totalPagesElementMobile = document.getElementById("total-pages-mobile");
@@ -155,7 +155,6 @@ function setupNavigation() {
 
     state.pageFlip.flip(state.currentPage);
     changeChapterHeaderText(state.currentPage, pageToChapter);
-    // updatePageCountUI();
   };
 
   const handlePrev = () => {
@@ -169,15 +168,14 @@ function setupNavigation() {
 
     state.pageFlip.flip(state.currentPage);
     changeChapterHeaderText(state.currentPage, pageToChapter);
-    // updatePageCountUI();
   };
 
   function updatePageCountUI() {
-    if (state.currentPageElement)
+    if (state.currentPageElement) {
       state.currentPageElement.value = state.currentPage;
-
+    }
     if (state.currentPageElementMobile)
-      state.currentPageElementMobile.value = state.currentPage;
+      state.currentPageElementMobile.textContent = state.currentPage;
   }
 
   nextBtn.addEventListener("click", handleNext, { passive: true });
@@ -186,7 +184,11 @@ function setupNavigation() {
   prevBtnMobile.addEventListener("click", handlePrev, { passive: true });
 
   state.pageFlip.on("flip", (event) => {
-    state.currentPage = event.data;
+    if (!state.isMobile) {
+      state.currentPage = event.data + 1;
+    } else {
+      state.currentPage = event.data;
+    }
 
     changeChapterHeaderText(state.currentPage, pageToChapter);
     updatePageCountUI();
@@ -274,6 +276,7 @@ async function changeChapter(chapter, index, ul) {
     if (targetPage !== undefined) {
       state.currentPage = targetPage;
       // state.currentPageElement.innerText = state.currentPage;
+      state.pageFlip.flip(state.currentPage, true);
       if (state.currentPageElementMobile)
         // state.currentPageElementMobile.innerText = state.currentPage;
         state.pageFlip.flip(state.currentPage, true);
