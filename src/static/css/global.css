@@ -1245,6 +1245,7 @@ header .header_wrapper .burger_menu .line {
 .dotted-line {
   flex-wrap: wrap;
   overflow: hidden;
+  flex: 1;
 }
 
 .book-details-body-container {
@@ -1436,7 +1437,6 @@ header .header_wrapper .burger_menu .line {
   font-weight: 400;
   color: #333;
   line-height: 21.6px;
-  word-break: break-all;
 }
 .book-main
   .book-container
