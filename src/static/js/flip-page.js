@@ -362,8 +362,8 @@ async function initializeViewer(pdfUrl) {
       height: state.isMobile ? 800 : height,
 
       useMouseEvents: true,
-      // useMouseEvents: !state.isMobile, // needs to be done!
-      swipeDistance: 30,
+      // useMouseEvents: !state.isMobile,
+      swipeDistance: !state.isMobile ? 30 : 100,
       preventTouchEvents: false,
     });
 
