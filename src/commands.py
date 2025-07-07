@@ -62,8 +62,20 @@ def populate_db_command():
 
     book4 = Book(title="TEST2", media_type_id=1, cover_image="gandegili.jpg",
                  annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
-                 publish_year="2000", page_count=15, language_id=1, genre_id=1,
+                 publish_year="2000", page_count=15, language_id=1, genre_id=3,
                  book_file="gandegili-1957.pdf",book_content=[BookContent(name="TEST2", page_number=10),
         BookContent(name="dfkjls;f", page_number=22)])
     book4.create()
+    book5 = Book(title="TEST3", media_type_id=1, cover_image="gandegili.jpg",
+                 annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
+                 publish_year="1991", page_count=15, language_id=1, genre_id=3,
+                 book_file="gandegili-1957.pdf",book_content=[BookContent(name="TEST5", page_number=10),
+        BookContent(name="dfkjls;f", page_number=22)])
+    book5.create()
+    book6 = Book(title="TEST4", media_type_id=1, cover_image="gandegili.jpg",
+                 annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
+                 publish_year="1990", page_count=15, language_id=1, genre_id=3,
+                 book_file="gandegili-1957.pdf",book_content=[BookContent(name="TEST6", page_number=10),
+        BookContent(name="dfkjls;f", page_number=22)])
+    book6.create()
 

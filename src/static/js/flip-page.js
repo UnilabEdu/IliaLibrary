@@ -23,7 +23,7 @@ function initializeElements() {
   state.main = document.getElementById("main");
   state.currentPageElement = document.querySelector(".current-page");
   state.currentPageElementMobile = state.isMobile
-    ? document.getElementById("current-page-mobile")
+    ? document.getElementById("current-page")
     : null;
   state.totalPagesElement = document.getElementById("total-pages");
   state.totalPagesElementMobile = document.getElementById("total-pages-mobile");
@@ -115,7 +115,7 @@ async function setupPages(pdf) {
 
   // Init PageFlip
   state.pageFlip.loadFromHTML(document.querySelectorAll(".my-page"));
-  state.pageFlip.flip(0);
+  state.pageFlip.flip(0, true);
 
   // Add lazy loading for future pages
   state.pageFlip.on("flip", async () => {
@@ -143,19 +143,21 @@ function setupNavigation() {
 
   const handleNext = () => {
     const totalPages = state.pageFlip.getPageCount();
-    const isLastPage = state.currentPage > totalPages - 1;
+    const isLastPage = state.currentPage + 2 >= totalPages;
 
-    if (isLastPage) return;
-
-    if (state.isMobile) {
-      state.currentPage += 1;
+    if (isLastPage) {
+      state.currentPage = state.totalPages - 1;
+      document.querySelector(".current-page").value = state.currentPage; //temp
     } else {
-      state.currentPage += 2;
+      if (state.isMobile) {
+        state.currentPage += 1;
+      } else {
+        state.currentPage += 2;
+      }
     }
 
-    state.pageFlip.flip(state.currentPage);
+    state.pageFlip.flip(state.currentPage, true);
     changeChapterHeaderText(state.currentPage, pageToChapter);
-    // updatePageCountUI();
   };
 
   const handlePrev = () => {
@@ -167,17 +169,18 @@ function setupNavigation() {
       state.currentPage = Math.max(0, state.currentPage - 1);
     }
 
-    state.pageFlip.flip(state.currentPage);
+    state.pageFlip.flip(state.currentPage, true);
     changeChapterHeaderText(state.currentPage, pageToChapter);
-    // updatePageCountUI();
   };
 
   function updatePageCountUI() {
-    if (state.currentPageElement)
+    if (state.currentPageElement) {
       state.currentPageElement.value = state.currentPage;
-
+      if (state.currentPage === state.totalPages)
+        state.currentPageElement.value = state.totalPages - 1;
+    }
     if (state.currentPageElementMobile)
-      state.currentPageElementMobile.value = state.currentPage;
+      state.currentPageElementMobile.textContent = state.currentPage;
   }
 
   nextBtn.addEventListener("click", handleNext, { passive: true });
@@ -186,7 +189,16 @@ function setupNavigation() {
   prevBtnMobile.addEventListener("click", handlePrev, { passive: true });
 
   state.pageFlip.on("flip", (event) => {
-    state.currentPage = event.data;
+    const isLastPage = state.currentPage > state.totalPages - 2;
+
+    // if (isLastPage) state.currentPage = state.totalPages - 1;
+    if (isLastPage) state.currentPage += 1;
+
+    if (!state.isMobile) {
+      if (state.currentPage % 2 === 0) state.currentPage = event.data + 1;
+    } else {
+      state.currentPage = event.data;
+    }
 
     changeChapterHeaderText(state.currentPage, pageToChapter);
     updatePageCountUI();
@@ -274,6 +286,7 @@ async function changeChapter(chapter, index, ul) {
     if (targetPage !== undefined) {
       state.currentPage = targetPage;
       // state.currentPageElement.innerText = state.currentPage;
+      state.pageFlip.flip(state.currentPage, true);
       if (state.currentPageElementMobile)
         // state.currentPageElementMobile.innerText = state.currentPage;
         state.pageFlip.flip(state.currentPage, true);
@@ -306,7 +319,9 @@ document.querySelector(".current-page").addEventListener("change", function () {
   }
 
   state.currentPage = inputPage;
-  state.pageFlip.flip(inputPage, true);
+
+  state.pageFlip.flip(inputPage % 2 === 0 ? inputPage : inputPage + 1, true);
+
   changeChapterHeaderText(state.currentPage, pageToChapter);
 });
 // -------------------------
@@ -359,8 +374,8 @@ async function initializeViewer(pdfUrl) {
       height: state.isMobile ? 800 : height,
 
       useMouseEvents: true,
-      // useMouseEvents: !state.isMobile, // needs to be done!
-      swipeDistance: 30,
+      // useMouseEvents: !state.isMobile,
+      swipeDistance: !state.isMobile ? 30 : 100,
       preventTouchEvents: false,
     });
 
@@ -373,7 +388,7 @@ async function initializeViewer(pdfUrl) {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams) {
       const page = parseInt(urlParams.get("page"));
-      state.pageFlip.flip(page);
+      state.pageFlip.flip(page, true);
     }
   } catch (error) {
     console.error("Error initializing book viewer:", error);

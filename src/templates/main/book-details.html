@@ -17,17 +17,17 @@
                     <div class="book-info">
                         <div>
                             <img src="{{ url_for('static', filename='assets/book-icon.svg') }}" alt="book icon"/>
-                            <span>გვერდების რადენობა: {{ book.page_count }}</span>
+                            <p>გვერდების რაოდენობა: {{ book.page_count }}</p>
                         </div>
                         <div>
                             <img src="{{ url_for('static', filename='assets/language-icon.svg') }}"
                                  alt="language icon"/>
-                            <span>ენა: {{ book.language }}</span>
+                            <p>ენა: {{ book.language }}</p>
                         </div>
                         <div>
                             <img src="{{ url_for('static', filename='assets/book-check-icon.svg') }}"
                                  alt="book check icon"/>
-                            <span>გამომცემლობა: {{ book.publisher }}</span>
+                            <p>გამომცემლობა: {{ book.publisher }}</p>
                         </div>
                     </div>
                 </div>
@@ -46,12 +46,11 @@
                             
                                 <a href="{{ url_for('main.read_book', id=book.id) }}?page={{ content.page_number }}" style="color: inherit">
                                     {{ content.name }}
-                    
                                 </a>
                             
 
                             <p class="dotted-line">
-                                <span>.......................................................................................................................................................................................</span>
+                                .......................................................................................................................................................................................
                             </p>
                             <p>გვ. {{ content.page_number }}</p>
                         </div>
@@ -61,8 +60,10 @@
                 <!-- feature section -->
                 <div class="feature-section">
                     <ul>
+                        
                         {% for column in book.__table__.columns %}
-                            {% if book | attr(column.name) and column.comment %}
+                            {#% if book | attr(column.name) and column.comment %#}
+                            {% if column.name != 'annotation' and book | attr(column.name) and column.comment %}
                                 {% if column.foreign_keys %}
                                     {% set foreign_key = column.foreign_keys | list %}
                                     {% set foreign_key= foreign_key[0].target_fullname.split('.')[0] %}
