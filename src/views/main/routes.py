@@ -33,7 +33,6 @@ def index():
 
     conditions = []
 
-
     if media_types and len(media_types) > 0:
         conditions = [Book.media_type_id == media_type_id for media_type_id in media_types]
         if conditions:
@@ -72,15 +71,10 @@ def index():
         elif sort_by == "year-desc":
             query = query.order_by(Book.publish_year.desc())
 
-
-    all_found_books_num = None
-    if conditions:
-        all_found_books_num = query.filter(*conditions).count()
+    all_found_books_num = query.count()
 
     preserved_args = dict(request.args)
     preserved_args.pop("page", None)
-
-    
 
     books = query.paginate(page=page, per_page=12, error_out=False)
 

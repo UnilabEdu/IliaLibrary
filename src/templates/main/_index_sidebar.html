@@ -6,7 +6,7 @@
                     <img src="{{ url_for('static', filename='assets/search-icon.svg') }}" alt="search-icon"
                          class="search-icon"/>
                 </label>
-                <input id="search-input" type="text" placeholder="ძიება" name="searchQuery"/>
+                <input id="search-input" type="text" placeholder="ძიება" name="searchQuery" value="{{ search_text or '' }}"/>
             </div>
 
             <button type="submit" class="blue-button">ძებნა</button>

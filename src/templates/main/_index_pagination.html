@@ -1,7 +1,8 @@
+{% if books.pages > 1 %}
 <div class="pagination-container">
     <div class="pagination-wrapper">
         {% if books.has_prev %}
-            <a href="{{ url_for('main.index', page=books.prev_num) }}">
+            <a href="{{ url_for('main.index', page=books.prev_num, **preserved_args) }}">
                 <img class="page-prev" src="{{ url_for('static', filename='assets/pagination-arrow.svg') }}"
                      alt="pagination-arrow"/>
             </a>
@@ -25,11 +26,12 @@
         </div>
 
         {% if books.has_next %}
-            <a href="{{ url_for('main.index', page=books.next_num) }}">
+            <a href="{{ url_for('main.index', page=books.next_num,**preserved_args) }}">
                 <img class="page-next" src="{{ url_for('static', filename='assets/pagination-arrow.svg') }}"
                      alt="pagination-arrow"/>
             </a>
         {% endif %}
-
+        
     </div>
 </div>
+{% endif %}
