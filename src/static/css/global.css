@@ -652,11 +652,12 @@ body {
   border: 1px solid rgba(60, 60, 67, 0.6);
   border-radius: 8px;
   max-width: 170px;
-  height: 54px;
+  min-height: 54px;
 
   cursor: pointer;
   min-width: 104px;
 }
+
 .main-content-wrapper
   .filter-books-wrapper
   .media-type-section
@@ -672,7 +673,9 @@ body {
   gap: 10px;
   cursor: pointer;
   padding: 12px 17.25px;
+  min-height: 54px;
 }
+
 .main-content-wrapper
   .filter-books-wrapper
   .media-type-section
@@ -1219,6 +1222,10 @@ header .header_wrapper .burger_menu .line {
   }
 }
 
+.about-project-footer {
+  margin-top: 75px;
+}
+
 .footer-additional-info {
   background-color: #95b48a;
   color: white;
@@ -1324,7 +1331,7 @@ header .header_wrapper .burger_menu .line {
   color: #333;
 }
 .book-main .book-container .info-wrapper .main-info p {
-  margin-bottom: 40px;
+  margin-bottom: 32px;
   font-family: "FiraGO400", sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -1434,7 +1441,7 @@ header .header_wrapper .burger_menu .line {
   .searching-section
   .each_content_line
   a {
-  min-width: 100px;
+  /* min-width: 100px; */
   margin-bottom: 34px;
   font-family: "FiraGO400", sans-serif;
   font-size: 18px;
@@ -1837,6 +1844,7 @@ a#menu:hover .svg-path {
 #main-content #pdf-container {
   visibility: hidden;
   overflow: visible !important;
+  padding-bottom: 20px;
 }
 #main-content #pdf-container .my-page {
   background-color: #fff;
