@@ -312,11 +312,6 @@ body {
   max-width: 402px;
   position: relative;
 }
-@media (max-width: 1040px) {
-  .main-content-wrapper .filter-books-wrapper .filter-section {
-    display: none;
-  }
-}
 @media only screen and (max-width: 1440px) {
   .main-content-wrapper .filter-books-wrapper .filter-section {
     max-width: 298px;
@@ -482,6 +477,7 @@ body {
 }
 .main-content-wrapper .filter-books-wrapper .clean-filters button {
   display: flex;
+  align-items: center;
   gap: 10px;
   background-color: transparent;
   border: none;
@@ -2086,4 +2082,247 @@ a#menu:hover .svg-path {
   font-family: FiraGO400;
   font-size: 24px;
   color: #022859;
+}
+
+@media (max-width: 1040px) {
+  /* breaks at 980 */
+  /* -------------------general styles---------------------- */
+
+  /* .main-content-wrapper,
+  .container,
+  .about-main .main-content-wrapper,
+  .book-main .book-container {
+    max-width: 86%;
+  } */
+  header {
+    height: 65px;
+  }
+  header .header_wrapper .header_components .navigation nav li a,
+  header .header_wrapper .header_components .navigation nav li a.active-header {
+    font-size: 18px;
+  }
+  header .header_wrapper .header_components .navigation nav ul {
+    gap: 39px;
+  }
+  footer .footer-main-info .container {
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+  .footer-main-info .container .contacts-container .contacts-wrapper a img {
+    width: 22px;
+    height: 22px;
+  }
+  .footer-main-info .container .contacts-container .contacts-wrapper a {
+    gap: 16px;
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+
+  .footer-main-info .container .contacts-container h2 {
+    font-size: 18px;
+  }
+  .footer-additional-info .container p {
+    font-size: 12px;
+    font-family: FiraGo300;
+    padding: 16px;
+  }
+
+  .footer-main-info .container .contacts-container {
+    gap: 22px;
+  }
+
+  .pagination-container {
+    margin: 36px 0 0 0;
+  }
+  .pagination-container .pagination-wrapper {
+    gap: 10px;
+  }
+  .pagination-container .pagination-wrapper p,
+  .pagination-container .pagination-wrapper a {
+    font-size: 20px;
+    height: 25px;
+    width: 25px;
+  }
+
+  .pagination-container .pagination-wrapper .pagination-numbers {
+    gap: 10px;
+  }
+  .pagination-container .pagination-wrapper .page-next,
+  .pagination-container .pagination-wrapper .page-prev {
+    height: 21px;
+    width: 11px;
+  }
+  /* ----------------------------------------- */
+
+  .main-content-wrapper {
+    padding-top: 46px;
+  }
+  .main-content-wrapper .filter-books-wrapper {
+    gap: 62px;
+  }
+  .main-content-wrapper .filter-books-wrapper .filter-section {
+    max-width: 208px;
+  }
+
+  .main-content-wrapper .books-section {
+    grid-template-columns: repeat(3, 1fr);
+    flex: 1;
+    min-height: 1020px; /* temp */
+  }
+  .main-content-wrapper .books-section .card {
+    max-width: 193px;
+    max-height: 273px;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .search-container
+    input[type="text"] {
+    max-height: 40px;
+    font-size: 16px;
+    padding: 0 40px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .search-container
+    input[type="text"]::placeholder {
+    font-size: 16px;
+  }
+
+  .about-project-footer {
+    margin-top: 116px;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .search-container
+    .search-icon {
+    height: 20px;
+    padding: 0 10px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .blue-button {
+    max-height: 42px;
+    font-size: 18px;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .dropdown-button {
+    min-height: 42px;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .dropdown-button
+    .dropdown-text {
+    font-family: FigaGo350;
+    font-size: 18px;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .clean-filters
+    .clean-filters-text {
+    text-wrap: nowrap;
+    font-size: 13px;
+  }
+  .main-content-wrapper .filter-books-wrapper .clean-filters button img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    legend {
+    font-size: 20px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .dropdown
+    label {
+    font-size: 16px;
+    font-family: FiraGo350;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .dropdown
+    label:not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .publish-date
+    .date-wrapper
+    .date-input-container {
+    height: 42px;
+    min-height: unset;
+    min-width: 78px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .publish-date
+    .date-wrapper {
+    gap: 20px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .publish-date
+    .date-wrapper
+    .date-input-container
+    label {
+    padding: 11px;
+    min-height: 42px;
+    min-width: 78px;
+
+    gap: 0;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .publish-date
+    .date-wrapper
+    .date-input-container
+    label
+    .calendar-icon {
+    height: 18px;
+    width: 18px;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .publish-date
+    .date-wrapper
+    img {
+    width: 18px;
+    height: 10px;
+  }
 }
