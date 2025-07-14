@@ -2372,6 +2372,6 @@ a#menu:hover .svg-path {
     height: 432px;
   }
   .about-main .contacts-section {
-    margin-bottom: 15px;
+    margin-bottom: -15px;
   }
 }
