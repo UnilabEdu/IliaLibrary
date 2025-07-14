@@ -1306,6 +1306,10 @@ header .header_wrapper .burger_menu .line {
   text-align: center;
   height: 61px;
   transition: all 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .book-main .book-container .cover-wrapper a:hover {
   background-color: #a6bd9e;
@@ -2168,10 +2172,10 @@ a#menu:hover .svg-path {
     max-width: 208px;
   }
 
-  .main-content-wrapper .books-section {
+  .search-results-info .books-section {
     grid-template-columns: repeat(3, 1fr);
     flex: 1;
-    min-height: 1020px; /* temp */
+    /* min-height: 1020px; temp */
   }
   .main-content-wrapper .books-section .card {
     max-width: 193px;
@@ -2373,5 +2377,73 @@ a#menu:hover .svg-path {
   }
   .about-main .contacts-section {
     margin-bottom: -15px;
+  }
+
+  .book-main .book-container .cover-wrapper img {
+    height: 413px;
+    max-width: 320px;
+    margin-bottom: 13px;
+  }
+
+  .book-main .book-container .cover-wrapper a {
+    font-size: 22px;
+  }
+
+  .book-main .book-container {
+    margin: 52px auto;
+  }
+
+  .book-main .book-container .info-wrapper .main-info h3 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .book-main .book-container .info-wrapper .main-info p {
+    margin-bottom: 18px;
+    font-size: 16px;
+  }
+  .book-main .book-container .info-wrapper .main-info .book-info div {
+    gap: 10px;
+  }
+  .book-main .book-container .info-wrapper .main-info .book-info div img {
+    width: 22px;
+    height: 22px;
+  }
+  .book-main .book-container .info-wrapper .button-wrapper {
+    max-width: 100%;
+    margin: 34px 0 10px 0;
+  }
+  .book-container .info-wrapper .button-wrapper button {
+    font-size: 18px;
+  }
+  .book-main .book-container .info-wrapper .anotation-section p {
+    font-size: 16px;
+  }
+  .book-main
+    .book-container
+    .info-wrapper
+    .searching-section
+    .each_content_line {
+    gap: 8px;
+  }
+  .book-main
+    .book-container
+    .info-wrapper
+    .searching-section
+    .each_content_line
+    a {
+    font-size: 16px;
+  }
+  .book-main .similar-books .similar-books-container.main-content-wrapper {
+    max-height: 400px;
+    padding-top: 27px;
+    padding-bottom: 26px;
+  }
+  .book-main .similar-books h3 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+  .book-main .similar-books {
+    margin-bottom: -56px;
   }
 }
