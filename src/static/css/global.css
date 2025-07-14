@@ -2390,7 +2390,7 @@ a#menu:hover .svg-path {
   }
 
   .book-main .book-container {
-    margin: 52px auto;
+    margin: 52px auto 59px auto;
   }
 
   .book-main .book-container .info-wrapper .main-info h3 {
@@ -2445,5 +2445,8 @@ a#menu:hover .svg-path {
   }
   .book-main .similar-books {
     margin-bottom: -56px;
+  }
+  .book-main .similar-books .books-box {
+    column-gap: 15px;
   }
 }
