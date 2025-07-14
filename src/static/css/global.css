@@ -2368,8 +2368,8 @@ a#menu:hover .svg-path {
     font-size: 20px;
   }
   .about-main .contacts-section > div .iframe-div {
-    min-width: 353px;
-    height: 432px;
+    min-width: 432px;
+    height: 353px;
   }
   .about-main .contacts-section {
     margin-bottom: -15px;
