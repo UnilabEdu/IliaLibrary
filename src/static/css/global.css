@@ -1584,7 +1584,7 @@ header .header_wrapper .burger_menu .line {
 .about-main .contacts-section > div > div {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
   gap: 56px;
   min-width: 415px;
@@ -2085,7 +2085,7 @@ a#menu:hover .svg-path {
 }
 
 @media (max-width: 1040px) {
-  /* breaks at 980 */
+  /* breaks at 980px */
   /* -------------------general styles---------------------- */
 
   /* .main-content-wrapper,
@@ -2103,6 +2103,10 @@ a#menu:hover .svg-path {
   }
   header .header_wrapper .header_components .navigation nav ul {
     gap: 39px;
+  }
+
+  .landing-photo-wrapper {
+    max-height: 160px;
   }
   footer .footer-main-info .container {
     padding-top: 22px;
@@ -2324,5 +2328,50 @@ a#menu:hover .svg-path {
     img {
     width: 18px;
     height: 10px;
+  }
+
+  .about-main section {
+    margin-top: 60px;
+  }
+  .about-main h2 {
+    font-size: 26px;
+  }
+  .about-main p {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  .about-main .about-project-section article > p:last-child {
+    margin-top: 35px;
+  }
+
+  .about-main .contacts-section > div {
+    gap: 20px;
+  }
+  .about-main .contacts-section > div > div {
+    gap: 42px;
+    width: 100%;
+    min-width: unset;
+    gap: 20px;
+    justify-content: unset;
+  }
+
+  .about-main .contacts-section > div > div > h2 {
+    margin-bottom: 42px;
+  }
+  .about-main .contacts-section > div ul img {
+    width: 35px;
+    height: 35px;
+  }
+  .about-main .contacts-section > div ul li a {
+    text-wrap: balance;
+    font-size: 20px;
+  }
+  .about-main .contacts-section > div .iframe-div {
+    min-width: 353px;
+    height: 432px;
+  }
+  .about-main .contacts-section {
+    margin-bottom: 15px;
   }
 }
