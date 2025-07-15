@@ -14,6 +14,7 @@ const state = {
   currentPage: 0,
   isAnimating: false,
   isMobile: window.innerWidth <= 428,
+  isSmallScreen: window.innerWidth <= 1040,
 };
 
 // Initialize DOM elements
@@ -62,7 +63,7 @@ async function loadVisiblePages(pdf, currentPage) {
 // Optimized page creation with proper cleanup
 async function createPage(pdf, pageNum) {
   const page = await pdf.getPage(pageNum);
-  const scale = state.isMobile ? 4 : 3;
+  const scale = state.isSmallScreen ? 4 : 3;
   const viewport = page.getViewport({ scale });
 
   const canvas = document.createElement("canvas");
@@ -86,7 +87,7 @@ async function createPage(pdf, pageNum) {
         img.style.height = "100%";
       } else {
         img.style.width = "100%";
-        img.style.height = state.isMobile ? "90%" : "100%"; //temp number
+        img.style.height = state.isSmallScreen ? "90%" : "100%"; //temp number
       }
       pageContainer.appendChild(img);
       canvas.remove();
@@ -149,7 +150,7 @@ function setupNavigation() {
       state.currentPage = state.totalPages - 1;
       document.querySelector(".current-page").value = state.currentPage; //temp
     } else {
-      if (state.isMobile) {
+      if (state.isSmallScreen) {
         state.currentPage += 1;
       } else {
         state.currentPage += 2;
@@ -163,7 +164,7 @@ function setupNavigation() {
   const handlePrev = () => {
     if (state.currentPage <= 0) return;
 
-    if (!state.isMobile) {
+    if (!state.isSmallScreen) {
       state.currentPage = Math.max(0, state.currentPage - 2);
     } else {
       state.currentPage = Math.max(0, state.currentPage - 1);
@@ -194,7 +195,7 @@ function setupNavigation() {
     // if (isLastPage) state.currentPage = state.totalPages - 1;
     if (isLastPage) state.currentPage += 1;
 
-    if (!state.isMobile) {
+    if (!state.isSmallScreen) {
       if (state.currentPage % 2 === 0) state.currentPage = event.data + 1;
     } else {
       state.currentPage = event.data;
@@ -356,27 +357,39 @@ async function initializeViewer(pdfUrl) {
         height = maxHeight;
         width = height * ratio;
       }
-      console.log(width);
 
       return { width, height };
     }
 
     const { width, height } = getScreenDimensions();
 
+    function assignWidth() {
+      if (state.isMobile) {
+        return width <= 170 ? 318 : 360;
+      }
+
+      if (state.isSmallScreen && width <= 404) {
+        return 820;
+      }
+
+      return width;
+    }
+
     // Initialize PageFlip with optimized settings
     state.pageFlip = new St.PageFlip(state.bookContainer, {
-      width: state.isMobile ? (width <= 170 ? 318 : 360) : width,
+      // width: state.isMobile ? (width <= 170 ? 318 : 360) : width,
+      width: assignWidth(),
       showCover: true,
       drawShadow: true,
       flippingTime: 600, // Reduced flip animation time
-      usePortrait: state.isMobile,
+      usePortrait: state.isSmallScreen,
       startZIndex: 0,
       // minWidth: 300,
-      height: state.isMobile ? 800 : height,
+      height: state.isSmallScreen ? 1100 : height,
 
       useMouseEvents: true,
       // useMouseEvents: !state.isMobile,
-      swipeDistance: !state.isMobile ? 30 : 100,
+      swipeDistance: !state.isSmallScreen ? 30 : 100,
       preventTouchEvents: false,
     });
 

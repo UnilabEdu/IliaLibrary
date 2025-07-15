@@ -2476,4 +2476,8 @@ a#menu:hover .svg-path {
   .book-main .similar-books .books-box {
     column-gap: 15px;
   }
+
+  .main-chapter {
+    display: none;
+  }
 }
