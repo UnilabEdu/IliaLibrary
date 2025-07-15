@@ -13,7 +13,7 @@ const state = {
   pageFlip: null,
   currentPage: 0,
   isAnimating: false,
-  isMobile: window.innerWidth <= 390,
+  isMobile: window.innerWidth <= 428,
 };
 
 // Initialize DOM elements
@@ -86,7 +86,7 @@ async function createPage(pdf, pageNum) {
         img.style.height = "100%";
       } else {
         img.style.width = "100%";
-        img.style.height = state.isMobile ? "85%" : "100%"; //temp number
+        img.style.height = state.isMobile ? "90%" : "100%"; //temp number
       }
       pageContainer.appendChild(img);
       canvas.remove();
@@ -356,6 +356,7 @@ async function initializeViewer(pdfUrl) {
         height = maxHeight;
         width = height * ratio;
       }
+      console.log(width);
 
       return { width, height };
     }
@@ -364,7 +365,7 @@ async function initializeViewer(pdfUrl) {
 
     // Initialize PageFlip with optimized settings
     state.pageFlip = new St.PageFlip(state.bookContainer, {
-      width: state.isMobile ? 318 : width,
+      width: state.isMobile ? (width <= 170 ? 318 : 360) : width,
       showCover: true,
       drawShadow: true,
       flippingTime: 600, // Reduced flip animation time

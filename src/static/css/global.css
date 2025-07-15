@@ -275,7 +275,7 @@ body {
     max-width: 1264px;
   }
 }
-@media only screen and (max-width: 390px) {
+@media only screen and (max-width: 428px) {
   .container {
     width: 100%;
     margin: 0 24px;
@@ -1687,7 +1687,7 @@ body {
   background-color: #edf6fb !important;
 }
 
-@media (max-width: 390px) {
+@media (max-width: 428px) {
   .flip-page-main {
     background-color: rgba(207, 222, 201, 1) !important;
   }
@@ -1727,7 +1727,7 @@ a#menu:hover .svg-path {
   max-width: 250px;
 }
 
-@media (max-width: 390px) {
+@media (max-width: 428px) {
   .flip-page-header .flip-page-header-container .download_book {
     display: none;
   }
@@ -1809,7 +1809,7 @@ a#menu:hover .svg-path {
   min-height: 42px;
   max-width: 100%;
   background-color: #95b48a;
-  margin-top: 5px;
+  margin-top: 15px;
   padding: 12px 24px;
 
   display: flex;
@@ -1891,7 +1891,7 @@ a#menu:hover .svg-path {
   gap: 22px;
 }
 
-@media (max-width: 390px) {
+@media (max-width: 428px) {
   #flip-pages .page {
     display: none;
   }
@@ -1913,7 +1913,7 @@ a#menu:hover .svg-path {
   display: none;
 }
 
-@media (max-width: 390px) {
+@media (max-width: 428px) {
   .mobile-flip-pages-container {
     display: block;
   }
@@ -1991,7 +1991,7 @@ a#menu:hover .svg-path {
   text-align: center;
 } /*# sourceMappingURL=global.css.map */
 
-@media (max-width: 390px) {
+@media (max-width: 428px) {
   .main-chapter {
     display: none;
   }
