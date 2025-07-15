@@ -13,14 +13,14 @@
             <div class="search-results-info">
                 {% if filters_used %}
                 <aside>
-                    {% if not books.items %}
+                  
                         <div class="go-back-container">
                             <a href="{{ url_for('main.index') }}">
                                 <img src="{{ url_for('static', filename='assets/arrow-back.svg') }}" alt="go-back"/>
                                 უკან დაბრუნება
                             </a>
                         </div>
-                    {% endif %}
+                    
                     <p {% if not books.items %} style="flex: unset" {% endif %}>
                         {% if search_text %}
                             <span>
@@ -37,6 +37,7 @@
                     <section id="no-books-found">
                         <article>
                             <h2>ჩანაწერი ვერ მოიძებნა</h2>
+                            <!-- <h2><img src="{{ url_for('static', filename='assets/ჩანაწერი-ვერ-მოიძებნა.svg') }}" alt=""></h2> -->
                             <p>გთხოვთ, სწორად შეიყვანოთ საძიებო სიტყვა</p>
                         </article>
                     </section>

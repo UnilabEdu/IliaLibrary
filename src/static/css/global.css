@@ -2033,6 +2033,8 @@ a#menu:hover .svg-path {
   align-items: center;
   gap: 14px;
   color: #3c3c4399;
+
+  font-size: 20px;
 }
 
 .temp {
@@ -2042,7 +2044,7 @@ a#menu:hover .svg-path {
 .search-results-info p {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  /* flex: 1; */
   /* width: 100%; */
 
   flex-direction: row;
@@ -2111,6 +2113,31 @@ a#menu:hover .svg-path {
 
   .landing-photo-wrapper {
     max-height: 160px;
+  }
+  .search-results-info aside {
+    margin-bottom: 35px;
+  }
+  .search-results-info p {
+    font-size: 16px;
+    gap: 5px;
+  }
+
+  #no-books-found article {
+    gap: 25px;
+  }
+  #no-books-found h2 {
+    font-size: 24px;
+  }
+  #no-books-found p {
+    font-size: 20px;
+  }
+  .search-results-info aside .go-back-container a {
+    gap: 12px;
+    font-size: 16px;
+  }
+  .search-results-info aside .go-back-container a img {
+    width: 22px;
+    height: 22px;
   }
   footer .footer-main-info .container {
     padding-top: 22px;
