@@ -347,8 +347,36 @@ async function initializeViewer(pdfUrl) {
     showLoader();
 
     function getScreenDimensions(ratio = 3 / 4) {
-      const maxWidth = window.innerWidth * 0.5;
-      const maxHeight = window.innerHeight * 0.7;
+      const parsePx = (val) => parseFloat(val) || 0;
+
+      const headerEl = document.querySelector(".flip-page-header");
+      const chapterEl = document.querySelector(".main-chapter");
+      const mainContentEl = document.querySelector("#main-content");
+
+      const headerStyles = window.getComputedStyle(headerEl);
+      const mainContentStyles = window.getComputedStyle(mainContentEl);
+
+      const headerHeight = parsePx(headerStyles.height);
+      const contentPaddingTop = parsePx(mainContentStyles.paddingTop);
+
+      let chapterHeight = 0;
+
+      if (chapterEl) {
+        const chapterStyles = window.getComputedStyle(chapterEl);
+
+        if (chapterStyles.display !== "none") {
+          chapterHeight =
+            parsePx(chapterStyles.marginTop) +
+            parsePx(chapterStyles.lineHeight) + // good enough lol
+            parsePx(chapterStyles.marginBottom);
+        }
+      }
+
+      const heightToConsider =
+        headerHeight + chapterHeight + contentPaddingTop * 2;
+
+      const maxWidth = window.innerWidth * 0.5 - 8; // bit of padding
+      const maxHeight = window.innerHeight - heightToConsider;
 
       let width = maxWidth;
       let height = width / ratio;
@@ -358,19 +386,36 @@ async function initializeViewer(pdfUrl) {
         width = height * ratio;
       }
 
-      return { width, height };
+      let size;
+      if (width > 430) size = "xlarge";
+      else if (width > 392) size = "large";
+      else if (width > 350) size = "medium";
+      else if (width > 170) size = "small";
+      else size = "xsmall";
+
+      return { width, height, size, heightToConsider };
     }
 
-    const { width, height } = getScreenDimensions();
+    const { size, heightToConsider } = getScreenDimensions();
 
     function assignWidth() {
       if (state.isMobile) {
-        return width <= 170 ? 318 : 360;
+        return size === "xsmall" ? 318 : 360;
       }
 
-      if (state.isSmallScreen && width <= 404) {
-        return 820;
+      if (state.isSmallScreen) {
+        switch (size) {
+          case "xlarge":
+            return 820;
+          case "large":
+            return 760;
+          case "medium":
+            return 655;
+          case "small":
+            return 555;
+        }
       }
+      const { width } = getScreenDimensions();
 
       return width;
     }
@@ -379,13 +424,14 @@ async function initializeViewer(pdfUrl) {
     state.pageFlip = new St.PageFlip(state.bookContainer, {
       // width: state.isMobile ? (width <= 170 ? 318 : 360) : width,
       width: assignWidth(),
+
       showCover: true,
       drawShadow: true,
       flippingTime: 600, // Reduced flip animation time
       usePortrait: state.isSmallScreen,
       startZIndex: 0,
-      // minWidth: 300,
-      height: state.isSmallScreen ? 1100 : height,
+      // height: state.isSmallScreen ? height * 1.8 : height,
+      height: window.innerHeight - heightToConsider,
 
       useMouseEvents: true,
       // useMouseEvents: !state.isMobile,
