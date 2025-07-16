@@ -32,15 +32,18 @@ function initializeElements() {
 }
 
 async function loadVisiblePages(pdf, currentPage) {
-  const pagesToLoad = [
-    currentPage - 3,
-    currentPage - 2,
-    currentPage - 1,
-    currentPage,
-    currentPage + 1,
-    currentPage + 2,
-    currentPage + 3,
-  ];
+  const pagesToLoad = !state.isSmallScreen
+    ? [
+        currentPage - 2,
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        currentPage + 2,
+        currentPage + 3,
+        currentPage + 4,
+        currentPage + 5,
+      ]
+    : [currentPage - 1, currentPage, currentPage + 1];
 
   const pageElements = document.querySelectorAll(".my-page");
 
@@ -111,7 +114,6 @@ async function setupPages(pdf) {
     state.bookContainer.appendChild(pageContainer);
   }
 
-  // Load only the first 2 pages
   await loadVisiblePages(pdf, 1);
 
   // Init PageFlip
@@ -120,8 +122,8 @@ async function setupPages(pdf) {
 
   // Add lazy loading for future pages
   state.pageFlip.on("flip", async () => {
-    await loadVisiblePages(pdf, state.currentPage + 3);
-    await loadVisiblePages(pdf, state.currentPage - 2);
+    await loadVisiblePages(pdf, state.currentPage + 1);
+    await loadVisiblePages(pdf, state.currentPage - 1);
   });
 }
 
@@ -143,42 +145,35 @@ function setupNavigation() {
   const prevBtnMobile = document.getElementById("prev-mobile");
 
   const handleNext = () => {
-    const totalPages = state.pageFlip.getPageCount();
-    const isLastPage = state.currentPage + 2 >= totalPages;
-
-    if (isLastPage) {
-      state.currentPage = state.totalPages - 1;
-      document.querySelector(".current-page").value = state.currentPage; //temp
+    if (state.isSmallScreen) {
+      state.pageFlip.flip(state.currentPage + 1, true);
     } else {
-      if (state.isSmallScreen) {
-        state.currentPage += 1;
-      } else {
-        state.currentPage += 2;
-      }
+      state.pageFlip.flip(state.currentPage + 2, true);
     }
-
-    state.pageFlip.flip(state.currentPage, true);
     changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
   const handlePrev = () => {
-    if (state.currentPage <= 0) return;
-
-    if (!state.isSmallScreen) {
-      state.currentPage = Math.max(0, state.currentPage - 2);
+    if (state.currentPage <= 0) {
+      state.pageFlip.flip(0, true);
     } else {
-      state.currentPage = Math.max(0, state.currentPage - 1);
+      state.pageFlip.flip(state.currentPage - 1, true);
+      changeChapterHeaderText(state.currentPage, pageToChapter);
     }
-
-    state.pageFlip.flip(state.currentPage, true);
-    changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
   function updatePageCountUI() {
-    if (state.currentPageElement) {
+    if (state.currentPage === 0) {
       state.currentPageElement.value = state.currentPage;
-      if (state.currentPage === state.totalPages)
-        state.currentPageElement.value = state.totalPages - 1;
+      return;
+    }
+
+    if (state.currentPageElement) {
+      if (state.currentPageElement.value - 1 === state.currentPage) {
+        return; //idon't even know anymore...
+      }
+
+      state.currentPageElement.value = state.currentPage;
     }
     if (state.currentPageElementMobile)
       state.currentPageElementMobile.textContent = state.currentPage;
@@ -190,17 +185,7 @@ function setupNavigation() {
   prevBtnMobile.addEventListener("click", handlePrev, { passive: true });
 
   state.pageFlip.on("flip", (event) => {
-    const isLastPage = state.currentPage > state.totalPages - 2;
-
-    // if (isLastPage) state.currentPage = state.totalPages - 1;
-    if (isLastPage) state.currentPage += 1;
-
-    if (!state.isSmallScreen) {
-      if (state.currentPage % 2 === 0) state.currentPage = event.data + 1;
-    } else {
-      state.currentPage = event.data;
-    }
-
+    state.currentPage = event.data;
     changeChapterHeaderText(state.currentPage, pageToChapter);
     updatePageCountUI();
   });
@@ -289,8 +274,8 @@ async function changeChapter(chapter, index, ul) {
       // state.currentPageElement.innerText = state.currentPage;
       state.pageFlip.flip(state.currentPage, true);
       if (state.currentPageElementMobile)
-        // state.currentPageElementMobile.innerText = state.currentPage;
-        state.pageFlip.flip(state.currentPage, true);
+        state.currentPageElementMobile.innerText = state.currentPage;
+      state.pageFlip.flip(state.currentPage, true);
     } else {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
     }
@@ -318,10 +303,7 @@ document.querySelector(".current-page").addEventListener("change", function () {
     this.value = state.currentPage;
     return;
   }
-
-  state.currentPage = inputPage;
-
-  state.pageFlip.flip(inputPage % 2 === 0 ? inputPage : inputPage + 1, true);
+  state.pageFlip.flip(inputPage, true);
 
   changeChapterHeaderText(state.currentPage, pageToChapter);
 });
