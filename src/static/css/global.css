@@ -276,10 +276,10 @@ body {
   }
 }
 @media only screen and (max-width: 428px) {
-  .container {
+  /* .container {
     width: 100%;
     margin: 0 24px;
-  }
+  } */
 }
 
 .main-content-wrapper {
@@ -1693,9 +1693,9 @@ body {
 }
 
 @media (max-width: 428px) {
-  .flip-page-main {
+  /* .flip-page-main {
     background-color: rgba(207, 222, 201, 1) !important;
-  }
+  } */
 }
 
 a#menu .svg-path {
@@ -1733,9 +1733,9 @@ a#menu:hover .svg-path {
 }
 
 @media (max-width: 428px) {
-  .flip-page-header .flip-page-header-container .download_book {
+  /* .flip-page-header .flip-page-header-container .download_book {
     display: none;
-  }
+  } */
 }
 
 .flip-page-header .flip-page-header-container .flip-navbar-right p {
@@ -1897,9 +1897,9 @@ a#menu:hover .svg-path {
 }
 
 @media (max-width: 428px) {
-  #flip-pages .page {
+  /* #flip-pages .page {
     display: none;
-  }
+  } */
 }
 
 #flip-pages .page .current-page {
@@ -1919,7 +1919,7 @@ a#menu:hover .svg-path {
 }
 
 @media (max-width: 428px) {
-  .mobile-flip-pages-container {
+  /* .mobile-flip-pages-container {
     display: block;
   }
 
@@ -1927,7 +1927,7 @@ a#menu:hover .svg-path {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
-  }
+  } */
 }
 
 #loader {
@@ -1997,9 +1997,19 @@ a#menu:hover .svg-path {
 } /*# sourceMappingURL=global.css.map */
 
 @media (max-width: 428px) {
-  .main-chapter {
+  /* .main-chapter {
     display: none;
   }
+
+    .mobile-flip-pages-container {
+    display: block;
+  }
+
+  #mobile-flip-pages {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+  } */
 }
 
 .pagination-container .pagination-wrapper .page-next {
@@ -2581,4 +2591,32 @@ a#menu:hover .svg-path {
 }
 /* phone--> */
 @media (max-width: 428px) {
+  .container {
+    width: 100%;
+    margin: 0 24px;
+  }
+  .flip-page-main {
+    background-color: rgba(207, 222, 201, 1) !important;
+  }
+  .flip-page-header .flip-page-header-container .download_book {
+    display: none;
+  }
+
+  #flip-pages .page {
+    display: none;
+  }
+
+  .main-chapter {
+    display: none;
+  }
+
+  .mobile-flip-pages-container {
+    display: block;
+  }
+
+  #mobile-flip-pages {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+  }
 }

@@ -328,7 +328,7 @@ async function initializeViewer(pdfUrl) {
     initializeElements();
     showLoader();
 
-    function getScreenDimensions(ratio = 3 / 4) {
+    function getScreenDimensions() {
       const parsePx = (val) => parseFloat(val) || 0;
 
       const headerEl = document.querySelector(".flip-page-header");
@@ -354,52 +354,52 @@ async function initializeViewer(pdfUrl) {
         }
       }
 
+      const maxWidth = !state.isSmallScreen
+        ? window.innerWidth * 0.5 - 8
+        : window.innerWidth; // bit of padding 4 & 8 are just bit of padding
+
+      let size;
+      if (maxWidth >= 860) size = "xlarge";
+      else if (maxWidth >= 770) size = "large";
+      else if (maxWidth >= 700) size = "medium";
+      else if (maxWidth >= 635) size = "small";
+      else if (maxWidth >= 520) size = "xsmall";
+      else if (maxWidth < 520) size = "xxsmall";
+
       const heightToConsider =
         headerHeight + chapterHeight + contentPaddingTop * 2;
 
-      const maxWidth = window.innerWidth * 0.5 - 8; // bit of padding
-      const maxHeight = window.innerHeight - heightToConsider;
+      const maxHeight =
+        size === "xxsmall" ? 500 : window.innerHeight - heightToConsider;
 
-      let width = maxWidth;
-      let height = width / ratio;
-
-      if (height > maxHeight) {
-        height = maxHeight;
-        width = height * ratio;
-      }
-
-      let size;
-      if (width > 430) size = "xlarge";
-      else if (width > 392) size = "large";
-      else if (width > 350) size = "medium";
-      else if (width > 170) size = "small";
-      else size = "xsmall";
-
-      return { width, height, size, heightToConsider };
+      return { maxHeight, maxWidth, size, heightToConsider };
     }
 
-    const { size, heightToConsider } = getScreenDimensions();
+    const { maxHeight, maxWidth, size, heightToConsider } =
+      getScreenDimensions();
 
     function assignWidth() {
-      if (state.isMobile) {
-        return size === "xsmall" ? 318 : 360;
-      }
+      if (state.isMobile) return maxWidth - 12;
 
+      //tablet cases
       if (state.isSmallScreen) {
         switch (size) {
           case "xlarge":
-            return 820;
+            return 720;
           case "large":
-            return 760;
+            return 670;
           case "medium":
-            return 655;
+            return 580;
           case "small":
-            return 555;
+            return 540;
+          case "xsmall":
+            return 500;
+          case "xxsmall":
+            return 410;
         }
       }
-      const { width } = getScreenDimensions();
 
-      return width;
+      return maxWidth;
     }
 
     // Initialize PageFlip with optimized settings
@@ -412,8 +412,9 @@ async function initializeViewer(pdfUrl) {
       flippingTime: 600, // Reduced flip animation time
       usePortrait: state.isSmallScreen,
       startZIndex: 0,
-      // height: state.isSmallScreen ? height * 1.8 : height,
-      height: window.innerHeight - heightToConsider,
+      // height: state.isSmallScreen ? height * 1.8 : height, //v.0
+      height: window.innerHeight - heightToConsider, //v.1
+      // height: maxHeight, // v1.1
 
       useMouseEvents: true,
       // useMouseEvents: !state.isMobile,
