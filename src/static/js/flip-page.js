@@ -22,7 +22,9 @@ function initializeElements() {
   state.bookContainer = document.getElementById("pdf-container");
   state.loader = document.getElementById("loader");
   state.main = document.getElementById("main");
-  state.currentPageElement = document.querySelector(".current-page");
+  state.currentPageElement = !state.isMobile
+    ? document.querySelector(".current-page")
+    : null;
   state.currentPageElementMobile = state.isMobile
     ? document.getElementById("current-page")
     : null;
@@ -154,11 +156,10 @@ function setupNavigation() {
   };
 
   const handlePrev = () => {
-    if (state.currentPage <= 0) {
-      state.pageFlip.flip(0, true);
-    } else {
+    if (state.isSmallScreen) {
       state.pageFlip.flip(state.currentPage - 1, true);
-      changeChapterHeaderText(state.currentPage, pageToChapter);
+    } else {
+      state.pageFlip.flip(state.currentPage - 2, true);
     }
   };
 
@@ -170,7 +171,8 @@ function setupNavigation() {
 
     if (state.currentPageElement) {
       if (state.currentPageElement.value - 1 === state.currentPage) {
-        return; //idon't even know anymore...
+        console.log("here");
+        return;
       }
 
       state.currentPageElement.value = state.currentPage;
@@ -273,9 +275,9 @@ async function changeChapter(chapter, index, ul) {
       state.currentPage = targetPage;
       // state.currentPageElement.innerText = state.currentPage;
       state.pageFlip.flip(state.currentPage, true);
+
       if (state.currentPageElementMobile)
-        state.currentPageElementMobile.innerText = state.currentPage;
-      state.pageFlip.flip(state.currentPage, true);
+        state.currentPageElementMobile.textContent = state.currentPage;
     } else {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
     }
@@ -328,7 +330,7 @@ async function initializeViewer(pdfUrl) {
     initializeElements();
     showLoader();
 
-    function getScreenDimensions() {
+    function getScreenDimensions(ratio = 3 / 4) {
       const parsePx = (val) => parseFloat(val) || 0;
 
       const headerEl = document.querySelector(".flip-page-header");
@@ -354,9 +356,11 @@ async function initializeViewer(pdfUrl) {
         }
       }
 
-      const maxWidth = !state.isSmallScreen
+      let maxWidth = !state.isSmallScreen
         ? window.innerWidth * 0.5 - 8
         : window.innerWidth; // bit of padding 4 & 8 are just bit of padding
+
+      let height = maxWidth / ratio;
 
       let size;
       if (maxWidth >= 860) size = "xlarge";
@@ -371,6 +375,12 @@ async function initializeViewer(pdfUrl) {
 
       const maxHeight =
         size === "xxsmall" ? 500 : window.innerHeight - heightToConsider;
+
+      if (height > maxHeight) {
+        //big screen case
+        height = maxHeight;
+        maxWidth = height * ratio;
+      }
 
       return { maxHeight, maxWidth, size, heightToConsider };
     }

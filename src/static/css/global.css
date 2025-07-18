@@ -2591,6 +2591,9 @@ a#menu:hover .svg-path {
 }
 /* phone--> */
 @media (max-width: 428px) {
+  #flip-pages {
+    display: none;
+  }
   .container {
     width: 100%;
     margin: 0 24px;
