@@ -134,7 +134,10 @@ function changeChapterHeaderText(page, obj) {
     .reverse()
     .find(([k, v]) => k <= page)?.[1];
 
-  const chapterTitle = document.getElementById("main-chapter");
+  const chapterTitle = state.isSmallScreen
+    ? document.getElementById("main-chapter-small-screen")
+    : document.getElementById("main-chapter");
+
   chapterHeader
     ? (chapterTitle.textContent = chapterHeader)
     : (chapterTitle.textContent = "დასაწყისი");
@@ -220,9 +223,9 @@ function setupChapterMenu() {
       li.addEventListener("click", () => changeChapter(li, i, ul), {
         passive: true,
       });
-      li.addEventListener("touchstart", () => changeChapter(li, i, ul), {
-        passive: true,
-      });
+      // li.addEventListener("touchstart", () => changeChapter(li, i, ul), {
+      //   passive: true,
+      // });
 
       ul.appendChild(li);
     });
@@ -258,7 +261,6 @@ function setupChapterMenu() {
 }
 
 async function changeChapter(chapter, index, ul) {
-  console.log("menu");
   const chapterTitle = document.getElementById("main-chapter");
   chapterTitle.textContent = chapter.textContent;
 
@@ -454,6 +456,8 @@ async function initializeViewer(pdfUrl) {
     if (lastRead.bookId === state.bookId) {
       state.pageFlip.flip(lastRead.page);
     }
+
+    changeChapterHeaderText(state.currentPage, pageToChapter);
   } catch (error) {
     console.error("Error initializing book viewer:", error);
     hideLoader();

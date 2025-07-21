@@ -14,10 +14,19 @@
 <body class="flip-body-container" id="body">
 <header class="flip-page-header" id="flip-page-header">
     <div class="flip-page-header-container container">
+        
         <a href="{{ url_for('main.view_book',id=book.id) }}">
             <img src="{{ url_for('static', filename='assets/back.svg') }}" alt="გადადით უკან"/>
         </a>
 
+        <div class="small-screen-back">
+            <a href="{{ url_for('main.view_book',id=book.id) }}">
+                <img src="{{ url_for('static', filename='assets/back.svg') }}" alt="გადადით უკან" />
+            </a>
+            <div id="main-chapter-small-screen">
+                <p></p>
+            </div>
+        </div>
         <div id="flip-pages">
             <div class="container page">
                 <img src="{{ url_for('static', filename='assets/arrow-left.svg') }}" id="prev" alt="მარცხნივ გადასვლა"
