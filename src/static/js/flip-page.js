@@ -7,7 +7,6 @@ const state = {
   main: null,
   totalPages: null,
   currentPageElement: null,
-  currentPageElementMobile: null,
   totalPagesElement: null,
   totalPagesElementMobile: null,
   pageFlip: null,
@@ -24,10 +23,7 @@ function initializeElements() {
   state.main = document.getElementById("main");
   state.currentPageElement = !state.isMobile
     ? document.querySelector(".current-page")
-    : null;
-  state.currentPageElementMobile = state.isMobile
-    ? document.getElementById("current-page")
-    : null;
+    : document.getElementById("current-page-mobile");
   state.totalPagesElement = document.getElementById("total-pages");
   state.totalPagesElementMobile = document.getElementById("total-pages-mobile");
   state.flipHeader = document.getElementById("flip-page-header");
@@ -45,7 +41,7 @@ async function loadVisiblePages(pdf, currentPage) {
         currentPage + 4,
         currentPage + 5,
       ]
-    : [currentPage - 1, currentPage, currentPage + 1];
+    : [currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
 
   const pageElements = document.querySelectorAll(".my-page");
 
@@ -165,20 +161,17 @@ function setupNavigation() {
 
   function updatePageCountUI() {
     if (state.currentPage === 0) {
-      state.currentPageElement.value = state.currentPage;
+      state.currentPageElement.value = 0;
       return;
     }
 
-    if (state.currentPageElement) {
-      if (state.currentPageElement.value - 1 === state.currentPage) {
-        console.log("here");
-        return;
-      }
-
+    if (state.currentPageElement.value % 2 === 0 && !state.isSmallScreen) {
+      state.currentPageElement.value = state.currentPage + 1;
+    } else if (state.isMobile) {
+      state.currentPageElement.textContent = state.currentPage;
+    } else {
       state.currentPageElement.value = state.currentPage;
     }
-    if (state.currentPageElementMobile)
-      state.currentPageElementMobile.textContent = state.currentPage;
   }
 
   nextBtn.addEventListener("click", handleNext, { passive: true });
@@ -254,6 +247,7 @@ function setupChapterMenu() {
 }
 
 async function changeChapter(chapter, index, ul) {
+  console.log("menu");
   const chapterTitle = document.getElementById("main-chapter");
   chapterTitle.textContent = chapter.textContent;
 
@@ -306,6 +300,9 @@ document.querySelector(".current-page").addEventListener("change", function () {
     return;
   }
   state.pageFlip.flip(inputPage, true);
+
+  if (inputPage % 2 === 0)
+    document.querySelector(".current-page").value = inputPage;
 
   changeChapterHeaderText(state.currentPage, pageToChapter);
 });

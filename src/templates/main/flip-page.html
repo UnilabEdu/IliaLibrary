@@ -22,7 +22,7 @@
             <div class="container page">
                 <img src="{{ url_for('static', filename='assets/arrow-left.svg') }}" id="prev" alt="მარცხნივ გადასვლა"
                      style="cursor: pointer"/>
-                <input type="text" class="current-page"  id="current-page-mobile"
+                <input type="text" class="current-page" 
                     style="width: 40px; text-align: center"            />
                 <p>/</p>
                 <p class="total-pages" id="total-pages"></p>
@@ -83,7 +83,7 @@
             <div class="container page">
                 <img src="{{ url_for('static', filename='assets/arrow-left.svg') }}" id="prev-mobile"
                     alt="მარცხნივ გადასვლა" style="cursor: pointer" />
-                <p  id="current-page">0</p>
+                <p id="current-page-mobile">0</p>
                 <p>/</p>
                 <p class="total-pages" id="total-pages-mobile"></p>
                 <img src="{{ url_for('static', filename='assets/arrow-right.svg') }}" id="next-mobile"
