@@ -11,6 +11,10 @@ const state = {
   totalPagesElementMobile: null,
   pageFlip: null,
   currentPage: 0,
+  bookId: (() => {
+    const match = window.location.pathname.match(/\/read_book\/(\d+)/);
+    return match ? parseInt(match[1], 10) : null;
+  })(),
   isAnimating: false,
   isMobile: window.innerWidth <= 428,
   isSmallScreen: window.innerWidth <= 1040,
@@ -161,7 +165,9 @@ function setupNavigation() {
 
   function updatePageCountUI() {
     if (state.currentPage === 0) {
-      state.currentPageElement.value = 0;
+      state.isMobile
+        ? (state.currentPageElement.textContent = 0)
+        : (state.currentPageElement.value = 0);
       return;
     }
 
@@ -183,6 +189,11 @@ function setupNavigation() {
     state.currentPage = event.data;
     changeChapterHeaderText(state.currentPage, pageToChapter);
     updatePageCountUI();
+
+    localStorage.setItem(
+      "lastRead",
+      JSON.stringify({ bookId: state.bookId, page: state.currentPage })
+    );
   });
 }
 
@@ -269,9 +280,6 @@ async function changeChapter(chapter, index, ul) {
       state.currentPage = targetPage;
       // state.currentPageElement.innerText = state.currentPage;
       state.pageFlip.flip(state.currentPage, true);
-
-      if (state.currentPageElementMobile)
-        state.currentPageElementMobile.textContent = state.currentPage;
     } else {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
     }
@@ -439,6 +447,12 @@ async function initializeViewer(pdfUrl) {
     if (urlParams) {
       const page = parseInt(urlParams.get("page"));
       state.pageFlip.flip(page, true);
+    }
+
+    //see if read
+    const lastRead = JSON.parse(localStorage.getItem("lastRead"));
+    if (lastRead.bookId === state.bookId) {
+      state.pageFlip.flip(lastRead.page);
     }
   } catch (error) {
     console.error("Error initializing book viewer:", error);
