@@ -24,7 +24,7 @@
                 <img src="{{ url_for('static', filename='assets/back.svg') }}" alt="გადადით უკან" />
             </a>
             <div id="main-chapter-small-screen">
-                <p></p>
+                <p>{{book}} - </p>
             </div>
         </div>
         <div id="flip-pages">
@@ -118,6 +118,7 @@
 </section>
 
 <script>
+    let bookTitle = "{{ book }}"
     let pageToChapter = {
         "0": 'დასაწყისი',
         {%- for content in book.book_content -%}

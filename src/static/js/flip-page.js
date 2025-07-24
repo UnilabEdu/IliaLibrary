@@ -139,7 +139,7 @@ function changeChapterHeaderText(page, obj) {
     : document.getElementById("main-chapter");
 
   chapterHeader
-    ? (chapterTitle.textContent = chapterHeader)
+    ? (chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`)
     : (chapterTitle.textContent = "დასაწყისი");
 }
 
