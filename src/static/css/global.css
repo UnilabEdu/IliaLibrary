@@ -1942,6 +1942,9 @@ a#menu:hover .svg-path {
 }
 #loader h1 {
   font-size: 48px;
+  line-height: 1.2;
+
+  padding: 0 10px;
   color: #022859;
   font-family: FiraGo700;
   display: flex;
@@ -2692,6 +2695,19 @@ a#menu:hover .svg-path {
 }
 /* phone--> */
 @media (max-width: 428px) {
+  #loader {
+    margin: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  #loader h1 {
+    font-size: 40px;
+  }
+  #loader a {
+    padding: 0 5px;
+  }
+
   #flip-pages {
     display: none;
   }
