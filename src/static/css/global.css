@@ -153,7 +153,8 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 100;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-100-normal.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-100-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-100-normal.woff)
       format("woff");
@@ -164,7 +165,8 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 200;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-200-normal.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-200-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-200-normal.woff)
       format("woff");
@@ -175,7 +177,8 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 300;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-300-normal.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-300-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-300-normal.woff)
       format("woff");
@@ -186,7 +189,8 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 400;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-400-normal.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-400-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-400-normal.woff)
       format("woff");
@@ -197,7 +201,8 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 500;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-500-normal.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-500-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-500-normal.woff)
       format("woff");
@@ -208,7 +213,8 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 600;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-600-normal.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-600-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-600-normal.woff)
       format("woff");
@@ -219,7 +225,8 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 700;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-700-normal.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-700-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-700-normal.woff)
       format("woff");
@@ -230,7 +237,8 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 800;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-800-normal.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-800-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-800-normal.woff)
       format("woff");
@@ -241,7 +249,8 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 900;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-900-normal.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-900-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-900-normal.woff)
       format("woff");
@@ -941,11 +950,7 @@ header {
   height: 96px;
   background-color: #a6bd9e;
 }
-@media (max-width: 1200px) {
-  header {
-    height: 120px;
-  }
-}
+
 @media (max-width: 768px) {
   header {
     height: 80px;
@@ -1247,6 +1252,10 @@ header .header_wrapper .burger_menu .line {
   font-weight: 700;
 }
 
+.tablet-flip-pages-container {
+  display: none;
+}
+
 .dotted-line {
   flex-wrap: wrap;
   overflow: hidden;
@@ -1464,7 +1473,9 @@ header .header_wrapper .burger_menu .line {
 .book-main .book-container .info-wrapper .searching-section {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0s ease-out, opacity 0.4s ease-out;
+  transition:
+    max-height 0s ease-out,
+    opacity 0.4s ease-out;
   opacity: 0;
 }
 .book-main .book-container .info-wrapper .feature-section ul li {
@@ -1768,7 +1779,9 @@ a#menu:hover .svg-path {
   border-bottom: 1px solid #333333;
   display: flex;
   align-items: center;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   cursor: pointer;
   color: #333333;
 }
@@ -1791,7 +1804,7 @@ a#menu:hover .svg-path {
   flex-direction: column;
   gap: 30px;
   align-items: center;
-  padding-top: 50px;
+  padding-top: 40px;
   position: relative;
 }
 
@@ -1817,26 +1830,31 @@ a#menu:hover .svg-path {
   align-items: center;
 }
 
-#flip-pages .page .zoom-container {
+.flip-pages .page .zoom-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
 }
 
-#flip-pages .page .zoom-container #zoom-icon-container {
+.flip-pages .page .zoom-container #zoom-icon-container {
   position: relative;
   display: flex;
 }
+.flip-pages .page .zoom-line {
+  height: 36px;
+  width: 1px;
+  border: 1px solid #fff;
+}
 
-#flip-pages .page .zoom-container button {
+.flip-pages .page .zoom-container button {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: transparent;
   border: none;
 }
-#flip-pages .page .zoom-container button img {
+.flip-pages .page .zoom-container button img {
   width: 25px;
   height: 25px;
 }
@@ -1848,11 +1866,13 @@ a#menu:hover .svg-path {
 }
 #main-content #pdf-container .my-page {
   background-color: #fff;
-  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    2px 4px 12px rgba(0, 0, 0, 0.2),
+    0px 0px 20px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
-#flip-pages {
+.flip-pages {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -1882,7 +1902,7 @@ a#menu:hover .svg-path {
   width: 24px;
 }
 
-#flip-pages .page {
+.flip-pages .page {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1892,12 +1912,12 @@ a#menu:hover .svg-path {
 }
 
 @media (max-width: 428px) {
-  /* #flip-pages .page {
+  /* .flip-pages .page {
     display: none;
   } */
 }
 
-#flip-pages .page .current-page {
+.flip-pages .page .current-page {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   background-color: transparent;
@@ -1905,7 +1925,7 @@ a#menu:hover .svg-path {
   font-size: inherit;
   min-width: 65px;
 }
-#flip-pages .page .current-page:focus {
+.flip-pages .page .current-page:focus {
   outline: 1px solid #fff;
 }
 
@@ -2113,8 +2133,33 @@ a#menu:hover .svg-path {
   .container,
   .about-main .main-content-wrapper,
   .book-main .book-container {
-    max-width: 86%;
+    max-width: 86%;    
   } */
+
+  .flip-page-header-container .flip-pages {
+    display: none;
+  }
+
+  .small-screen-back {
+    flex: 1;
+  }
+
+  .small-screen-back div {
+    margin: 0 auto;
+  }
+
+  .tablet-flip-pages-container {
+    display: flex;
+    height: 70px;
+    background-color: rgba(166, 189, 158, 1);
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 26px;
+  }
+  #main-content {
+    padding-top: 15px;
+  }
 
   .container {
     max-width: 900px;
@@ -2533,20 +2578,20 @@ a#menu:hover .svg-path {
     display: none;
   }
 
-  #flip-pages .page .zoom-container {
+  .flip-pages .page .zoom-container {
     display: none;
   }
 
-  #flip-pages .page {
+  .flip-pages .page {
     gap: 10px;
     font-size: 22px;
   }
-  #flip-pages .page img {
+  .flip-pages .page img {
     height: 16px;
     width: 9px;
   }
 
-  #flip-pages .page .current-page {
+  .flip-pages .page .current-page {
     min-width: 45px;
     height: 25px;
   }
@@ -2708,7 +2753,7 @@ a#menu:hover .svg-path {
     padding: 0 5px;
   }
 
-  #flip-pages {
+  .flip-pages {
     display: none;
   }
   .container {
@@ -2722,7 +2767,7 @@ a#menu:hover .svg-path {
     display: none;
   }
 
-  #flip-pages .page {
+  .flip-pages .page {
     display: none;
   }
 

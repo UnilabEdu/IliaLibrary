@@ -25,10 +25,14 @@ function initializeElements() {
   state.bookContainer = document.getElementById("pdf-container");
   state.loader = document.getElementById("loader");
   state.main = document.getElementById("main");
-  state.currentPageElement = !state.isMobile
-    ? document.querySelector(".current-page")
-    : document.getElementById("current-page-mobile");
-  state.totalPagesElement = document.getElementById("total-pages");
+  state.currentPageElement = state.isMobile
+    ? document.getElementById("current-page-mobile")
+    : state.isSmallScreen
+      ? document.querySelector(".current-page-tablet")
+      : document.querySelector(".current-page");
+  state.totalPagesElement = state.isSmallScreen
+    ? document.querySelector(".tablet-total-pages")
+    : document.getElementById("total-pages");
   state.totalPagesElementMobile = document.getElementById("total-pages-mobile");
   state.flipHeader = document.getElementById("flip-page-header");
 }
@@ -144,9 +148,13 @@ function changeChapterHeaderText(page, obj) {
 }
 
 function setupNavigation() {
-  const nextBtn = document.getElementById("next");
+  const nextBtn = state.isSmallScreen
+    ? document.getElementById("tablet-next")
+    : document.getElementById("next");
   const nextBtnMobile = document.getElementById("next-mobile");
-  const prevBtn = document.getElementById("prev");
+  const prevBtn = state.isSmallScreen
+    ? document.getElementById("tablet-prev")
+    : document.getElementById("prev");
   const prevBtnMobile = document.getElementById("prev-mobile");
 
   const handleNext = () => {
@@ -168,14 +176,20 @@ function setupNavigation() {
 
   function updatePageCountUI() {
     if (state.currentPage === 0) {
+      // state.isSmallScreen
       state.isMobile
         ? (state.currentPageElement.textContent = 0)
         : (state.currentPageElement.value = 0);
       return;
     }
 
-    if (state.currentPageElement.value % 2 === 0 && !state.isSmallScreen) {
+    if (state.currentPage === state.totalPages - 1 && !state.isSmallScreen) {
+      state.currentPageElement.value = state.currentPage;
+    } //edge case
+
+    if (state.currentPageElement?.value % 2 === 0 && !state.isSmallScreen) {
       state.currentPageElement.value = state.currentPage + 1;
+      // } else if (state.isSmallScreen) {
     } else if (state.isMobile) {
       state.currentPageElement.textContent = state.currentPage;
     } else {
@@ -190,6 +204,7 @@ function setupNavigation() {
 
   state.pageFlip.on("flip", (event) => {
     state.currentPage = event.data;
+    const maxPage = state.totalPages;
     changeChapterHeaderText(state.currentPage, pageToChapter);
     updatePageCountUI();
 
@@ -293,7 +308,7 @@ window.addEventListener("DOMContentLoaded", function () {
   document.querySelector(".current-page").value = state.currentPage;
 }); //only way I managed to reset input...
 
-document.querySelector(".current-page").addEventListener("change", function () {
+function getPageInput() {
   const maxPage = state.totalPages;
   const inputValue = this.value.trim();
 
@@ -315,7 +330,16 @@ document.querySelector(".current-page").addEventListener("change", function () {
     document.querySelector(".current-page").value = inputPage;
 
   changeChapterHeaderText(state.currentPage, pageToChapter);
-});
+}
+
+state.isSmallScreen
+  ? document
+      .querySelector(".current-page-tablet")
+      .addEventListener("change", getPageInput)
+  : document
+      .querySelector(".current-page")
+      .addEventListener("change", getPageInput);
+
 // -------------------------
 
 function showLoader() {
@@ -370,12 +394,13 @@ async function initializeViewer(pdfUrl) {
       let height = maxWidth / ratio;
 
       let size;
+
       if (maxWidth >= 860) size = "xlarge";
       else if (maxWidth >= 770) size = "large";
       else if (maxWidth >= 700) size = "medium";
       else if (maxWidth >= 635) size = "small";
-      else if (maxWidth >= 520) size = "xsmall";
-      else if (maxWidth < 520) size = "xxsmall";
+      else if (maxWidth >= 550) size = "xsmall";
+      else if (maxWidth <= 520) size = "xxsmall";
 
       const heightToConsider =
         headerHeight + chapterHeight + contentPaddingTop * 2;
@@ -410,7 +435,7 @@ async function initializeViewer(pdfUrl) {
           case "small":
             return 540;
           case "xsmall":
-            return 500;
+            return 490;
           case "xxsmall":
             return 410;
         }

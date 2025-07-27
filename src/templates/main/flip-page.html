@@ -27,7 +27,7 @@
                 <p id="main-chapter-small-screen">{{book}} - </p>
             </div>
         </div>
-        <div id="flip-pages">
+        <div class="flip-pages">
             <div class="container page">
                 <img src="{{ url_for('static', filename='assets/arrow-left.svg') }}" id="prev" alt="მარცხნივ გადასვლა"
                      style="cursor: pointer"/>
@@ -37,7 +37,7 @@
                 <p class="total-pages" id="total-pages"></p>
                 <img src="{{ url_for('static', filename='assets/arrow-right.svg') }}" id="next" alt="მარჯვნივ გადასვლა"
                      style="cursor: pointer"/>
-
+                <div class="zoom-line"></div>
                 <div class="zoom-container">
                     <button id="zoom_out">
                         <img src="{{ url_for('static', filename='assets/zoom_out.svg') }}" alt="zoom_out"/>
@@ -83,6 +83,42 @@
     <p class="main-chapter" id="main-chapter">დასაწყისი</p>
     <section id="main-content">
         <div id="pdf-container"></div>
+    </section>
+
+    <section class="tablet-flip-pages-container">
+        <div class="flip-pages" class="tablet-flip-pages">
+            <div class="container page">
+                <img src="{{ url_for('static', filename='assets/arrow-left.svg') }}" id="tablet-prev" alt="მარცხნივ გადასვლა"
+                    style="cursor: pointer" />
+                <input type="text" class="current-page current-page-tablet" style="width: 40px; text-align: center" />
+                <p>/</p>
+                <p class="tablet-total-pages" id="total-pages"></p>
+                <img src="{{ url_for('static', filename='assets/arrow-right.svg') }}" id="tablet-next" alt="მარჯვნივ გადასვლა"
+                    style="cursor: pointer" />
+        
+                <div class="zoom-container">
+                    <button id="zoom_out">
+                        <img src="{{ url_for('static', filename='assets/zoom_out.svg') }}" alt="zoom_out" />
+                    </button>
+                    <div id="zoom-icon-container">
+                        <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10.9995 1.25C16.2566 1.25 20.5962 5.68369 20.5962 11.25C20.5962 16.8163 16.2566 21.25 10.9995 21.25C5.74258 21.2497 1.40381 16.8162 1.40381 11.25C1.40381 5.68385 5.74258 1.25025 10.9995 1.25Z"
+                                fill="white" fill-opacity="0.1" stroke="white" stroke-width="2.5" />
+                            <path
+                                d="M23.3888 25.8999C23.8679 26.3969 24.6448 26.3969 25.1239 25.8999C25.6031 25.4029 25.6031 24.5971 25.1239 24.1001L23.3888 25.8999ZM18.2307 18.75L17.3631 19.6499L23.3888 25.8999L24.2564 25L25.1239 24.1001L19.0983 17.8501L18.2307 18.75Z"
+                                fill="white" />
+                            <path d="M1.37932 7.4317L1.36026 7.31729C0.851313 4.26217 3.10665 1.44129 6.19887 1.26537V1.26537"
+                                stroke="white" transform="translate(4, 4)" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+        
+                    <button id="zoom_in">
+                        <img src="{{ url_for('static', filename='assets/zoom_in.svg') }}" alt="zoom_in" />
+                    </button>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section class="mobile-flip-pages-container">
