@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, session
+from flask import Blueprint, render_template, url_for, session, redirect
 from sqlalchemy import or_, func
 from datetime import datetime
 
@@ -32,7 +32,6 @@ def index():
 ])
 
     conditions = []
-
 
     if media_types and len(media_types) > 0:
         conditions = [Book.media_type_id == media_type_id for media_type_id in media_types]
@@ -72,15 +71,10 @@ def index():
         elif sort_by == "year-desc":
             query = query.order_by(Book.publish_year.desc())
 
-
-    all_found_books_num = None
-    if conditions:
-        all_found_books_num = query.filter(*conditions).count()
+    all_found_books_num = query.count()
 
     preserved_args = dict(request.args)
     preserved_args.pop("page", None)
-
-    
 
     books = query.paginate(page=page, per_page=12, error_out=False)
 
@@ -113,3 +107,7 @@ def view_book(id):
 def read_book(id):
     book = Book.query.get(id)
     return render_template('main/flip-page.html', book=book)
+
+# @main_blueprint.errorhandler(404)
+# def page_not_found(e):
+    # return render_template('error.html'), 404 #no error page

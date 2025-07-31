@@ -7,13 +7,17 @@ const state = {
   main: null,
   totalPages: null,
   currentPageElement: null,
-  currentPageElementMobile: null,
   totalPagesElement: null,
   totalPagesElementMobile: null,
   pageFlip: null,
   currentPage: 0,
+  bookId: (() => {
+    const match = window.location.pathname.match(/\/read_book\/(\d+)/);
+    return match ? parseInt(match[1], 10) : null;
+  })(),
   isAnimating: false,
-  isMobile: window.innerWidth <= 390,
+  isMobile: window.innerWidth <= 428,
+  isSmallScreen: window.innerWidth <= 1040,
 };
 
 // Initialize DOM elements
@@ -21,25 +25,31 @@ function initializeElements() {
   state.bookContainer = document.getElementById("pdf-container");
   state.loader = document.getElementById("loader");
   state.main = document.getElementById("main");
-  state.currentPageElement = document.querySelector(".current-page");
-  state.currentPageElementMobile = state.isMobile
-    ? document.getElementById("current-page")
-    : null;
-  state.totalPagesElement = document.getElementById("total-pages");
+  state.currentPageElement = state.isMobile
+    ? document.getElementById("current-page-mobile")
+    : state.isSmallScreen
+      ? document.querySelector(".current-page-tablet")
+      : document.querySelector(".current-page");
+  state.totalPagesElement = state.isSmallScreen
+    ? document.querySelector(".tablet-total-pages")
+    : document.getElementById("total-pages");
   state.totalPagesElementMobile = document.getElementById("total-pages-mobile");
   state.flipHeader = document.getElementById("flip-page-header");
 }
 
 async function loadVisiblePages(pdf, currentPage) {
-  const pagesToLoad = [
-    currentPage - 3,
-    currentPage - 2,
-    currentPage - 1,
-    currentPage,
-    currentPage + 1,
-    currentPage + 2,
-    currentPage + 3,
-  ];
+  const pagesToLoad = !state.isSmallScreen
+    ? [
+        currentPage - 2,
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        currentPage + 2,
+        currentPage + 3,
+        currentPage + 4,
+        currentPage + 5,
+      ]
+    : [currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
 
   const pageElements = document.querySelectorAll(".my-page");
 
@@ -62,7 +72,7 @@ async function loadVisiblePages(pdf, currentPage) {
 // Optimized page creation with proper cleanup
 async function createPage(pdf, pageNum) {
   const page = await pdf.getPage(pageNum);
-  const scale = state.isMobile ? 4 : 3;
+  const scale = state.isSmallScreen ? 4 : 3;
   const viewport = page.getViewport({ scale });
 
   const canvas = document.createElement("canvas");
@@ -86,7 +96,7 @@ async function createPage(pdf, pageNum) {
         img.style.height = "100%";
       } else {
         img.style.width = "100%";
-        img.style.height = state.isMobile ? "85%" : "100%"; //temp number
+        img.style.height = state.isSmallScreen ? "90%" : "100%"; //temp number
       }
       pageContainer.appendChild(img);
       canvas.remove();
@@ -110,7 +120,6 @@ async function setupPages(pdf) {
     state.bookContainer.appendChild(pageContainer);
   }
 
-  // Load only the first 2 pages
   await loadVisiblePages(pdf, 1);
 
   // Init PageFlip
@@ -119,8 +128,8 @@ async function setupPages(pdf) {
 
   // Add lazy loading for future pages
   state.pageFlip.on("flip", async () => {
-    await loadVisiblePages(pdf, state.currentPage + 3);
-    await loadVisiblePages(pdf, state.currentPage - 2);
+    await loadVisiblePages(pdf, state.currentPage + 1);
+    await loadVisiblePages(pdf, state.currentPage - 1);
   });
 }
 
@@ -129,58 +138,63 @@ function changeChapterHeaderText(page, obj) {
     .reverse()
     .find(([k, v]) => k <= page)?.[1];
 
-  const chapterTitle = document.getElementById("main-chapter");
+  const chapterTitle = state.isSmallScreen
+    ? document.getElementById("main-chapter-small-screen")
+    : document.getElementById("main-chapter");
+
   chapterHeader
-    ? (chapterTitle.textContent = chapterHeader)
+    ? (chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`)
     : (chapterTitle.textContent = "დასაწყისი");
 }
 
 function setupNavigation() {
-  const nextBtn = document.getElementById("next");
+  const nextBtn = state.isSmallScreen
+    ? document.getElementById("tablet-next")
+    : document.getElementById("next");
   const nextBtnMobile = document.getElementById("next-mobile");
-  const prevBtn = document.getElementById("prev");
+  const prevBtn = state.isSmallScreen
+    ? document.getElementById("tablet-prev")
+    : document.getElementById("prev");
   const prevBtnMobile = document.getElementById("prev-mobile");
 
   const handleNext = () => {
-    const totalPages = state.pageFlip.getPageCount();
-    const isLastPage = state.currentPage + 2 >= totalPages;
-
-    if (isLastPage) {
-      state.currentPage = state.totalPages - 1;
-      document.querySelector(".current-page").value = state.currentPage; //temp
+    if (state.isSmallScreen) {
+      state.pageFlip.flip(state.currentPage + 1, true);
     } else {
-      if (state.isMobile) {
-        state.currentPage += 1;
-      } else {
-        state.currentPage += 2;
-      }
+      state.pageFlip.flip(state.currentPage + 2, true);
     }
-
-    state.pageFlip.flip(state.currentPage, true);
     changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
   const handlePrev = () => {
-    if (state.currentPage <= 0) return;
-
-    if (!state.isMobile) {
-      state.currentPage = Math.max(0, state.currentPage - 2);
+    if (state.isSmallScreen) {
+      state.pageFlip.flip(state.currentPage - 1, true);
     } else {
-      state.currentPage = Math.max(0, state.currentPage - 1);
+      state.pageFlip.flip(state.currentPage - 2, true);
     }
-
-    state.pageFlip.flip(state.currentPage, true);
-    changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
   function updatePageCountUI() {
-    if (state.currentPageElement) {
-      state.currentPageElement.value = state.currentPage;
-      if (state.currentPage === state.totalPages)
-        state.currentPageElement.value = state.totalPages - 1;
+    if (state.currentPage === 0) {
+      // state.isSmallScreen
+      state.isMobile
+        ? (state.currentPageElement.textContent = 0)
+        : (state.currentPageElement.value = 0);
+      return;
     }
-    if (state.currentPageElementMobile)
-      state.currentPageElementMobile.textContent = state.currentPage;
+
+    if (state.currentPage === state.totalPages - 1 && !state.isSmallScreen) {
+      state.currentPageElement.value = state.currentPage;
+    } //edge case
+
+    if (state.currentPageElement?.value % 2 === 0 && !state.isSmallScreen) {
+      state.currentPageElement.value = state.currentPage + 1;
+      // } else if (state.isSmallScreen) {
+    } else if (state.isMobile) {
+      state.currentPageElement.textContent = state.currentPage;
+    } else {
+      state.currentPageElement.value = state.currentPage;
+    }
   }
 
   nextBtn.addEventListener("click", handleNext, { passive: true });
@@ -189,19 +203,15 @@ function setupNavigation() {
   prevBtnMobile.addEventListener("click", handlePrev, { passive: true });
 
   state.pageFlip.on("flip", (event) => {
-    const isLastPage = state.currentPage > state.totalPages - 2;
-
-    // if (isLastPage) state.currentPage = state.totalPages - 1;
-    if (isLastPage) state.currentPage += 1;
-
-    if (!state.isMobile) {
-      if (state.currentPage % 2 === 0) state.currentPage = event.data + 1;
-    } else {
-      state.currentPage = event.data;
-    }
-
+    state.currentPage = event.data;
+    const maxPage = state.totalPages;
     changeChapterHeaderText(state.currentPage, pageToChapter);
     updatePageCountUI();
+
+    localStorage.setItem(
+      "lastRead",
+      JSON.stringify({ bookId: state.bookId, page: state.currentPage })
+    );
   });
 }
 
@@ -228,9 +238,9 @@ function setupChapterMenu() {
       li.addEventListener("click", () => changeChapter(li, i, ul), {
         passive: true,
       });
-      li.addEventListener("touchstart", () => changeChapter(li, i, ul), {
-        passive: true,
-      });
+      // li.addEventListener("touchstart", () => changeChapter(li, i, ul), {
+      //   passive: true,
+      // });
 
       ul.appendChild(li);
     });
@@ -287,9 +297,6 @@ async function changeChapter(chapter, index, ul) {
       state.currentPage = targetPage;
       // state.currentPageElement.innerText = state.currentPage;
       state.pageFlip.flip(state.currentPage, true);
-      if (state.currentPageElementMobile)
-        // state.currentPageElementMobile.innerText = state.currentPage;
-        state.pageFlip.flip(state.currentPage, true);
     } else {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
     }
@@ -301,7 +308,7 @@ window.addEventListener("DOMContentLoaded", function () {
   document.querySelector(".current-page").value = state.currentPage;
 }); //only way I managed to reset input...
 
-document.querySelector(".current-page").addEventListener("change", function () {
+function getPageInput() {
   const maxPage = state.totalPages;
   const inputValue = this.value.trim();
 
@@ -317,13 +324,22 @@ document.querySelector(".current-page").addEventListener("change", function () {
     this.value = state.currentPage;
     return;
   }
+  state.pageFlip.flip(inputPage, true);
 
-  state.currentPage = inputPage;
-
-  state.pageFlip.flip(inputPage % 2 === 0 ? inputPage : inputPage + 1, true);
+  if (inputPage % 2 === 0)
+    document.querySelector(".current-page").value = inputPage;
 
   changeChapterHeaderText(state.currentPage, pageToChapter);
-});
+}
+
+state.isSmallScreen
+  ? document
+      .querySelector(".current-page-tablet")
+      .addEventListener("change", getPageInput)
+  : document
+      .querySelector(".current-page")
+      .addEventListener("change", getPageInput);
+
 // -------------------------
 
 function showLoader() {
@@ -346,36 +362,105 @@ async function initializeViewer(pdfUrl) {
     showLoader();
 
     function getScreenDimensions(ratio = 3 / 4) {
-      const maxWidth = window.innerWidth * 0.5;
-      const maxHeight = window.innerHeight * 0.7;
+      const parsePx = (val) => parseFloat(val) || 0;
 
-      let width = maxWidth;
-      let height = width / ratio;
+      const headerEl = document.querySelector(".flip-page-header");
+      const chapterEl = document.querySelector(".main-chapter");
+      const mainContentEl = document.querySelector("#main-content");
 
-      if (height > maxHeight) {
-        height = maxHeight;
-        width = height * ratio;
+      const headerStyles = window.getComputedStyle(headerEl);
+      const mainContentStyles = window.getComputedStyle(mainContentEl);
+
+      const headerHeight = parsePx(headerStyles.height);
+      const contentPaddingTop = parsePx(mainContentStyles.paddingTop);
+
+      let chapterHeight = 0;
+
+      if (chapterEl) {
+        const chapterStyles = window.getComputedStyle(chapterEl);
+
+        if (chapterStyles.display !== "none") {
+          chapterHeight =
+            parsePx(chapterStyles.marginTop) +
+            parsePx(chapterStyles.lineHeight) + // good enough lol
+            parsePx(chapterStyles.marginBottom);
+        }
       }
 
-      return { width, height };
+      let maxWidth = !state.isSmallScreen
+        ? window.innerWidth * 0.5 - 8
+        : window.innerWidth; // bit of padding 4 & 8 are just bit of padding
+
+      let height = maxWidth / ratio;
+
+      let size;
+
+      if (maxWidth >= 860) size = "xlarge";
+      else if (maxWidth >= 770) size = "large";
+      else if (maxWidth >= 700) size = "medium";
+      else if (maxWidth >= 635) size = "small";
+      else if (maxWidth >= 550) size = "xsmall";
+      else if (maxWidth <= 520) size = "xxsmall";
+
+      const heightToConsider =
+        headerHeight + chapterHeight + contentPaddingTop * 2;
+
+      const maxHeight =
+        size === "xxsmall" ? 500 : window.innerHeight - heightToConsider;
+
+      if (height > maxHeight) {
+        //big screen case
+        height = maxHeight;
+        maxWidth = height * ratio;
+      }
+
+      return { maxHeight, maxWidth, size, heightToConsider };
     }
 
-    const { width, height } = getScreenDimensions();
+    const { maxHeight, maxWidth, size, heightToConsider } =
+      getScreenDimensions();
+
+    function assignWidth() {
+      if (state.isMobile) return maxWidth - 12;
+
+      //tablet cases
+      if (state.isSmallScreen) {
+        switch (size) {
+          case "xlarge":
+            return 720;
+          case "large":
+            return 670;
+          case "medium":
+            return 580;
+          case "small":
+            return 540;
+          case "xsmall":
+            return 490;
+          case "xxsmall":
+            return 410;
+        }
+      }
+
+      return maxWidth;
+    }
 
     // Initialize PageFlip with optimized settings
     state.pageFlip = new St.PageFlip(state.bookContainer, {
-      width: state.isMobile ? 318 : width,
+      // width: state.isMobile ? (width <= 170 ? 318 : 360) : width,
+      width: assignWidth(),
+
       showCover: true,
       drawShadow: true,
       flippingTime: 600, // Reduced flip animation time
-      usePortrait: state.isMobile,
+      usePortrait: state.isSmallScreen,
       startZIndex: 0,
-      // minWidth: 300,
-      height: state.isMobile ? 800 : height,
+      // height: state.isSmallScreen ? height * 1.8 : height, //v.0
+      height: window.innerHeight - heightToConsider, //v.1
+      // height: maxHeight, // v1.1
 
       useMouseEvents: true,
       // useMouseEvents: !state.isMobile,
-      swipeDistance: !state.isMobile ? 30 : 100,
+      swipeDistance: !state.isSmallScreen ? 30 : 100,
       preventTouchEvents: false,
     });
 
@@ -390,6 +475,14 @@ async function initializeViewer(pdfUrl) {
       const page = parseInt(urlParams.get("page"));
       state.pageFlip.flip(page, true);
     }
+
+    //see if read
+    const lastRead = JSON.parse(localStorage.getItem("lastRead"));
+    if (lastRead.bookId === state.bookId) {
+      state.pageFlip.flip(lastRead.page);
+    }
+
+    changeChapterHeaderText(state.currentPage, pageToChapter);
   } catch (error) {
     console.error("Error initializing book viewer:", error);
     hideLoader();
