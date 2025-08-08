@@ -29,6 +29,7 @@
                                  alt="book check icon"/>
                             <p>გამომცემლობა: {{ book.publisher }}</p>
                         </div>
+                        <a class="read-mobile" href="{{ url_for('main.read_book', id=book.id) }}">წაკითხვა (PDF)</a>
                     </div>
                 </div>
                 <div class="button-wrapper">
