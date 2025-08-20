@@ -1380,6 +1380,10 @@ header .header_wrapper .burger_menu .line {
   align-items: center;
   gap: 46px;
 }
+
+.book-main .book-container .info-wrapper .button-wrapper button img {
+  display: none;
+}
 @media only screen and (max-width: 1440px) {
   .book-main .book-container .info-wrapper .button-wrapper {
     max-width: 545px;
@@ -2129,6 +2133,10 @@ a#menu:hover .svg-path {
   display: none;
 }
 
+.mobile-only {
+  display: none;
+}
+
 @media (max-width: 1040px) {
   /* -------------------general styles---------------------- */
 
@@ -2868,8 +2876,9 @@ a#menu:hover .svg-path {
 
   .book-main .book-container .info-wrapper .main-info,
   .book-main .book-container .info-wrapper {
-    max-width: 337px;
+    width: 100%;
   }
+
   .book-main .book-container .info-wrapper .main-info h3 {
     margin-bottom: 12px;
   }
@@ -2884,10 +2893,10 @@ a#menu:hover .svg-path {
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 341px;
     background-color: #95b48a;
     color: #ffffff;
     padding: 16px;
+    margin-top: 33px;
     border-radius: 12px;
 
     font-weight: 350;
@@ -2898,15 +2907,108 @@ a#menu:hover .svg-path {
   }
 
   .book-main .book-container .info-wrapper .button-wrapper {
-    max-width: 337px;
+    display: none;
   }
-  .book-main .book-container .info-wrapper .button-wrapper button {
+
+  .info-wrapper section {
+    display: none;
+  }
+  .book-main .book-container .info-wrapper .open {
+    display: none;
+  }
+
+  /* ------------------ */
+  .mobile-only {
+    display: block;
+    margin: 0 auto !important;
+  }
+
+  .mobile-accordion {
     width: 100%;
-    text-align: start;
+    margin-bottom: 43px;
+  }
+
+  .mobile-accordion button {
+    width: 100%;
+    padding: 10px 20px;
     border: 1px solid #95b48a;
     border-radius: 5px;
-    padding: 10px 20px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0;
   }
+
+  .mobile-accordion button span {
+    font-family: FiraGo500;
+    font-size: 18px;
+  }
+
+  .mobile-anotation-section,
+  .mobile-searching-section,
+  .mobile-feature-section {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      max-height 0s ease,
+      opacity 0.3s ease;
+
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 0;
+    margin-bottom: 8px;
+  }
+  .mobile-feature-section ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .mobile-feature-section ul li {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 350;
+    color: rgba(60, 60, 67, 0.6);
+
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #d0d0d0;
+  }
+
+  .mobile-searching-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mobile-searching-section .each_content_line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mobile-anotation-section.open,
+  .mobile-searching-section.open,
+  .mobile-feature-section.open {
+    height: 100% !important;
+    max-height: 100% !important;
+    opacity: 1;
+    padding: 10px;
+  }
+
+  .dropdown-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .dropdown-icon.rotated {
+    transform: rotate(180deg);
+  }
+  /* ------------------ */
+
   .book-main + .about-project-footer {
     margin-top: 0px;
   }

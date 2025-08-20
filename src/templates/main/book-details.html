@@ -5,7 +5,7 @@
 
 {% block content %}
     <main class="book-main">
-        <section class="book-container container">
+        <article class="book-container container">
             <div class="cover-wrapper">
                 <img src="{{ url_for('static', filename='upload/' + book.cover_image) }}" alt="{{ book.title }} cover"/>
                 <a href="{{ url_for('main.read_book', id=book.id) }}">წაკითხვა (PDF)</a>
@@ -37,11 +37,11 @@
                     <button id="search">სარჩევი</button>
                     <button id="feature">მახასიათებლები</button>
                 </div>
-                <div class="anotation-section open">
+                <section class="anotation-section open">
                     <p>{{ book.annotation }}</p>
-                </div>
+                </section>
 
-                <div class="searching-section">
+                <section class="searching-section">
                     {% for content in book.book_content %}
                         <div class="each_content_line">
                             
@@ -56,12 +56,10 @@
                             <p>გვ. {{ content.page_number }}</p>
                         </div>
                     {% endfor %}
-                </div>
+                </section>
 
-                <!-- feature section -->
-                <div class="feature-section">
+                <section class="feature-section">
                     <ul>
-                        
                         {% for column in book.__table__.columns %}
                             {#% if book | attr(column.name) and column.comment %#}
                             {% if column.name != 'annotation' and book | attr(column.name) and column.comment %}
@@ -85,9 +83,75 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
-                </div>
+                </section>
             </div>
-        </section>
+        </article>
+
+        <div class="mobile-only container">
+            <div class="mobile-accordion ">
+                <button class="mobile-btn" id="mobile-anotation-btn">
+                    <span>ანოტაცია</span>
+                    <img src="{{ url_for('static', filename='assets/green-dropdown-icon.svg') }}" alt="dropdown icon"
+                        class="dropdown-icon rotated">
+                </button>
+                <section id="mobile-anotation" class="mobile-anotation-section open">
+                    <p>{{ book.annotation }}</p>
+                </section>
+
+                <button class="mobile-btn" id="mobile-search-btn">
+                    <span>სარჩევი</span>
+                    <img src="{{ url_for('static', filename='assets/green-dropdown-icon.svg') }}" alt="dropdown icon"
+                        class="dropdown-icon">
+                </button>
+                <section id="mobile-search" class="mobile-searching-section ">
+                    {% for content in book.book_content %}
+                    <div class="each_content_line">
+                        <a href="{{ url_for('main.read_book', id=book.id) }}?page={{ content.page_number }}"
+                            style="color: inherit">
+                            {{ content.name }}
+                        </a>
+                        <p class="dotted-line">
+                            .......................................................................................................................................................................................
+                        </p>
+                        <p>გვ. {{ content.page_number }}</p>
+                    </div>
+                    {% endfor %}
+                </section>
+
+                <button class="mobile-btn" id="mobile-feature-btn">
+                    <span>მახასიათებლები</span>
+                    <img src="{{ url_for('static', filename='assets/green-dropdown-icon.svg') }}" alt="dropdown icon"
+                        class="dropdown-icon">
+                </button>
+                <section id="mobile-feature" class="mobile-feature-section">
+                    <ul>
+                        {% for column in book.__table__.columns %}
+                            {% if column.name != 'annotation' and book | attr(column.name) and column.comment %}
+                                {% if column.foreign_keys %}
+                                    {% set foreign_key = column.foreign_keys | list %}
+                                    {% set foreign_key = foreign_key[0].target_fullname.split('.')[0] %}
+                                    
+                                    {% for relationship in book.__mapper__.relationships %}
+                                        {% if relationship.target.name == foreign_key %}
+                                            <li>
+                                                <span>{{ column.comment }}: </span>
+                                                <span>{{ book | attr(relationship.key) }}</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <li>
+                                        <span>{{ column.comment }}: </span>
+                                        <span>{{ book | attr(column.name) }}</span>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </section>
+
+            </div>
+        </div>
 
         <section class="similar-books">
             <div class="main-content-wrapper similar-books-container">
