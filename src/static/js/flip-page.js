@@ -17,7 +17,7 @@ const state = {
   })(),
   isAnimating: false,
   isMobile: window.innerWidth <= 428,
-  isSmallScreen: window.innerWidth <= 1040,
+  isSmallScreen: window.innerWidth <= 1060,
 };
 
 // Initialize DOM elements
@@ -427,7 +427,7 @@ async function initializeViewer(pdfUrl) {
       if (state.isSmallScreen) {
         switch (size) {
           case "xlarge":
-            return 720;
+            return 690;
           case "large":
             return 670;
           case "medium":
