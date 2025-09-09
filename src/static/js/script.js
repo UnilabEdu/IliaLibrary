@@ -81,3 +81,17 @@ window.addEventListener("DOMContentLoaded", () => {
     dropdownTextEl.innerHTML = `<p class="dropdown-text">${sortTexts[sortedBy]}</p>`;
   }
 });
+
+document.querySelector(".burger_menu").addEventListener("click", () => {
+  document.querySelector(".burger_menu_dropdown").classList.toggle("open");
+
+  if (
+    document.querySelector(".burger_menu_dropdown").classList.contains("open")
+  ) {
+    document.documentElement.style.overflow = "hidden"; // <html>
+    document.body.style.overflow = "hidden"; // <body>
+  } else {
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+  }
+});
