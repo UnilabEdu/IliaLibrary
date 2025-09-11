@@ -63,7 +63,9 @@
                                                      alt="share-icon"/>
                                             </div>
                                             <div class="title-share-hover">
+                                                {% if book.publisher.name %}
                                                 <p>{{ book.publisher.name }}</p>
+                                                {% endif %}
                                                 <span>{{ book.publish_year }}</span>
                                             </div>
                                         </div>

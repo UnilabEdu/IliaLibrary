@@ -1,18 +1,5 @@
 const bookCards = document.querySelectorAll(".card");
 
-bookCards.forEach((card) => {
-  const bookInfoCard = card.querySelector(".title-share");
-  const bookInfoHover = card.querySelector(".title-share-hover");
-
-  card.addEventListener("mouseover", () => {
-    bookInfoHover.style.height = "50px";
-  });
-
-  card.addEventListener("mouseout", () => {
-    bookInfoHover.style.height = "0px";
-  });
-});
-
 const dropdownBTN = document.querySelector(".dropdown-button");
 const dropdownOptionsEl = document.querySelector(".dropdown-options");
 const dropdownTextEl = document.querySelector(".dropdown-text");
