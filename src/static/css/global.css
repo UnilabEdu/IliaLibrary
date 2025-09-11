@@ -2144,6 +2144,17 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   display: none;
 }
 
+.mobile-mian-form-submit {
+  display: none;
+}
+.main-content-wrapper
+  .filter-books-wrapper
+  .filter-section
+  .buttons-section
+  .dropdown-button-mobile {
+  display: none;
+}
+
 @media (max-width: 1060px) {
   /* -------------------general styles---------------------- */
 
@@ -2745,6 +2756,10 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   }
 }
 @media (max-width: 675px) {
+  .landing-photo-wrapper {
+    display: none;
+  }
+
   .navigation {
     display: none;
   }
@@ -2832,12 +2847,62 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     display: flex;
     background-color: white;
     padding: 25px 18px;
-    min-width: 342px;
-    /* width: 100%; */
+    min-width: 200px;
+    width: 100%;
+    max-width: unset;
     box-shadow: 0px 0px 8px 0px rgba(166, 189, 158, 1);
   }
   .main-content-wrapper .books-section .card .book-info .title-share {
     border: none;
+    padding: 7px 0 0 18px;
+  }
+  .main-content-wrapper .books-section .card .book-info .book-views {
+    position: absolute;
+    transform: translate(-45px, -8px);
+  }
+  .main-content-wrapper .books-section .card .book-info .book-views img {
+    width: 13px;
+  }
+  .main-content-wrapper
+    .books-section
+    .card
+    .book-info
+    .title-share
+    .title-share-default
+    img {
+    position: absolute;
+    bottom: 24px;
+    right: 10px;
+    width: 30px;
+    height: 24px;
+  }
+
+  .main-content-wrapper
+    .books-section
+    .card
+    .book-info
+    .title-share
+    .title-share-default
+    h2 {
+    font-size: 20px;
+  }
+  .main-content-wrapper
+    .books-section
+    .card
+    .book-info
+    .title-share
+    .title-share-hover {
+    margin-top: 30px;
+  }
+  .main-content-wrapper
+    .books-section
+    .card
+    .book-info
+    .title-share
+    .title-share-hover
+    span {
+    color: black;
+    font-size: 16px;
   }
 
   .main-content-wrapper .books-section .card .book-info {
@@ -2858,14 +2923,154 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     height: 100%;
   }
   .main-content-wrapper {
-    position: relative;
+    padding-top: 28px;
   }
 
   .main-content-wrapper .filter-books-wrapper .filter-section {
+    display: block;
+    max-width: unset;
+    width: 100%;
+
+    z-index: 998;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    #main-form
+    > :not(.buttons-section) {
+    margin-top: 12px;
     position: absolute;
-    background-color: rebeccapurple;
+    width: 0px;
+    height: 945px;
+    overflow: hidden;
+    background-color: red;
+    background-color: white;
     right: 0;
-    /* z-index: 999; */
+    padding: 25px 0;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .search-container {
+    width: 60%;
+    max-width: 400px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    #main-form
+    .buttons-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .search-container
+    label {
+    display: none;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .search-container
+    input[type="text"] {
+    padding: 5px 12px;
+    max-height: 42px;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .blue-button {
+    display: none;
+  }
+  .mobile-mian-form-submit {
+    display: block;
+    background-color: #a6bd9e;
+    border: none;
+    height: 40px;
+    padding-inline: 9px;
+    border-radius: 50%;
+    order: -1;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .dropdown-button.dropdown-button-default {
+    display: none;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .dropdown-button-mobile {
+    display: block;
+    background-color: transparent;
+    border: none;
+    margin-left: auto;
+  }
+
+  .main-content-wrapper .filter-books-wrapper .media-type-section {
+    background-color: white;
+    transition: all 0.2s ease;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    #main-form
+    .media-type-section.open {
+    width: 100%;
+    /* width: 102%; */
+    height: 942px;
+    padding: 25px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .publish-date
+    .date-wrapper {
+    max-width: unset;
+    gap: 26px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .publish-date
+    .date-wrapper
+    .date-input-container {
+    min-height: 54px;
+  }
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .publish-date
+    .date-wrapper
+    .date-input-container
+    label {
+    padding: 16px;
+  }
+
+  .main-content-wrapper section.books-section a {
+    width: 100%;
+    display: flex;
   }
 }
 /* phone--> */
@@ -2925,6 +3130,10 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
 
   header .header_wrapper .header_components .logo a img {
     width: unset;
+  }
+
+  .main-content-wrapper .books-section .card .book-cover {
+    min-width: 105px;
   }
 
   .landing-photo-wrapper {

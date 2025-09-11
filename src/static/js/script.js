@@ -1,6 +1,7 @@
 const bookCards = document.querySelectorAll(".card");
 
-const dropdownBTN = document.querySelector(".dropdown-button");
+const dropdownBTN = document.querySelector(".dropdown-button-default");
+const dropdownBTNMobile = document.querySelector(".dropdown-button-mobile");
 const dropdownOptionsEl = document.querySelector(".dropdown-options");
 const dropdownTextEl = document.querySelector(".dropdown-text");
 const dropdownOptions = document.querySelectorAll(".option");
@@ -21,6 +22,20 @@ dropdownBTN?.addEventListener("click", () => {
       // .setAttribute("src", "./assets/");
       .setAttribute("src", "static/assets/green-dropdown-icon.svg");
   }
+});
+
+dropdownBTNMobile?.addEventListener("click", () => {
+  document.querySelector(".media-type-section").classList.toggle("open");
+
+  // if (
+  //   document.querySelector(".media-type-section").classList.contains("open")
+  // ) {
+  //   document.documentElement.style.overflow = "hidden";
+  //   document.body.style.overflow = "hidden";
+  // } else {
+  //   document.documentElement.style.overflow = "";
+  //   document.body.style.overflow = "";
+  // }
 });
 
 dropdownOptions.forEach((option) => {
@@ -75,8 +90,8 @@ document.querySelector(".burger_menu").addEventListener("click", () => {
   if (
     document.querySelector(".burger_menu_dropdown").classList.contains("open")
   ) {
-    document.documentElement.style.overflow = "hidden"; // <html>
-    document.body.style.overflow = "hidden"; // <body>
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
   } else {
     document.documentElement.style.overflow = "";
     document.body.style.overflow = "";
