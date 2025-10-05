@@ -333,18 +333,27 @@ body {
   .buttons-section
   .search-container {
   position: relative;
+  overflow: hidden;
 }
+
 .main-content-wrapper
   .filter-books-wrapper
   .filter-section
   .buttons-section
   .search-container
-  .search-icon {
+  .search-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  padding: 0 12px 0 20px;
+  padding: 0 12px 0 15px;
+  height: 100%;
   top: 50%;
   transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
 }
+
 .main-content-wrapper
   .filter-books-wrapper
   .filter-section
@@ -384,7 +393,11 @@ body {
   .filter-books-wrapper
   .filter-section
   .buttons-section
-  .blue-button {
+  .blue-button,
+.main-content-wrapper
+  .filter-books-wrapper
+  .filter-section
+  .form-submit-button {
   width: 100%;
   height: 61px;
   background-color: #95b48a;
@@ -394,6 +407,14 @@ body {
   border: none;
   border-radius: 10px;
 }
+
+.main-content-wrapper
+  .filter-books-wrapper
+  .filter-section
+  .form-submit-button {
+  margin-top: 25px;
+}
+
 .main-content-wrapper
   .filter-books-wrapper
   .filter-section
@@ -2144,7 +2165,7 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   display: none;
 }
 
-.mobile-mian-form-submit {
+.mobile-main-form-submit {
   display: none;
 }
 .main-content-wrapper
@@ -2152,6 +2173,10 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   .filter-section
   .buttons-section
   .dropdown-button-mobile {
+  display: none;
+}
+
+.mobile-filter-submit-button {
   display: none;
 }
 
@@ -2230,6 +2255,15 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   .small-screen-back img {
     height: 35px;
     width: 35px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .search-container
+    .search-button {
+    padding: 0;
   }
 
   #no-books-found article {
@@ -2365,6 +2399,7 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     max-height: 42px;
     font-size: 18px;
   }
+
   .main-content-wrapper
     .filter-books-wrapper
     .filter-section
@@ -2388,6 +2423,7 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     text-wrap: nowrap;
     font-size: 13px;
   }
+
   .main-content-wrapper .filter-books-wrapper .clean-filters button img {
     width: 16px;
     height: 16px;
@@ -2756,6 +2792,33 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   }
 }
 @media (max-width: 675px) {
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .buttons-section
+    .search-container
+    .search-button {
+    display: none;
+  }
+  .mobile-filter-submit-button {
+    display: block;
+    width: 100%;
+    background-color: #95b48a;
+    color: #ffffff;
+    font-family: "FiraGo400";
+    border: none;
+    border-radius: 10px;
+    padding: 15px 0;
+    font-size: 18px;
+    /* margin-top: 30px; */
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .filter-section
+    .form-submit-button {
+    display: none;
+  }
   .landing-photo-wrapper {
     display: none;
   }
@@ -2937,26 +3000,12 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   .main-content-wrapper
     .filter-books-wrapper
     .filter-section
-    #main-form
-    > :not(.buttons-section) {
-    margin-top: 12px;
-    position: absolute;
-    width: 0px;
-    height: 945px;
-    overflow: hidden;
-    background-color: red;
-    background-color: white;
-    right: 0;
-    padding: 25px 0;
-  }
-
-  .main-content-wrapper
-    .filter-books-wrapper
-    .filter-section
     .buttons-section
     .search-container {
-    width: 60%;
-    max-width: 400px;
+    /* max-width: 400px; */
+    width: 75%;
+    display: flex;
+    gap: 5px;
   }
 
   .main-content-wrapper
@@ -2966,8 +3015,13 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     .buttons-section {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     gap: 5px;
+  }
+
+  #main-form .buttons-section > fieldset {
+    display: none;
   }
 
   .main-content-wrapper
@@ -2995,7 +3049,7 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     .blue-button {
     display: none;
   }
-  .mobile-mian-form-submit {
+  .mobile-main-form-submit {
     display: block;
     background-color: #a6bd9e;
     border: none;
@@ -3020,22 +3074,30 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     display: block;
     background-color: transparent;
     border: none;
-    margin-left: auto;
   }
 
+  .dropdownUnderline {
+    display: none;
+  }
+  .main-content-wrapper .filter-books-wrapper .clean-filters {
+    display: none;
+  }
   .main-content-wrapper .filter-books-wrapper .media-type-section {
+    padding: 25px;
+    height: 870px;
+    width: 100%;
+    position: absolute;
+    left: 150%;
+    margin-top: 20px;
     background-color: white;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
   }
   .main-content-wrapper
     .filter-books-wrapper
     .filter-section
     #main-form
     .media-type-section.open {
-    width: 100%;
-    /* width: 102%; */
-    height: 942px;
-    padding: 25px;
+    left: 0;
   }
 
   .main-content-wrapper
@@ -3056,6 +3118,16 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     .date-wrapper
     .date-input-container {
     min-height: 54px;
+  }
+
+  .main-content-wrapper
+    .filter-books-wrapper
+    .media-type-section
+    .dropdown-section-wrapper
+    .publish-date
+    .date-wrapper
+    .date-input-container {
+    max-width: none;
   }
   .main-content-wrapper
     .filter-books-wrapper

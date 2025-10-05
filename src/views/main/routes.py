@@ -3,7 +3,7 @@ from sqlalchemy import or_, func
 from datetime import datetime
 
 from flask import request
-from src.models import Book, MediaType, Language, Genre
+from src.models import Book, MediaType, Language, Genre, BookContent
 
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
@@ -59,8 +59,9 @@ def index():
         query = query.filter(*conditions)
 
     if search_text is not None:
-        query = query.filter(or_(Book.title.ilike(f"%{search_text}%")))
-
+        query = query.join(Book.book_content, isouter=True).filter(or_(Book.title.ilike(f"%{search_text}%"),
+                                 Book.author.ilike(f"%{search_text}%"),BookContent.name.ilike(f"%{search_text}%") ))
+        
     if sort_by is not None:
         if sort_by == 'name-asc':
             query = query.order_by(Book.title.asc())
