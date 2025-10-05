@@ -1515,8 +1515,13 @@ header .header_wrapper .burger_menu .line {
   color: rgba(60, 60, 67, 0.6);
 }
 .book-main .book-container .info-wrapper .open {
-  max-height: 100% !important;
+  height: 100%;
   opacity: 1;
+  max-height: 352px;
+}
+.book-main .book-container .info-wrapper .searching-section.open {
+  /* max-height: 320px; */
+  overflow-y: scroll;
 }
 .book-main .similar-books {
   margin-bottom: 110px;
@@ -1752,6 +1757,7 @@ a#menu:hover .svg-path {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 .flip-page-header .flip-page-header-container .flip-navbar-right {
   position: relative;
@@ -2180,6 +2186,12 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   display: none;
 }
 
+#main-chapter-small-screen {
+  text-align: center;
+  font-size: clamp(12px, 3vw, 18px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 @media (max-width: 1060px) {
   /* -------------------general styles---------------------- */
 
@@ -2196,6 +2208,9 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
 
   .small-screen-back {
     flex: 1;
+  }
+  .small-screen-back a {
+    margin-right: auto;
   }
 
   .small-screen-back div {
@@ -2247,7 +2262,7 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 10px;
     font-size: 20px;
     font-weight: 400;
   }
@@ -2713,6 +2728,9 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   }
 }
 @media (max-width: 860px) {
+  .flip-page-header .flip-page-header-container .flip-navbar-right {
+    gap: 20px;
+  }
   .main-content-wrapper section.books-section {
     grid-template-columns: 1fr 1fr;
   }
@@ -2755,8 +2773,13 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
 }
 
 @media (max-width: 783px) {
+  #main-chapter-small-screen {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 450px;
+  }
   .flip-page-header .flip-page-header-container .flip-navbar-right {
-    gap: 60px;
+    gap: 20px;
   }
   .about-main .contacts-section > div {
     flex-direction: column;
@@ -2782,9 +2805,6 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     justify-content: end;
     align-items: start;
     gap: 12px;
-  }
-  .flip-page-header .flip-page-header-container .flip-navbar-right {
-    gap: 50px;
   }
 
   .flip-page-header .flip-page-header-container .menu-ul {
@@ -2896,7 +2916,8 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     width: 30px;
   }
   #main-chapter-small-screen {
-    font-size: 16px;
+    max-width: 250px;
+    /* font-size: 16px; */
   }
 
   .main-content-wrapper section.books-section {

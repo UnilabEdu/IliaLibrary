@@ -156,20 +156,18 @@
 <script>
     let bookTitle = "{{ book }}"
     let pageToChapter = {
-        "0": 'დასაწყისი',
         {%- for content in book.book_content -%}
             "{{ content.page_number }}": "{{ content.name }}",
             {%- if not loop.last %}{% endif %}
         {%- endfor -%}
     };
-    
-    let indexToPage = {
-        "0": 0,
-        {%- for content in book.book_content -%}
-            "{{ loop.index }}": {{ content.page_number }}{% if not loop.last %},{% endif %}
-        {%- endfor -%}
-    };
+
 </script>
+    <!-- let indexToPage = {
+    {%- for content in book.book_content -%}
+    "{{ loop.index }}": {{ content.page_number }}{% if not loop.last %},{% endif %}
+    {%- endfor -%}
+    }; -->
 <!-- <script>
     let chapterToPageMap = {
         {%- for content in book.book_content -%}
