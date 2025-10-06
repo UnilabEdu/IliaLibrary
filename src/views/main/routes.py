@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, url_for, session, redirect
 from sqlalchemy import or_, func
 from datetime import datetime
 
+import os
+import fitz  # PyMuPDF
+
 from flask import request
 from src.models import Book, MediaType, Language, Genre, BookContent
 
@@ -14,11 +17,15 @@ def index():
 
     query = Book.query
     search_text = request.args.get('searchQuery')
+    search_text = request.args.get('searchQuery')
+    if search_text == '':
+        search_text = None
     media_types = request.args.getlist('mediaType')
     genres = request.args.getlist('genre')
     languages = request.args.getlist('language')
-    date_from = request.args.get('yearFrom')
-    date_to = request.args.get('yearTo')
+
+    date_from = request.args.get('yearFrom', type=int)
+    date_to = request.args.get('yearTo', type=int)
     sort_by = request.args.get("sortedBy")
 
     filters_used = any([
@@ -107,6 +114,27 @@ def view_book(id):
 @main_blueprint.route('/read_book/<int:id>', methods=['GET'])
 def read_book(id):
     book = Book.query.get(id)
+    query = request.args.get('searchText')
+    book_file_name=book.book_file.replace(".pdf", "")
+    pdf_path = os.path.join('src/static/upload', f"{book_file_name}.pdf")
+    print(pdf_path,query)
+
+
+    results = []
+
+
+    doc = fitz.open(pdf_path)
+
+    for page_number, page in enumerate(doc, start=1):
+        text = page.get_text()
+        if query and query.lower() in text.lower():
+            results.append({
+                "page": page_number-1,
+                "snippet": text
+            })
+            # \n and - is tuff
+
+    print(results)
     return render_template('main/flip-page.html', book=book)
 
 # @main_blueprint.errorhandler(404)

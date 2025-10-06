@@ -149,7 +149,9 @@ function changeChapterHeaderText(page, obj) {
     .reverse()
     .find(([chapterPage]) => Number(chapterPage) <= page)?.[1];
 
-  chapterTitle.textContent = `${bookTitle} - ${chapterHeader ?? ""}`;
+  chapterTitle.textContent = chapterHeader
+    ? `${bookTitle} - ${chapterHeader}`
+    : `${bookTitle} - დასაწყისი`;
 }
 
 function setupNavigation() {
