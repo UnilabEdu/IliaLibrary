@@ -515,3 +515,17 @@ zoomOutBTN.addEventListener("click", () => {
   zoomLevel -= 0.05;
   updateZoom();
 });
+
+// async function searchText(text) {
+//   const res = await fetch(
+//     // `http://127.0.0.1:5000/read_book/${state.bookId}?searchText=${encodeURIComponent(text)}`,
+//     `http://127.0.0.1:5000/read_book/${2}?searchText=${encodeURIComponent(text)}`,
+//     {
+//       headers: { "X-Requested-With": "XMLHttpRequest" },
+//     }
+//   );
+//   const data = await res.json();
+//   console.log(state.bookId, data);
+// }
+
+// // searchText("ილია");

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, session, redirect
+from flask import Blueprint, render_template, url_for, session, redirect, jsonify
 from sqlalchemy import or_, func
 from datetime import datetime
 
@@ -114,28 +114,30 @@ def view_book(id):
 @main_blueprint.route('/read_book/<int:id>', methods=['GET'])
 def read_book(id):
     book = Book.query.get(id)
-    query = request.args.get('searchText')
-    book_file_name=book.book_file.replace(".pdf", "")
-    pdf_path = os.path.join('src/static/upload', f"{book_file_name}.pdf")
-    print(pdf_path,query)
+    # query = request.args.get('searchText')
+    # book_file_name=book.book_file.replace(".pdf", "")
+    # pdf_path = os.path.join('src/static/upload', f"{book_file_name}.pdf")
 
+    # results = []
 
-    results = []
+    # doc = fitz.open(pdf_path)
 
+    # for page_number, page in enumerate(doc, start=1):
+    #     text = page.get_text()
+    #     if query and query.lower() in text.lower():
+    #         results.append({
+    #             "page": page_number-1,
+    #             "snippet": text
+    #         })
+    #         # \n and - is tuff
+    # doc.close()
+    # print(query,results)
 
-    doc = fitz.open(pdf_path)
-
-    for page_number, page in enumerate(doc, start=1):
-        text = page.get_text()
-        if query and query.lower() in text.lower():
-            results.append({
-                "page": page_number-1,
-                "snippet": text
-            })
-            # \n and - is tuff
-
-    print(results)
-    return render_template('main/flip-page.html', book=book)
+    # if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+    #     return jsonify(results)
+    
+    # # print(results)
+    return render_template('main/flip-page.html', book=book,)
 
 # @main_blueprint.errorhandler(404)
 # def page_not_found(e):
