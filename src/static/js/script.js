@@ -1,19 +1,7 @@
 const bookCards = document.querySelectorAll(".card");
 
-bookCards.forEach((card) => {
-  const bookInfoCard = card.querySelector(".title-share");
-  const bookInfoHover = card.querySelector(".title-share-hover");
-
-  card.addEventListener("mouseover", () => {
-    bookInfoHover.style.height = "50px";
-  });
-
-  card.addEventListener("mouseout", () => {
-    bookInfoHover.style.height = "0px";
-  });
-});
-
-const dropdownBTN = document.querySelector(".dropdown-button");
+const dropdownBTN = document.querySelector(".dropdown-button-default");
+const dropdownBTNMobile = document.querySelector(".dropdown-button-mobile");
 const dropdownOptionsEl = document.querySelector(".dropdown-options");
 const dropdownTextEl = document.querySelector(".dropdown-text");
 const dropdownOptions = document.querySelectorAll(".option");
@@ -34,6 +22,20 @@ dropdownBTN?.addEventListener("click", () => {
       // .setAttribute("src", "./assets/");
       .setAttribute("src", "static/assets/green-dropdown-icon.svg");
   }
+});
+
+dropdownBTNMobile?.addEventListener("click", () => {
+  document.querySelector(".media-type-section").classList.toggle("open");
+
+  // if (
+  //   document.querySelector(".media-type-section").classList.contains("open")
+  // ) {
+  //   document.documentElement.style.overflow = "hidden";
+  //   document.body.style.overflow = "hidden";
+  // } else {
+  //   document.documentElement.style.overflow = "";
+  //   document.body.style.overflow = "";
+  // }
 });
 
 dropdownOptions.forEach((option) => {
@@ -79,5 +81,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (sortTexts[sortedBy]) {
     dropdownTextEl.innerHTML = `<p class="dropdown-text">${sortTexts[sortedBy]}</p>`;
+  }
+});
+
+document.querySelector(".burger_menu").addEventListener("click", () => {
+  document.querySelector(".burger_menu_dropdown").classList.toggle("open");
+
+  if (
+    document.querySelector(".burger_menu_dropdown").classList.contains("open")
+  ) {
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+  } else {
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
   }
 });

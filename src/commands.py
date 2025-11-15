@@ -39,14 +39,16 @@ def populate_db_command():
     for language in languages:
         Language(name=language).create()
 
-    book1 = Book(title="მოთხრობები", media_type_id=1, cover_image="diogene.jpg",
+    book1 = Book(title="მოთხრობები", media_type_id=1,author='TEST-1', cover_image="diogene.jpg",
                  annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
                  publish_year="2012", page_count=20, language_id=1, genre_id=1,
                  book_file="motxrobebi.pdf",book_content=[BookContent(name="თავი 1", page_number=3),
-        BookContent(name="თავი 2", page_number=35)])
+        BookContent(name="თავი 2", page_number=35),BookContent(name="თავი 1111111111111111111111111111111111111111111111111111111111111111", page_number=12),
+        BookContent(name="თავი 8", page_number=4),BookContent(name="თავი 9", page_number=5),BookContent(name="თავი 10", page_number=6),BookContent(name="თავი 3", page_number=7),BookContent(name="თავი 4", page_number=8),BookContent(name="თავი 5", page_number=9),BookContent(name="თავი 6", page_number=13),BookContent(name="თავი 7", page_number=23),
+        BookContent(name="თავი 123 123 1234567 75353535 111111111111111111111111111111111111111111111111111111111111111", page_number=23),])
     book1.create()
 
-    book2 = Book(title="განდეგილი", media_type_id=1, cover_image="gandegili.jpg",
+    book2 = Book(title="განდეგილი", media_type_id=1, author='TEST-2',cover_image="gandegili.jpg",
                  annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
                  publish_year="2012", page_count=15, language_id=1, genre_id=1,
                  book_file="gandegili-1957.pdf",book_content=[BookContent(name="თავი 1", page_number=2),
@@ -119,13 +121,13 @@ def populate_db_command():
     book13 = Book(title="TEST3", media_type_id=1, cover_image="gandegili.jpg",
                  annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
                  publish_year="1991", page_count=15, language_id=1, genre_id=3,
-                 book_file="gandegili-1957.pdf",book_content=[BookContent(name="TEST5", page_number=10),
+                 book_file="gandegili-1957.pdf",book_content=[BookContent(name="TEST51234", page_number=10),
         BookContent(name="dfkjls;f", page_number=22)])
     book13.create()
     book14 = Book(title="TEST4", media_type_id=1, cover_image="gandegili.jpg",
                  annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
                  publish_year="1990", page_count=15, language_id=1, genre_id=3,
-                 book_file="gandegili-1957.pdf",book_content=[BookContent(name="TEST6", page_number=10),
+                 book_file="gandegili-1957.pdf",book_content=[BookContent(name="TEST1234", page_number=10),
         BookContent(name="dfkjls;f", page_number=22)])
     book14.create()
 

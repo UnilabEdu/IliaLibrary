@@ -17,7 +17,7 @@ const state = {
   })(),
   isAnimating: false,
   isMobile: window.innerWidth <= 428,
-  isSmallScreen: window.innerWidth <= 1040,
+  isSmallScreen: window.innerWidth <= 1060,
 };
 
 // Initialize DOM elements
@@ -134,17 +134,24 @@ async function setupPages(pdf) {
 }
 
 function changeChapterHeaderText(page, obj) {
-  const chapterHeader = Object.entries(obj)
-    .reverse()
-    .find(([k, v]) => k <= page)?.[1];
-
   const chapterTitle = state.isSmallScreen
     ? document.getElementById("main-chapter-small-screen")
     : document.getElementById("main-chapter");
 
-  chapterHeader
-    ? (chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`)
-    : (chapterTitle.textContent = "დასაწყისი");
+  const headerFromPageMap = pageToChapter[page];
+  if (headerFromPageMap) {
+    chapterTitle.textContent = `${bookTitle} - ${headerFromPageMap}`;
+    return;
+  }
+
+  //closest preceding chapter
+  const chapterHeader = Object.entries(obj)
+    .reverse()
+    .find(([chapterPage]) => Number(chapterPage) <= page)?.[1];
+
+  chapterTitle.textContent = chapterHeader
+    ? `${bookTitle} - ${chapterHeader}`
+    : `${bookTitle} - დასაწყისი`;
 }
 
 function setupNavigation() {
@@ -163,7 +170,7 @@ function setupNavigation() {
     } else {
       state.pageFlip.flip(state.currentPage + 2, true);
     }
-    changeChapterHeaderText(state.currentPage, pageToChapter);
+    // changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
   const handlePrev = () => {
@@ -223,24 +230,16 @@ function setupChapterMenu() {
     const ul = document.createElement("ul");
     ul.className = "menu-ul";
     ul.style.display = "none";
-
     const chapters = Object.values(pageToChapter).length; // Total number of chapters + დასაწყისი
     Array.from({ length: chapters }, (_, i) => {
       const li = document.createElement("li");
       li.className = "menu-li";
 
-      if (i === 0) {
-        li.textContent = "დასაწყისი";
-      } else {
-        li.textContent = Object.values(pageToChapter)[i];
-      }
+      li.textContent = Object.values(pageToChapter)[i];
 
       li.addEventListener("click", () => changeChapter(li, i, ul), {
         passive: true,
       });
-      // li.addEventListener("touchstart", () => changeChapter(li, i, ul), {
-      //   passive: true,
-      // });
 
       ul.appendChild(li);
     });
@@ -260,26 +259,21 @@ function setupChapterMenu() {
     },
     { passive: true }
   );
-
-  // menu.addEventListener(
-  //   "touchstart",
-  //   () => {
-  //     if (!menuList) {
-  //       menuList = createChapterList();
-  //       menu.parentElement.appendChild(menuList);
-  //     }
-  //     menuList.style.display =
-  //       menuList.style.display === "none" ? "block" : "none";
-  //   },
-  //   { passive: true }
-  // );
 }
 
 async function changeChapter(chapter, index, ul) {
   const chapterTitle = document.getElementById("main-chapter");
-  chapterTitle.textContent = chapter.textContent;
+  const chapterName = chapter.textContent.trim().toLowerCase();
+  chapterTitle.textContent = `${bookTitle} - ${chapterName}`;
 
   const active = ul.querySelector(".menu-li.hover");
+
+  const entry = Object.entries(pageToChapter).find(
+    ([, name]) => name.trim().toLowerCase() === chapterName
+  );
+
+  let targetPage = entry ? Number(entry[0]) : undefined;
+
   if (active && active !== chapter) {
     active.classList.remove("hover");
   }
@@ -288,8 +282,6 @@ async function changeChapter(chapter, index, ul) {
   ul.style.display = "none";
 
   if (!state.isAnimating) {
-    const targetPage = Object.values(indexToPage)[index];
-
     if (targetPage === undefined) {
       state.pageFlip.flip(0, true);
     }
@@ -329,7 +321,7 @@ function getPageInput() {
   if (inputPage % 2 === 0)
     document.querySelector(".current-page").value = inputPage;
 
-  changeChapterHeaderText(state.currentPage, pageToChapter);
+  // changeChapterHeaderText(state.currentPage, pageToChapter);
 }
 
 state.isSmallScreen
@@ -427,7 +419,7 @@ async function initializeViewer(pdfUrl) {
       if (state.isSmallScreen) {
         switch (size) {
           case "xlarge":
-            return 720;
+            return 690;
           case "large":
             return 670;
           case "medium":
@@ -523,3 +515,17 @@ zoomOutBTN.addEventListener("click", () => {
   zoomLevel -= 0.05;
   updateZoom();
 });
+
+// async function searchText(text) {
+//   const res = await fetch(
+//     // `http://127.0.0.1:5000/read_book/${state.bookId}?searchText=${encodeURIComponent(text)}`,
+//     `http://127.0.0.1:5000/read_book/${2}?searchText=${encodeURIComponent(text)}`,
+//     {
+//       headers: { "X-Requested-With": "XMLHttpRequest" },
+//     }
+//   );
+//   const data = await res.json();
+//   console.log(state.bookId, data);
+// }
+
+// // searchText("ილია");

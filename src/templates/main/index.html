@@ -2,7 +2,7 @@
 {% block title %} Ilia Library {% endblock %}
 
 {% block content %}
-<main>
+<main class="main-page">
     <div class="landing-photo-wrapper">
         <img src="{{ url_for('static', filename='assets/landing-photo.png') }}" alt="landing-photo"
              class="landing-photo"/>
@@ -63,8 +63,10 @@
                                                      alt="share-icon"/>
                                             </div>
                                             <div class="title-share-hover">
+                                                {% if book.publisher.name %}
                                                 <p>{{ book.publisher.name }}</p>
-                                                <span>{{ book.publish_year }}</span>
+                                                {% endif %}
+                                                <span>{{ book.publish_year }} წელი</span>
                                             </div>
                                         </div>
                                     </div>

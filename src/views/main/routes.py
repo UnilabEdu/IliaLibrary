@@ -1,9 +1,12 @@
-from flask import Blueprint, render_template, url_for, session, redirect
+from flask import Blueprint, render_template, url_for, session, redirect, jsonify
 from sqlalchemy import or_, func
 from datetime import datetime
 
+import os
+import fitz  # PyMuPDF
+
 from flask import request
-from src.models import Book, MediaType, Language, Genre
+from src.models import Book, MediaType, Language, Genre, BookContent
 
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
@@ -14,11 +17,15 @@ def index():
 
     query = Book.query
     search_text = request.args.get('searchQuery')
+    search_text = request.args.get('searchQuery')
+    if search_text == '':
+        search_text = None
     media_types = request.args.getlist('mediaType')
     genres = request.args.getlist('genre')
     languages = request.args.getlist('language')
-    date_from = request.args.get('yearFrom')
-    date_to = request.args.get('yearTo')
+
+    date_from = request.args.get('yearFrom', type=int)
+    date_to = request.args.get('yearTo', type=int)
     sort_by = request.args.get("sortedBy")
 
     filters_used = any([
@@ -59,8 +66,9 @@ def index():
         query = query.filter(*conditions)
 
     if search_text is not None:
-        query = query.filter(or_(Book.title.ilike(f"%{search_text}%")))
-
+        query = query.join(Book.book_content, isouter=True).filter(or_(Book.title.ilike(f"%{search_text}%"),
+                                 Book.author.ilike(f"%{search_text}%"),BookContent.name.ilike(f"%{search_text}%") ))
+        
     if sort_by is not None:
         if sort_by == 'name-asc':
             query = query.order_by(Book.title.asc())
@@ -106,7 +114,30 @@ def view_book(id):
 @main_blueprint.route('/read_book/<int:id>', methods=['GET'])
 def read_book(id):
     book = Book.query.get(id)
-    return render_template('main/flip-page.html', book=book)
+    # query = request.args.get('searchText')
+    # book_file_name=book.book_file.replace(".pdf", "")
+    # pdf_path = os.path.join('src/static/upload', f"{book_file_name}.pdf")
+
+    # results = []
+
+    # doc = fitz.open(pdf_path)
+
+    # for page_number, page in enumerate(doc, start=1):
+    #     text = page.get_text()
+    #     if query and query.lower() in text.lower():
+    #         results.append({
+    #             "page": page_number-1,
+    #             "snippet": text
+    #         })
+    #         # \n and - is tuff
+    # doc.close()
+    # print(query,results)
+
+    # if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+    #     return jsonify(results)
+    
+    # # print(results)
+    return render_template('main/flip-page.html', book=book,)
 
 # @main_blueprint.errorhandler(404)
 # def page_not_found(e):
