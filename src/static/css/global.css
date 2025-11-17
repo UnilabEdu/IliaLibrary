@@ -337,7 +337,7 @@ body {
   top: 50%;
   left: 0.5px;
   transform: translateY(-50%);
-  background-color: #d0d0d0;
+  background-color: transparent;
   border: none;
   border-radius: 50%;
 }
@@ -506,9 +506,17 @@ body {
   border: none;
 }
 .main-content-wrapper .filter-books-wrapper .clean-filters .clean-filters-text {
+  display: flex;
   color: rgba(60, 60, 67, 0.6);
   font-family: FiraGo600;
   font-size: 16px;
+}
+.main-content-wrapper
+  .filter-books-wrapper
+  .clean-filters
+  .clean-filters-text
+  .trash-icon {
+  margin-right: 10px;
 }
 .main-content-wrapper .filter-books-wrapper .dropdownUnderline {
   width: 100%;
@@ -1810,7 +1818,7 @@ a#menu:hover .svg-path {
   border: 1px solid #333333;
   overflow: hidden;
   z-index: 100;
-  /* max-height: 500px; */
+  max-height: 420px;
   overflow-y: auto;
   max-width: 250px;
 }
