@@ -153,8 +153,7 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 100;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-100-normal.woff2)
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-100-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-100-normal.woff)
       format("woff");
@@ -165,8 +164,7 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 200;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-200-normal.woff2)
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-200-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-200-normal.woff)
       format("woff");
@@ -177,8 +175,7 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 300;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-300-normal.woff2)
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-300-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-300-normal.woff)
       format("woff");
@@ -189,8 +186,7 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 400;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-400-normal.woff2)
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-400-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-400-normal.woff)
       format("woff");
@@ -201,8 +197,7 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 500;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-500-normal.woff2)
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-500-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-500-normal.woff)
       format("woff");
@@ -213,8 +208,7 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 600;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-600-normal.woff2)
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-600-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-600-normal.woff)
       format("woff");
@@ -225,8 +219,7 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 700;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-700-normal.woff2)
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-700-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-700-normal.woff)
       format("woff");
@@ -237,8 +230,7 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 800;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-800-normal.woff2)
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-800-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-800-normal.woff)
       format("woff");
@@ -249,8 +241,7 @@ button {
   font-style: normal;
   font-display: swap;
   font-weight: 900;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-900-normal.woff2)
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-900-normal.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/fontsource/fonts/firago@latest/latin-900-normal.woff)
       format("woff");
@@ -1534,9 +1525,7 @@ header .header_wrapper .burger_menu .line {
 .book-main .book-container .info-wrapper .searching-section {
   max-height: 0;
   overflow: hidden;
-  transition:
-    max-height 0s ease-out,
-    opacity 0.4s ease-out;
+  transition: max-height 0s ease-out, opacity 0.4s ease-out;
   opacity: 0;
 }
 .book-main .book-container .info-wrapper .feature-section ul li {
@@ -1835,9 +1824,7 @@ a#menu:hover .svg-path {
   border-bottom: 1px solid #333333;
   /* display: flex; */
   /* align-items: center; */
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   cursor: pointer;
   text-wrap: balance;
   color: #333333;
@@ -1932,9 +1919,7 @@ a#menu:hover .svg-path {
 }
 #main-content #pdf-container .my-page {
   background-color: #fff;
-  box-shadow:
-    2px 4px 12px rgba(0, 0, 0, 0.2),
-    0px 0px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
@@ -3163,23 +3148,25 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     display: none;
   }
   .main-content-wrapper .filter-books-wrapper .media-type-section {
+    display: none;
     padding: 25px;
     height: 870px;
     width: 100%;
     position: absolute;
-    left: 150%;
+    left: 0;
     margin-top: 20px;
     background-color: white;
-    transition: all 0.3s ease;
-  }
-  .main-content-wrapper
-    .filter-books-wrapper
-    .filter-section
-    #main-form
-    .media-type-section.open {
-    left: 0;
+
+    transform: translateX(150%);
+
+    transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
+  .main-content-wrapper .filter-books-wrapper .media-type-section.open {
+    transform: translateX(0);
+
+    pointer-events: auto;
+  }
   .main-content-wrapper
     .filter-books-wrapper
     .media-type-section
@@ -3491,9 +3478,7 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition:
-      max-height 0s ease,
-      opacity 0.3s ease;
+    transition: max-height 0s ease, opacity 0.3s ease;
 
     background: #f9f9f9;
     border: 1px solid #ddd;
