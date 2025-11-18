@@ -65,9 +65,11 @@ def index():
     if conditions:
         query = query.filter(*conditions)
 
+
     if search_text is not None:
         query = query.join(Book.book_content, isouter=True).filter(or_(Book.title.ilike(f"%{search_text}%"),
-                                 Book.author.ilike(f"%{search_text}%"),BookContent.name.ilike(f"%{search_text}%") ))
+                                 Book.author.ilike(f"%{search_text}%"),BookContent.name.ilike(f"%{search_text}%") )).distinct()
+
         
     if sort_by is not None:
         if sort_by == 'name-asc':
@@ -79,13 +81,13 @@ def index():
         elif sort_by == "year-desc":
             query = query.order_by(Book.publish_year.desc())
 
-    all_found_books_num = query.count()
 
     preserved_args = dict(request.args)
     preserved_args.pop("page", None)
 
     books = query.paginate(page=page, per_page=12, error_out=False)
-
+    all_found_books_num = books.total
+ 
     return render_template('main/index.html', books=books,
                            genres=Genre.query.all(),all_found_books_num=all_found_books_num, media_types=MediaType.query.all(), languages=Language.query.all(), search_text=search_text,filters_used=filters_used,preserved_args=preserved_args)
 
