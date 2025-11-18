@@ -251,6 +251,15 @@ body {
   font-family: "FiraGO400", Helvetica, sans-serif !important;
 }
 
+.stf__block {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  perspective: 2000px;
+  overflow: hidden;
+}
+
 .landing-page {
   min-height: 100vh;
   display: flex;
@@ -1856,7 +1865,8 @@ a#menu:hover .svg-path {
 }
 
 #main-content {
-  /* overflow: scroll; */
+  overflow: hidden;
+  /* overflow-y: scroll; */
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -3631,5 +3641,12 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
 @media (max-width: 345px) {
   .main-content-wrapper .search-results-info .books-section .card {
     padding: 25px 5px;
+  }
+  .flip-page-header .flip-page-header-container .menu-ul {
+    max-width: 120px;
+  }
+  .flip-page-header .flip-page-header-container .menu-li {
+    font-size: 12px;
+    padding: 5px 6px;
   }
 }
