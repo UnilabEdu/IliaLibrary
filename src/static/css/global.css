@@ -1850,7 +1850,7 @@ a#menu:hover .svg-path {
 .flip-page-header .flip-page-header-container .menu-li:hover {
   background-color: #dcf0d4;
   color: #333333;
-  overflow: scroll;
+  overflow-x: auto;
   text-overflow: initial;
 }
 
