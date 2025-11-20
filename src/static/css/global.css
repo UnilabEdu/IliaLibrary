@@ -3392,7 +3392,8 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   }
   .book-main .book-container .cover-wrapper img {
     height: 437px;
-    max-width: unset;
+    width: 100%;
+    max-width: 300px;
     margin-bottom: 0;
   }
 
