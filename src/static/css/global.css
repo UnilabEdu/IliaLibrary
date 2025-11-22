@@ -1485,9 +1485,11 @@ header .header_wrapper .burger_menu .line {
   display: flex;
   gap: 16px;
   justify-content: space-between;
+  align-items: center;
 
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 34px;
 
   /* scrollbar-width: thin;  */
   /* overflow-x: scroll; */
@@ -1521,7 +1523,6 @@ header .header_wrapper .burger_menu .line {
   .each_content_line
   a {
   /* min-width: 100px; */
-  margin-bottom: 34px;
   font-family: "FiraGO400", sans-serif;
   font-size: 18px;
   font-weight: 400;
@@ -1557,6 +1558,7 @@ header .header_wrapper .burger_menu .line {
   height: 100%;
   opacity: 1;
   max-height: 352px;
+  overflow: auto;
 }
 .book-main .book-container .info-wrapper .searching-section.open {
   /* max-height: 320px; */
@@ -3514,16 +3516,20 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     display: flex;
     align-items: center;
     gap: 8px;
+    overflow-x: auto;
+    overflow-y: visible;
+    line-height: 1.1;
   }
 
   .mobile-anotation-section.open,
   .mobile-searching-section.open,
   .mobile-feature-section.open {
     height: 100% !important;
-    max-height: 100% !important;
+    max-height: 400px;
     opacity: 1;
     padding: 32px 20px;
     margin-top: 8px;
+    overflow: auto;
   }
 
   .dropdown-icon {
