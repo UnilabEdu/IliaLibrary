@@ -13,6 +13,7 @@ class User(BaseModel, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String)
     _password = db.Column(db.String)
+    role = db.Column(db.String, default="admin")
 
     @property
     def password(self):
@@ -24,3 +25,9 @@ class User(BaseModel, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def is_superadmin(self):
+        return self.role == "superadmin"
+
+    def is_admin(self):
+        return self.role in ["admin", "superadmin"]

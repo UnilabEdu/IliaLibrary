@@ -2,6 +2,7 @@ from flask_admin import expose
 from flask_admin.contrib.sqla.filters import FilterEqual
 from flask_admin.form.upload import ImageUploadField, FileUploadField
 from flask_admin.model.form import InlineFormAdmin
+from flask_login import current_user
 from markupsafe import Markup
 from wtforms.fields import TextAreaField
 
@@ -81,3 +82,10 @@ class BookView(SecureModelView):
         ])
         self._refresh_filters_cache()
         return super(SecureModelView, self).index_view()
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+    @property
+    def can_delete(self):
+        return current_user.role == "superadmin"
