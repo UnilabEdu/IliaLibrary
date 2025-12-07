@@ -23,19 +23,22 @@ dropdownBTN?.addEventListener("click", () => {
       .setAttribute("src", "static/assets/green-dropdown-icon.svg");
   }
 });
-
 dropdownBTNMobile?.addEventListener("click", () => {
-  document.querySelector(".media-type-section").classList.toggle("open");
+  const filter = document.querySelector(".media-type-section");
 
-  // if (
-  //   document.querySelector(".media-type-section").classList.contains("open")
-  // ) {
-  //   document.documentElement.style.overflow = "hidden";
-  //   document.body.style.overflow = "hidden";
-  // } else {
-  //   document.documentElement.style.overflow = "";
-  //   document.body.style.overflow = "";
-  // }
+  const isVisible = window.getComputedStyle(filter).display !== "none";
+  console.log(filter);
+  if (!isVisible) {
+    filter.style.display = "flex";
+    filter.getBoundingClientRect(); //  force layout
+    filter.classList.add("open");
+  } else {
+    filter.classList.remove("open");
+    filter.addEventListener("transitionend", function handler() {
+      filter.style.display = "none";
+      filter.removeEventListener("transitionend", handler);
+    });
+  }
 });
 
 dropdownOptions.forEach((option) => {

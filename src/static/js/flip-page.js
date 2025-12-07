@@ -28,8 +28,8 @@ function initializeElements() {
   state.currentPageElement = state.isMobile
     ? document.getElementById("current-page-mobile")
     : state.isSmallScreen
-      ? document.querySelector(".current-page-tablet")
-      : document.querySelector(".current-page");
+    ? document.querySelector(".current-page-tablet")
+    : document.querySelector(".current-page");
   state.totalPagesElement = state.isSmallScreen
     ? document.querySelector(".tablet-total-pages")
     : document.getElementById("total-pages");
@@ -496,10 +496,11 @@ let zoomLevel = 1;
 
 function updateZoom() {
   zoomLevel > 1
-    ? (document.getElementById("pdf-container").style.overflow = "scroll")
-    : (document.getElementById("pdf-container").style.overflow = null);
+    ? (document.getElementById("main-content").style.overflowY = "scroll")
+    : (document.getElementById("main-content").style.overflow = "hidden");
 
   document.querySelector(".stf__block").style.transform = `scale(${zoomLevel})`;
+
   document.querySelector(".stf__block").style.transformOrigin = "top center";
 }
 
@@ -515,17 +516,3 @@ zoomOutBTN.addEventListener("click", () => {
   zoomLevel -= 0.05;
   updateZoom();
 });
-
-// async function searchText(text) {
-//   const res = await fetch(
-//     // `http://127.0.0.1:5000/read_book/${state.bookId}?searchText=${encodeURIComponent(text)}`,
-//     `http://127.0.0.1:5000/read_book/${2}?searchText=${encodeURIComponent(text)}`,
-//     {
-//       headers: { "X-Requested-With": "XMLHttpRequest" },
-//     }
-//   );
-//   const data = await res.json();
-//   console.log(state.bookId, data);
-// }
-
-// // searchText("ილია");
