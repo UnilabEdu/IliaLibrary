@@ -20,8 +20,13 @@ def init_db_command():
 @with_appcontext
 def populate_db_command():
     click.echo("Populating Users")
-    user1 = User(username="admin", password="admin123")
+    user1 = User(username="admin", password="admin123", role="admin")
     user1.password = "admin123"
+    user1.create()
+
+
+    user1 = User(username="superadmin", password="superadmin123", role="superadmin")
+    user1.password = "superadmin123"
     user1.create()
 
     click.echo("Populating Media types")
