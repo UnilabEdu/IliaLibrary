@@ -26,22 +26,22 @@ function openBookInfo(section) {
   [anotationSection, featureSection, searchingSection].forEach((sec) => {
     if (sec.classList.contains("open")) {
       sec.classList.remove("open");
-      // sec.style.maxHeight = "0";
+
       sec.style.opacity = "0";
     }
   });
 
   if (section === "anotation") {
     anotationSection.classList.add("open");
-    // anotationSection.style.maxHeight = anotationSection.scrollHeight + "px";
+
     anotationSection.style.opacity = "1";
   } else if (section === "feature") {
     featureSection.classList.add("open");
-    // featureSection.style.maxHeight = featureSection.scrollHeight + "px";
+
     featureSection.style.opacity = "1";
   } else if (section === "search") {
     searchingSection.classList.add("open");
-    // searchingSection.style.maxHeight = searchingSection.scrollHeight + "px";
+
     searchingSection.style.opacity = "1";
   }
 }
@@ -94,7 +94,6 @@ mobileButtons.forEach((button, i) => {
 
     if (!isOpen) {
       section.classList.add("open");
-      // section.style.maxHeight = section.scrollHeight + "px";
       section.style.opacity = "1";
 
       e.currentTarget.classList.add("focused");
