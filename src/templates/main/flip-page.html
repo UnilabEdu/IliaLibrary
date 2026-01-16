@@ -80,7 +80,7 @@
 </header>
 
 <main id="main" class="flip-page-main">
-    <p class="main-chapter" id="main-chapter">დასაწყისი</p>
+    <p class="main-chapter" id="main-chapter">ყდა</p>
     <section id="main-content">
         <div id="pdf-container"></div>
     </section>
@@ -156,6 +156,7 @@
 <script>
     let bookTitle = "{{ book }}"
     let pageToChapter = {
+        "0": "ყდა",
         {%- for content in book.book_content -%}
             "{{ content.page_number }}": "{{ content.name }}",
             {%- if not loop.last %}{% endif %}

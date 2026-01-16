@@ -2214,9 +2214,6 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   .small-screen-back {
     flex: 1;
   }
-  .small-screen-back a {
-    margin-right: auto;
-  }
 
   .small-screen-back div {
     margin: 0 auto;
@@ -3569,6 +3566,7 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     margin: 0 24px;
   }
   .flip-page-main {
+    flex-direction: column;
     background-color: rgba(207, 222, 201, 1) !important;
   }
   .flip-page-header .flip-page-header-container .download_book {

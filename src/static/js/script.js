@@ -27,7 +27,6 @@ dropdownBTNMobile?.addEventListener("click", () => {
   const filter = document.querySelector(".media-type-section");
 
   const isVisible = window.getComputedStyle(filter).display !== "none";
-  console.log(filter);
   if (!isVisible) {
     filter.style.display = "flex";
     filter.getBoundingClientRect(); //  force layout

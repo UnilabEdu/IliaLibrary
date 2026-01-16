@@ -138,20 +138,25 @@ function changeChapterHeaderText(page, obj) {
     ? document.getElementById("main-chapter-small-screen")
     : document.getElementById("main-chapter");
 
-  const headerFromPageMap = pageToChapter[page];
+  if (page === 0) {
+    chapterTitle.textContent = `ყდა`;
+    return;
+  }
+
+  const headerFromPageMap = obj[page];
+
   if (headerFromPageMap) {
     chapterTitle.textContent = `${bookTitle} - ${headerFromPageMap}`;
     return;
   }
 
-  //closest preceding chapter
+  // closest preceding chapter
   const chapterHeader = Object.entries(obj)
     .reverse()
     .find(([chapterPage]) => Number(chapterPage) <= page)?.[1];
 
-  chapterTitle.textContent = chapterHeader
-    ? `${bookTitle} - ${chapterHeader}`
-    : `${bookTitle} - დასაწყისი`;
+  // if (chapterHeader)
+  chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`;
 }
 
 function setupNavigation() {
@@ -167,17 +172,20 @@ function setupNavigation() {
   const handleNext = () => {
     if (state.isSmallScreen) {
       state.pageFlip.flip(state.currentPage + 1, true);
+      changeChapterHeaderText(state.currentPage + 1, pageToChapter);
     } else {
       state.pageFlip.flip(state.currentPage + 2, true);
+      changeChapterHeaderText(state.currentPage + 2, pageToChapter);
     }
-    // changeChapterHeaderText(state.currentPage, pageToChapter);
   };
 
   const handlePrev = () => {
     if (state.isSmallScreen) {
       state.pageFlip.flip(state.currentPage - 1, true);
+      changeChapterHeaderText(state.currentPage, pageToChapter);
     } else {
       state.pageFlip.flip(state.currentPage - 2, true);
+      changeChapterHeaderText(state.currentPage, pageToChapter);
     }
   };
 
@@ -194,10 +202,7 @@ function setupNavigation() {
       state.currentPageElement.value = state.currentPage;
     } //edge case
 
-    if (state.currentPageElement?.value % 2 === 0 && !state.isSmallScreen) {
-      state.currentPageElement.value = state.currentPage + 1;
-      // } else if (state.isSmallScreen) {
-    } else if (state.isMobile) {
+    if (state.isMobile) {
       state.currentPageElement.textContent = state.currentPage;
     } else {
       state.currentPageElement.value = state.currentPage;
@@ -211,9 +216,12 @@ function setupNavigation() {
 
   state.pageFlip.on("flip", (event) => {
     state.currentPage = event.data;
-    const maxPage = state.totalPages;
-    changeChapterHeaderText(state.currentPage, pageToChapter);
+
     updatePageCountUI();
+
+    if (state.isSmallScreen) {
+      changeChapterHeaderText(event.data, pageToChapter);
+    }
 
     localStorage.setItem(
       "lastRead",
@@ -293,6 +301,8 @@ async function changeChapter(chapter, index, ul) {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
     }
   }
+
+  changeChapterHeaderText(state.currentPage, pageToChapter);
 }
 
 // -------------------------
@@ -320,8 +330,6 @@ function getPageInput() {
 
   if (inputPage % 2 === 0)
     document.querySelector(".current-page").value = inputPage;
-
-  // changeChapterHeaderText(state.currentPage, pageToChapter);
 }
 
 state.isSmallScreen
@@ -472,6 +480,7 @@ async function initializeViewer(pdfUrl) {
     const lastRead = JSON.parse(localStorage.getItem("lastRead"));
     if (lastRead.bookId === state.bookId) {
       state.pageFlip.flip(lastRead.page);
+      state.currentPage = lastRead.page;
     }
 
     changeChapterHeaderText(state.currentPage, pageToChapter);

@@ -47,10 +47,10 @@ def populate_db_command():
     book1 = Book(title="მოთხრობები", media_type_id=1,author='TEST-1', cover_image="diogene.jpg",
                  annotation="ილია ჭავჭავაძის მოთხრობები", edition="1", copies="62445",
                  publish_year="2012", page_count=20, language_id=1, genre_id=1,
-                 book_file="motxrobebi.pdf",book_content=[BookContent(name="თავი 1", page_number=3),
-        BookContent(name="თავი 2", page_number=35),BookContent(name="თავი 1111111111111111111111111111111111111111111111111111111111111111", page_number=12),
-        BookContent(name="თავი 8", page_number=4),BookContent(name="თავი 9", page_number=5),BookContent(name="თავი 10", page_number=6),BookContent(name="თავი 3", page_number=7),BookContent(name="თავი 4", page_number=8),BookContent(name="თავი 5", page_number=9),BookContent(name="თავი 6", page_number=13),BookContent(name="თავი 7", page_number=23),
-        BookContent(name="თავი 123 123 1234567 75353535 111111111111111111111111111111111111111111111111111111111111111", page_number=23),])
+                 book_file="motxrobebi.pdf",book_content=[BookContent(name="თავი 1 (3)", page_number=3),
+        BookContent(name="თავი 2 (35)", page_number=35),BookContent(name="(12) თავი 1111111111111111111111111111111111111111111111111111111111111111", page_number=12),
+        BookContent(name="თავი 3 (4)", page_number=4),BookContent(name="თავი 4 (5)", page_number=5),BookContent(name="თავი 5 (6)", page_number=6),BookContent(name="თავი 6 (7)", page_number=7),BookContent(name="თავი 7 (8)", page_number=8),BookContent(name="თავი 8 (9)", page_number=9),BookContent(name="თავი 9 (13)", page_number=13),BookContent(name="თავი 10 (23)", page_number=23),
+        BookContent(name="(24) თავი 123 123 1234567 75353535 111111111111111111111111111111111111111111111111111111111111111", page_number=24),])
     book1.create()
 
     book2 = Book(title="განდეგილი", media_type_id=1, author='TEST-2',cover_image="gandegili.jpg",
