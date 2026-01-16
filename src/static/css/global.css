@@ -1711,6 +1711,7 @@ header .header_wrapper .burger_menu .line {
 }
 .about-main .contacts-section > div ul img {
   width: 40px;
+  height: 40px;
   aspect-ratio: 1;
 }
 .about-main .contacts-section > div .iframe-div {
@@ -2160,7 +2161,7 @@ a#menu:hover .svg-path {
 #no-books-found p {
   font-family: FiraGO400;
   font-size: 24px;
-  color: #022859;
+  color: #3c3c4399;
 }
 .small-screen-back {
   display: none;
