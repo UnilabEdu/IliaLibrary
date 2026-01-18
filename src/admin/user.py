@@ -8,6 +8,13 @@ class UserView(SecureModelView):
     column_list = ["username", "role"]
     form_excluded_columns = ["password"]
 
+    form_choices = {
+        "role": [
+            ("admin", "admin"),
+            ("superadmin", "superadmin"),
+        ]
+    }
+
     form_extra_fields = {
         "password": PasswordField("Password")
     }

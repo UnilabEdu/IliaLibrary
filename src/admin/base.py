@@ -25,6 +25,12 @@ class SecureIndexView(AdminIndexView):
         if not self.is_accessible():
             return redirect(url_for('auth.login'))
 
+
     @expose('/')
     def index(self):
         return redirect(url_for('book.index_view'))
+
+    @expose('/logout/')
+    def logout(self):
+        logout_user()
+        return redirect(url_for('auth.login'))

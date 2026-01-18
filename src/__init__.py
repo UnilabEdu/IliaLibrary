@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_admin.menu import MenuLink
 
 from src.config import Config
 from src.extensions import db, login_manager, migrate
@@ -48,6 +49,7 @@ def register_extenstions(app):
     admin.add_view(GenericView(MediaType, db.session, name="მედიის ტიპი", category="ფილტრაცია"))
     admin.add_view(GenericView(Genre, db.session, name="ჟანრი", category="ფილტრაცია"))
     admin.add_view(GenericView(Language, db.session, name="ენა", category="ფილტრაცია"))
+    admin.add_link(MenuLink(name='გასვლა', category='', url="/admin/logout/"))
 
 
 
