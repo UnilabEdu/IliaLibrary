@@ -28,8 +28,8 @@ function initializeElements() {
   state.currentPageElement = state.isMobile
     ? document.getElementById("current-page-mobile")
     : state.isSmallScreen
-    ? document.querySelector(".current-page-tablet")
-    : document.querySelector(".current-page");
+      ? document.querySelector(".current-page-tablet")
+      : document.querySelector(".current-page");
   state.totalPagesElement = state.isSmallScreen
     ? document.querySelector(".tablet-total-pages")
     : document.getElementById("total-pages");
@@ -144,7 +144,6 @@ function changeChapterHeaderText(page, obj) {
   }
 
   const headerFromPageMap = obj[page];
-
   if (headerFromPageMap) {
     chapterTitle.textContent = `${bookTitle} - ${headerFromPageMap}`;
     return;
@@ -155,8 +154,11 @@ function changeChapterHeaderText(page, obj) {
     .reverse()
     .find(([chapterPage]) => Number(chapterPage) <= page)?.[1];
 
-  // if (chapterHeader)
-  chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`;
+  if (chapterHeader) {
+    chapterHeader !== "ყდა"
+      ? (chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`)
+      : (chapterTitle.textContent = `ყდა`);
+  }
 }
 
 function setupNavigation() {
@@ -182,10 +184,10 @@ function setupNavigation() {
   const handlePrev = () => {
     if (state.isSmallScreen) {
       state.pageFlip.flip(state.currentPage - 1, true);
-      changeChapterHeaderText(state.currentPage, pageToChapter);
+      changeChapterHeaderText(state.currentPage - 1, pageToChapter);
     } else {
       state.pageFlip.flip(state.currentPage - 2, true);
-      changeChapterHeaderText(state.currentPage, pageToChapter);
+      changeChapterHeaderText(state.currentPage - 2, pageToChapter);
     }
   };
 
@@ -225,7 +227,7 @@ function setupNavigation() {
 
     localStorage.setItem(
       "lastRead",
-      JSON.stringify({ bookId: state.bookId, page: state.currentPage })
+      JSON.stringify({ bookId: state.bookId, page: state.currentPage }),
     );
   });
 }
@@ -265,19 +267,19 @@ function setupChapterMenu() {
       menuList.style.display =
         menuList.style.display === "none" ? "block" : "none";
     },
-    { passive: true }
+    { passive: true },
   );
 }
 
 async function changeChapter(chapter, index, ul) {
-  const chapterTitle = document.getElementById("main-chapter");
+  // const chapterTitle = document.getElementById("main-chapter");
   const chapterName = chapter.textContent.trim().toLowerCase();
-  chapterTitle.textContent = `${bookTitle} - ${chapterName}`;
+  // chapterTitle.textContent = `${bookTitle} - ${chapterName}`;
 
   const active = ul.querySelector(".menu-li.hover");
 
   const entry = Object.entries(pageToChapter).find(
-    ([, name]) => name.trim().toLowerCase() === chapterName
+    ([, name]) => name.trim().toLowerCase() === chapterName,
   );
 
   let targetPage = entry ? Number(entry[0]) : undefined;
@@ -308,7 +310,20 @@ async function changeChapter(chapter, index, ul) {
 // -------------------------
 window.addEventListener("DOMContentLoaded", function () {
   document.querySelector(".current-page").value = state.currentPage;
-}); //only way I managed to reset input...
+});
+
+window.addEventListener("keydown", (e) => {
+  if (state.isSmallScreen) return;
+
+  if (e.key === "ArrowRight") {
+    state.pageFlip.flip(state.currentPage + 2, true);
+    changeChapterHeaderText(state.currentPage + 2, pageToChapter);
+  }
+  if (e.key === "ArrowLeft") {
+    state.pageFlip.flip(state.currentPage - 2, true);
+    changeChapterHeaderText(state.currentPage - 2, pageToChapter);
+  }
+});
 
 function getPageInput() {
   const maxPage = state.totalPages;
@@ -328,8 +343,8 @@ function getPageInput() {
   }
   state.pageFlip.flip(inputPage, true);
 
-  if (inputPage % 2 === 0)
-    document.querySelector(".current-page").value = inputPage;
+  // if (inputPage % 2 === 0)
+  //   document.querySelector(".current-page").value = inputPage;
 }
 
 state.isSmallScreen
@@ -382,7 +397,7 @@ async function initializeViewer(pdfUrl) {
         if (chapterStyles.display !== "none") {
           chapterHeight =
             parsePx(chapterStyles.marginTop) +
-            parsePx(chapterStyles.lineHeight) + // good enough lol
+            parsePx(chapterStyles.lineHeight) +
             parsePx(chapterStyles.marginBottom);
         }
       }
@@ -400,7 +415,7 @@ async function initializeViewer(pdfUrl) {
       else if (maxWidth >= 700) size = "medium";
       else if (maxWidth >= 635) size = "small";
       else if (maxWidth >= 550) size = "xsmall";
-      else if (maxWidth <= 520) size = "xxsmall";
+      else if (maxWidth <= 550) size = "xxsmall";
 
       const heightToConsider =
         headerHeight + chapterHeight + contentPaddingTop * 2;
@@ -425,6 +440,7 @@ async function initializeViewer(pdfUrl) {
 
       //tablet cases
       if (state.isSmallScreen) {
+        console.log(size, maxWidth >= 550);
         switch (size) {
           case "xlarge":
             return 690;
