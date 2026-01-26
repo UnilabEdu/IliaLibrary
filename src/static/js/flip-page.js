@@ -106,6 +106,43 @@ async function createPage(pdf, pageNum) {
   });
 }
 
+function changeChapterHeaderText(page, obj) {
+  const chapterTitle = state.isSmallScreen
+    ? document.getElementById("main-chapter-small-screen")
+    : document.getElementById("main-chapter");
+
+  const firstChapterPageNum = Object.keys(obj)[1];
+
+  if (page < firstChapterPageNum) {
+    chapterTitle.textContent = ``;
+  }
+
+  if (page === 0) {
+    chapterTitle.textContent = `ყდა`;
+    return;
+  }
+
+  const headerFromPageMap = obj[page];
+
+  if (headerFromPageMap) {
+    chapterTitle.textContent = `${bookTitle} - ${headerFromPageMap}`;
+    return;
+  }
+
+  // closest preceding chapter
+  const chapterHeader = Object.entries(obj)
+    .reverse()
+    .find(([chapterPage]) => Number(chapterPage) <= page)?.[1];
+
+  console.log(chapterHeader);
+
+  if (chapterHeader === "ყდა") return;
+
+  if (chapterHeader) {
+    chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`;
+  }
+}
+
 async function setupPages(pdf) {
   const numPages = pdf.numPages;
   state.totalPages = numPages;
@@ -130,35 +167,8 @@ async function setupPages(pdf) {
   state.pageFlip.on("flip", async () => {
     await loadVisiblePages(pdf, state.currentPage + 1);
     await loadVisiblePages(pdf, state.currentPage - 1);
+    changeChapterHeaderText(state.currentPage, pageToChapter);
   });
-}
-
-function changeChapterHeaderText(page, obj) {
-  const chapterTitle = state.isSmallScreen
-    ? document.getElementById("main-chapter-small-screen")
-    : document.getElementById("main-chapter");
-
-  if (page === 0) {
-    chapterTitle.textContent = `ყდა`;
-    return;
-  }
-
-  const headerFromPageMap = obj[page];
-  if (headerFromPageMap) {
-    chapterTitle.textContent = `${bookTitle} - ${headerFromPageMap}`;
-    return;
-  }
-
-  // closest preceding chapter
-  const chapterHeader = Object.entries(obj)
-    .reverse()
-    .find(([chapterPage]) => Number(chapterPage) <= page)?.[1];
-
-  if (chapterHeader) {
-    chapterHeader !== "ყდა"
-      ? (chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`)
-      : (chapterTitle.textContent = `ყდა`);
-  }
 }
 
 function setupNavigation() {
@@ -174,20 +184,16 @@ function setupNavigation() {
   const handleNext = () => {
     if (state.isSmallScreen) {
       state.pageFlip.flip(state.currentPage + 1, true);
-      changeChapterHeaderText(state.currentPage + 1, pageToChapter);
     } else {
       state.pageFlip.flip(state.currentPage + 2, true);
-      changeChapterHeaderText(state.currentPage + 2, pageToChapter);
     }
   };
 
   const handlePrev = () => {
     if (state.isSmallScreen) {
       state.pageFlip.flip(state.currentPage - 1, true);
-      changeChapterHeaderText(state.currentPage - 1, pageToChapter);
     } else {
       state.pageFlip.flip(state.currentPage - 2, true);
-      changeChapterHeaderText(state.currentPage - 2, pageToChapter);
     }
   };
 
@@ -303,8 +309,6 @@ async function changeChapter(chapter, index, ul) {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
     }
   }
-
-  changeChapterHeaderText(state.currentPage, pageToChapter);
 }
 
 // -------------------------
@@ -313,15 +317,21 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 
 window.addEventListener("keydown", (e) => {
-  if (state.isSmallScreen) return;
+  const inputIsFocused = document.activeElement === state.currentPageElement;
+  if (state.isSmallScreen || inputIsFocused) return;
+
+  //tab to next chapter?
+
+  if (String(e.key) === "0") {
+    state.pageFlip.flip(0, true);
+  }
 
   if (e.key === "ArrowRight") {
     state.pageFlip.flip(state.currentPage + 2, true);
-    changeChapterHeaderText(state.currentPage + 2, pageToChapter);
   }
+
   if (e.key === "ArrowLeft") {
     state.pageFlip.flip(state.currentPage - 2, true);
-    changeChapterHeaderText(state.currentPage - 2, pageToChapter);
   }
 });
 
@@ -342,9 +352,6 @@ function getPageInput() {
     return;
   }
   state.pageFlip.flip(inputPage, true);
-
-  // if (inputPage % 2 === 0)
-  //   document.querySelector(".current-page").value = inputPage;
 }
 
 state.isSmallScreen
@@ -404,7 +411,7 @@ async function initializeViewer(pdfUrl) {
 
       let maxWidth = !state.isSmallScreen
         ? window.innerWidth * 0.5 - 8
-        : window.innerWidth; // bit of padding 4 & 8 are just bit of padding
+        : window.innerWidth; // bit of padding
 
       let height = maxWidth / ratio;
 
