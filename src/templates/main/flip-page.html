@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description"
+        content="ილია სახელმწიფო უნივერსიტეტის ბიბლიოთეკის ციფრული არქივი - საქართველოს უმსხვილესი ონლაინ საცავი, რომელიც მოიცავს ციფრულ წიგნებს, იშვიათ ხელნაწერებს, პერიოდულ გამოცემებს, ისტორიულ დოკუმენტებს, აკადემიურ და სამეცნიერო რესურსებს. აღმოაჩინეთ საქართველოს მდიდარი კულტურული, ლიტერატურული, სამეცნიერო და საგანმანათლებლო მემკვიდრეობა თანამედროვე ციფრული ბიბლიოთეკის მეშვეობით. ხელმისაწვდომია უფასო ღია წვდომა სტუდენტებისთვის, მკვლევარებისთვის და საზოგადოებისთვის." />
+    <meta name="keywords"
+        content="ილია სახელმწიფო ბიბლიოთეკა, ილიას სახელმწიფო უნივერსიტეტის ბიბლიოთეკა, ონლაინ არქივი, ციფრული ბიბლიოთეკა, ქართული არქივები, აკადემიური რესურსები, ციფრული წიგნები, ხელნაწერები, ისტორიული დოკუმენტები, პერიოდიკა, კვლევითი მასალები, ღია წვდომა, კულტურული მემკვიდრეობა" />
+
     <title>{{ book.title }}</title>
     <link
             rel="stylesheet"
             href="{{ url_for('static', filename='css/global.css') }}"
     />
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/icon.svg') }}">
+
     <script src="https://cdn.jsdelivr.net/npm/page-flip@latest/dist/js/page-flip.browser.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 </head>
