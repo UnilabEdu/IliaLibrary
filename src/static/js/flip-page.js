@@ -9,6 +9,7 @@ const state = {
   currentPageElement: null,
   totalPagesElement: null,
   totalPagesElementMobile: null,
+  chapterHeaderEl: null,
   pageFlip: null,
   currentPage: 0,
   bookId: (() => {
@@ -35,6 +36,9 @@ function initializeElements() {
     : document.getElementById("total-pages");
   state.totalPagesElementMobile = document.getElementById("total-pages-mobile");
   state.flipHeader = document.getElementById("flip-page-header");
+  state.chapterHeaderEl = state.isSmallScreen
+    ? document.getElementById("main-chapter-small-screen")
+    : document.getElementById("main-chapter");
 }
 
 async function loadVisiblePages(pdf, currentPage) {
@@ -106,43 +110,6 @@ async function createPage(pdf, pageNum) {
   });
 }
 
-function changeChapterHeaderText(page, obj) {
-  const chapterTitle = state.isSmallScreen
-    ? document.getElementById("main-chapter-small-screen")
-    : document.getElementById("main-chapter");
-
-  const firstChapterPageNum = Object.keys(obj)[1];
-
-  if (page < firstChapterPageNum) {
-    chapterTitle.textContent = ``;
-  }
-
-  if (page === 0) {
-    chapterTitle.textContent = `ყდა`;
-    return;
-  }
-
-  const headerFromPageMap = obj[page];
-
-  if (headerFromPageMap) {
-    chapterTitle.textContent = `${bookTitle} - ${headerFromPageMap}`;
-    return;
-  }
-
-  // closest preceding chapter
-  const chapterHeader = Object.entries(obj)
-    .reverse()
-    .find(([chapterPage]) => Number(chapterPage) <= page)?.[1];
-
-  console.log(chapterHeader);
-
-  if (chapterHeader === "ყდა") return;
-
-  if (chapterHeader) {
-    chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`;
-  }
-}
-
 async function setupPages(pdf) {
   const numPages = pdf.numPages;
   state.totalPages = numPages;
@@ -164,13 +131,104 @@ async function setupPages(pdf) {
   state.pageFlip.flip(0, true);
 
   // Add lazy loading for future pages
-  state.pageFlip.on("flip", async () => {
-    await loadVisiblePages(pdf, state.currentPage + 1);
-    await loadVisiblePages(pdf, state.currentPage - 1);
-    changeChapterHeaderText(state.currentPage, pageToChapter);
+  state.pageFlip.on("flip", async (e) => {
+    // const currentPages =
+    // e.object.pages.landscapeSpread[e.object.pages.currentSpreadIndex];
+    // console.log(
+    // e.object,
+    // e.object.pages.landscapeSpread,
+    // e.object.pages.currentSpreadIndex,
+    // currentPages,
+    // );
+
+    state.currentPage = +e.data;
+    await loadVisiblePages(pdf, +e.data + 1);
+    await loadVisiblePages(pdf, +e.data - 1);
+    changeChapterHeaderText(+e.data, pageToChapter);
+    updatePageCountUI();
+
+    if (state.isSmallScreen) {
+      changeChapterHeaderText(+e.data, pageToChapter);
+    }
+
+    localStorage.setItem(
+      "lastRead",
+      JSON.stringify({ bookId: state.bookId, page: +e.data }),
+    );
   });
 }
 
+// -=-=-=-=-= DOM MANIPULATION FUNCS =-=-=-=-=-
+function changeChapterHeaderText(page, obj) {
+  const chapterTitle = state.chapterHeaderEl;
+  const firstChapterPageNum = Object.keys(obj)[1];
+
+  if (page < firstChapterPageNum) {
+    chapterTitle.textContent = ``;
+  }
+
+  if (page === 0) {
+    chapterTitle.textContent = `ყდა`;
+    return;
+  }
+
+  const headerFromPageMap = obj[page];
+
+  if (!headerFromPageMap && obj[page + 1]) {
+    chapterTitle.textContent = `${bookTitle} - ${obj[page + 1]}`;
+    return;
+  }
+
+  if (headerFromPageMap) {
+    chapterTitle.textContent = `${bookTitle} - ${headerFromPageMap}`;
+    return;
+  }
+
+  // closest preceding chapter (უყურებს ბოლოს რა თავის გვერდებზე ვართ)
+  const chapterHeader = Object.entries(obj)
+    .reverse()
+    .find(([chapterPage]) => Number(chapterPage) <= page)?.[1];
+
+  if (chapterHeader === "ყდა") return;
+
+  if (chapterHeader) {
+    chapterTitle.textContent = `${bookTitle} - ${chapterHeader}`;
+  }
+}
+
+function updatePageCountUI() {
+  if (state.currentPage === 0) {
+    state.isMobile
+      ? (state.currentPageElement.textContent = 0)
+      : (state.currentPageElement.value = 0);
+    return;
+  }
+
+  if (state.currentPage === state.totalPages - 1 && !state.isSmallScreen) {
+    state.currentPageElement.value = state.currentPage;
+  } //edge case
+
+  if (state.isMobile) {
+    state.currentPageElement.textContent = state.currentPage;
+  } else {
+    state.currentPageElement.value = state.currentPage;
+  }
+}
+
+function showLoader() {
+  state.loader.style.display = "flex";
+  state.main.style.display = "none";
+  state.flipHeader.style.display = "none";
+}
+
+function hideLoader() {
+  state.loader.style.display = "none";
+  state.main.style.display = "block";
+  state.flipHeader.style.display = "flex";
+  state.bookContainer.style.visibility = "visible";
+}
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function setupNavigation() {
   const nextBtn = state.isSmallScreen
     ? document.getElementById("tablet-next")
@@ -197,45 +255,10 @@ function setupNavigation() {
     }
   };
 
-  function updatePageCountUI() {
-    if (state.currentPage === 0) {
-      // state.isSmallScreen
-      state.isMobile
-        ? (state.currentPageElement.textContent = 0)
-        : (state.currentPageElement.value = 0);
-      return;
-    }
-
-    if (state.currentPage === state.totalPages - 1 && !state.isSmallScreen) {
-      state.currentPageElement.value = state.currentPage;
-    } //edge case
-
-    if (state.isMobile) {
-      state.currentPageElement.textContent = state.currentPage;
-    } else {
-      state.currentPageElement.value = state.currentPage;
-    }
-  }
-
   nextBtn.addEventListener("click", handleNext, { passive: true });
   nextBtnMobile.addEventListener("click", handleNext, { passive: true });
   prevBtn.addEventListener("click", handlePrev, { passive: true });
   prevBtnMobile.addEventListener("click", handlePrev, { passive: true });
-
-  state.pageFlip.on("flip", (event) => {
-    state.currentPage = event.data;
-
-    updatePageCountUI();
-
-    if (state.isSmallScreen) {
-      changeChapterHeaderText(event.data, pageToChapter);
-    }
-
-    localStorage.setItem(
-      "lastRead",
-      JSON.stringify({ bookId: state.bookId, page: state.currentPage }),
-    );
-  });
 }
 
 function setupChapterMenu() {
@@ -278,9 +301,7 @@ function setupChapterMenu() {
 }
 
 async function changeChapter(chapter, index, ul) {
-  // const chapterTitle = document.getElementById("main-chapter");
   const chapterName = chapter.textContent.trim().toLowerCase();
-  // chapterTitle.textContent = `${bookTitle} - ${chapterName}`;
 
   const active = ul.querySelector(".menu-li.hover");
 
@@ -303,7 +324,6 @@ async function changeChapter(chapter, index, ul) {
     }
     if (targetPage !== undefined) {
       state.currentPage = targetPage;
-      // state.currentPageElement.innerText = state.currentPage;
       state.pageFlip.flip(state.currentPage, true);
     } else {
       console.error("Chapter-to-page mapping is missing for chapter:", index);
@@ -312,7 +332,7 @@ async function changeChapter(chapter, index, ul) {
 }
 
 // -------------------------
-window.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".current-page").value = state.currentPage;
 });
 
@@ -364,19 +384,6 @@ state.isSmallScreen
 
 // -------------------------
 
-function showLoader() {
-  state.loader.style.display = "flex";
-  state.main.style.display = "none";
-  state.flipHeader.style.display = "none";
-}
-
-function hideLoader() {
-  state.loader.style.display = "none";
-  state.main.style.display = "block";
-  state.flipHeader.style.display = "flex";
-  state.bookContainer.style.visibility = "visible";
-}
-
 // Main initialization function with performance optimizations
 async function initializeViewer(pdfUrl) {
   try {
@@ -387,7 +394,6 @@ async function initializeViewer(pdfUrl) {
       const parsePx = (val) => parseFloat(val) || 0;
 
       const headerEl = document.querySelector(".flip-page-header");
-      const chapterEl = document.querySelector(".main-chapter");
       const mainContentEl = document.querySelector("#main-content");
 
       const headerStyles = window.getComputedStyle(headerEl);
@@ -398,8 +404,8 @@ async function initializeViewer(pdfUrl) {
 
       let chapterHeight = 0;
 
-      if (chapterEl) {
-        const chapterStyles = window.getComputedStyle(chapterEl);
+      if (state.chapterHeaderEl) {
+        const chapterStyles = window.getComputedStyle(state.chapterHeaderEl);
 
         if (chapterStyles.display !== "none") {
           chapterHeight =
@@ -439,15 +445,14 @@ async function initializeViewer(pdfUrl) {
       return { maxHeight, maxWidth, size, heightToConsider };
     }
 
-    const { maxHeight, maxWidth, size, heightToConsider } =
-      getScreenDimensions();
+    const { maxWidth, size, heightToConsider } = getScreenDimensions();
 
     function assignWidth() {
       if (state.isMobile) return maxWidth - 12;
 
       //tablet cases
       if (state.isSmallScreen) {
-        console.log(size, maxWidth >= 550);
+        //returns book width (px)
         switch (size) {
           case "xlarge":
             return 690;
@@ -469,20 +474,15 @@ async function initializeViewer(pdfUrl) {
 
     // Initialize PageFlip with optimized settings
     state.pageFlip = new St.PageFlip(state.bookContainer, {
-      // width: state.isMobile ? (width <= 170 ? 318 : 360) : width,
       width: assignWidth(),
-
       showCover: true,
       drawShadow: true,
-      flippingTime: 600, // Reduced flip animation time
+      flippingTime: 600,
       usePortrait: state.isSmallScreen,
       startZIndex: 0,
-      // height: state.isSmallScreen ? height * 1.8 : height, //v.0
-      height: window.innerHeight - heightToConsider, //v.1
+      height: window.innerHeight - heightToConsider, //v.1.0
       // height: maxHeight, // v1.1
-
       useMouseEvents: true,
-      // useMouseEvents: !state.isMobile,
       swipeDistance: !state.isSmallScreen ? 30 : 100,
       preventTouchEvents: false,
     });
@@ -494,32 +494,28 @@ async function initializeViewer(pdfUrl) {
     hideLoader();
 
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams) {
-      const page = parseInt(urlParams.get("page"));
-      state.pageFlip.flip(page, true);
-    }
+    const page = parseInt(urlParams.get("page"));
 
     //see if read
     const lastRead = JSON.parse(localStorage.getItem("lastRead"));
-    if (lastRead.bookId === state.bookId) {
+    if (lastRead.bookId === state.bookId && !page) {
       state.pageFlip.flip(lastRead.page);
       state.currentPage = lastRead.page;
     }
 
-    changeChapterHeaderText(state.currentPage, pageToChapter);
+    if (page) {
+      state.pageFlip.flip(page, true);
+      state.currentPage = page;
+
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    changeChapterHeaderText(+state.currentPage, pageToChapter);
   } catch (error) {
     console.error("Error initializing book viewer:", error);
     hideLoader();
   }
 }
-
-// if (typeof pdfjsLib !== "undefined") {
-//   const pdfPath = "/static/book/gandegili-1957.pdf";
-
-//   initializeViewer(window.location.origin + pdfPath);
-// } else {
-//   console.error("PDF.js is not available");
-// }
 
 // ------ zoom ----------
 const zoomInBTN = document.getElementById("zoom_in");
