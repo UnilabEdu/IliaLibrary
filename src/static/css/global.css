@@ -1490,6 +1490,7 @@ header .header_wrapper .burger_menu .line {
   font-size: 24px;
   font-weight: normal;
   color: #000;
+  text-align: end;
 }
 .book-main .book-container .info-wrapper .searching-section {
   max-width: 1140px;
@@ -2085,6 +2086,7 @@ a#menu:hover .svg-path {
   text-align: center;
   text-wrap: balance;
   min-height: 24px;
+  padding: 0 5px;
 } /*# sourceMappingURL=global.css.map */
 
 .pagination-container .pagination-wrapper .page-next {
@@ -2973,7 +2975,7 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     .book-info
     .title-share {
     border: none;
-    padding: 7px 0 0 18px;
+    padding: 7px 0 15px 18px;
     height: 100%;
     overflow: scroll;
   }
@@ -3520,6 +3522,7 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     font-size: 14px;
     font-weight: 350;
     color: rgba(60, 60, 67, 0.6);
+    text-align: end;
 
     padding-bottom: 8px;
     border-bottom: 1px dashed #d0d0d0;
