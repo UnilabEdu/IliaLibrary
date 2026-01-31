@@ -147,10 +147,6 @@ async function setupPages(pdf) {
     changeChapterHeaderText(+e.data, pageToChapter);
     updatePageCountUI();
 
-    if (state.isSmallScreen) {
-      changeChapterHeaderText(+e.data, pageToChapter);
-    }
-
     localStorage.setItem(
       "lastRead",
       JSON.stringify({ bookId: state.bookId, page: +e.data }),
@@ -173,9 +169,15 @@ function changeChapterHeaderText(page, obj) {
   }
 
   const headerFromPageMap = obj[page];
+  const neighbourChapterHeader = obj[page + 1];
 
-  if (!headerFromPageMap && obj[page + 1]) {
-    chapterTitle.textContent = `${bookTitle} - ${obj[page + 1]}`;
+  if (headerFromPageMap && neighbourChapterHeader && !state.isSmallScreen) {
+    chapterTitle.textContent = `${bookTitle} - ${headerFromPageMap} და ${neighbourChapterHeader}`;
+    return;
+  }
+
+  if (!headerFromPageMap && neighbourChapterHeader && !state.isSmallScreen) {
+    chapterTitle.textContent = `${bookTitle} - ${neighbourChapterHeader}`;
     return;
   }
 
@@ -288,7 +290,8 @@ function setupChapterMenu() {
 
   menu.addEventListener(
     "click",
-    () => {
+    (e) => {
+      e.stopPropagation();
       if (!menuList) {
         menuList = createChapterList();
         menu.parentElement.appendChild(menuList);
@@ -296,8 +299,14 @@ function setupChapterMenu() {
       menuList.style.display =
         menuList.style.display === "none" ? "block" : "none";
     },
-    { passive: true },
+    { passive: false },
   );
+
+  document.addEventListener("click", () => {
+    if (menuList) {
+      menuList.style.display = "none";
+    }
+  });
 }
 
 async function changeChapter(chapter, index, ul) {
@@ -509,8 +518,6 @@ async function initializeViewer(pdfUrl) {
 
       window.history.replaceState({}, document.title, window.location.pathname);
     }
-
-    changeChapterHeaderText(+state.currentPage, pageToChapter);
   } catch (error) {
     console.error("Error initializing book viewer:", error);
     hideLoader();
