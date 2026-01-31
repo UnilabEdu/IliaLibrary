@@ -2712,8 +2712,6 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
     gap: 74px;
   }
   #menu img {
-    /* height: 20px; */
-    /* width: 30px; */
     height: 35px;
     width: 35px;
   }
@@ -3626,6 +3624,11 @@ header .header_wrapper .burger_menu .burger_menu_dropdown {
   #main-chapter-small-screen {
     max-width: 200px;
     max-height: 90%;
+  }
+
+  #menu img {
+    height: 20px;
+    width: 25px;
   }
 }
 @media (max-width: 345px) {
