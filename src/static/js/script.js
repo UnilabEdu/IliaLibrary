@@ -14,12 +14,10 @@ dropdownBTN?.addEventListener("click", () => {
   if (dropdownBTN.classList.contains("active-btn")) {
     dropdownBTN
       .querySelector("img")
-      // .setAttribute("src", "./assets/white-arrow.svg");
       .setAttribute("src", "static/assets/white-arrow.svg");
   } else {
     dropdownBTN
       .querySelector("img")
-      // .setAttribute("src", "./assets/");
       .setAttribute("src", "static/assets/green-dropdown-icon.svg");
   }
 });
@@ -27,7 +25,6 @@ dropdownBTNMobile?.addEventListener("click", () => {
   const filter = document.querySelector(".media-type-section");
 
   const isVisible = window.getComputedStyle(filter).display !== "none";
-  console.log(filter);
   if (!isVisible) {
     filter.style.display = "flex";
     filter.getBoundingClientRect(); //  force layout
@@ -44,10 +41,10 @@ dropdownBTNMobile?.addEventListener("click", () => {
 dropdownOptions.forEach((option) => {
   option.addEventListener("click", (option) => {
     const selectedOption = option.target.textContent;
-    //----
+
     const value = option.target.getAttribute("data-value");
     hiddenDropdownSelector.value = value;
-    //----
+    document.getElementById("sortSelector").value = value;
 
     //for ui
     if (value === "year-desc") {
@@ -67,7 +64,6 @@ dropdownOptions.forEach((option) => {
     dropdownBTN
       .querySelector("img")
       .setAttribute("src", "static/assets/green-dropdown-icon.svg");
-    // dropdownTextEl.style.fontSize = "18px";
   });
 });
 
@@ -75,6 +71,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const sortedBy = params.get("sortedBy");
 
+  if (sortedBy) {
+    hiddenDropdownSelector.value = sortedBy;
+  }
   const sortTexts = {
     "year-desc": "გამოცემის წელი <br/> (კლებადი)",
     "year-asc": "გამოცემის წელი <br/> (ზრდადი)",

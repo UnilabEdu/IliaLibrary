@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-    დეტალები
+    {{book.title}}
 {% endblock %}
 
 {% block content %}
@@ -27,7 +27,7 @@
                         <div>
                             <img src="{{ url_for('static', filename='assets/book-check-icon.svg') }}"
                                  alt="book check icon"/>
-                            <p>გამომცემლობა: {{ book.publisher }}</p>
+                            <p>გამომცემლობა: {{ book.publisher | default('უცნობია', true) }}</p>
                         </div>
                         <a class="read-mobile" href="{{ url_for('main.read_book', id=book.id) }}">წაკითხვა (PDF)</a>
                     </div>
@@ -174,13 +174,18 @@
 
                                     <div class="title-share">
                                         <div class="title-share-default">
-                                            <h2>{{ book.title }}</h2>
+                                            <h2>{{ book.title | default('უსათაურო', true) }}</h2>
                                             <img src="{{ url_for('static', filename="assets/share-icon.svg") }}"
                                                  alt="share-icon"/>
                                         </div>
                                         <div class="title-share-hover">
-                                            <p>{{ book.publisher }}</p>
-                                            <span>{{ book.publish_year }}</span>
+                                            {% if book.publisher %}
+                                                <p>{{ book.publisher }}</p>
+                                            {% endif %}
+                                            {% if book.publish_year %}
+                                                <span>{{ book.publish_year }}</span>
+                                            {% endif %}
+
                                         </div>
                                     </div>
                                 </div>

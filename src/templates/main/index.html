@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Ilia Library {% endblock %}
+{% block title %} ციფრული არქივი{% endblock %}
 
 {% block content %}
 <main class="main-page">
@@ -13,21 +13,20 @@
             <div class="search-results-info">
                 {% if filters_used %}
                 <aside>
-                  
-                        <div class="go-back-container">
-                            <a href="{{ url_for('main.index') }}">
-                                <img src="{{ url_for('static', filename='assets/arrow-back.svg') }}" alt="go-back"/>
-                                უკან დაბრუნება
-                            </a>
-                        </div>
+                    <div class="go-back-container">
+                        <a href="{{ url_for('main.index') }}">
+                            <img src="{{ url_for('static', filename='assets/arrow-back.svg') }}" alt="go-back"/>
+                            უკან დაბრუნება
+                        </a>
+                    </div>
                     
                     <p {% if not books.items %} style="flex: unset" {% endif %}>
                         {% if search_text %}
                             <span>
                                 საძიებო სიტყვა <span class="search-text-line">"{{ search_text }}"</span>
                             </span>
+                            
                         {% endif %}
-                        
                         <span> მოიძებნა {{ all_found_books_num }} ჩანაწერი </span>
                     </p>
                 </aside>
@@ -37,7 +36,6 @@
                     <section id="no-books-found">
                         <article>
                             <h2>ჩანაწერი ვერ მოიძებნა</h2>
-                            <!-- <h2><img src="{{ url_for('static', filename='assets/ჩანაწერი-ვერ-მოიძებნა.svg') }}" alt=""></h2> -->
                             <p>გთხოვთ, სწორად შეიყვანოთ საძიებო სიტყვა</p>
                         </article>
                     </section>

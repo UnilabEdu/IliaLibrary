@@ -17,7 +17,6 @@ def index():
 
     query = Book.query
     search_text = request.args.get('searchQuery')
-    search_text = request.args.get('searchQuery')
     if search_text == '':
         search_text = None
     media_types = request.args.getlist('mediaType')
@@ -35,8 +34,8 @@ def index():
     languages,
     date_from,
     date_to,
-    sort_by
-])
+    ])
+
 
     conditions = []
 
