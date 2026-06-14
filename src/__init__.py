@@ -49,6 +49,7 @@ def register_extenstions(app):
     admin.add_view(GenericView(MediaType, db.session, name="მედიის ტიპი", category="ფილტრაცია"))
     admin.add_view(GenericView(Genre, db.session, name="ჟანრი", category="ფილტრაცია"))
     admin.add_view(GenericView(Language, db.session, name="ენა", category="ფილტრაცია"))
+    admin.add_link(MenuLink(name='საიტზე დაბრუნება', category='', url="/"))
     admin.add_link(MenuLink(name='გასვლა', category='', url="/admin/logout/"))
 
 
