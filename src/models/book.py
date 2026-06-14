@@ -25,7 +25,7 @@ class Book(BaseModel):
     issue_number = db.Column(db.Integer, comment="ტომი")
     liable_person = db.Column(db.String, comment="პასუხისმგებელი პირი")
     liable_organization = db.Column(db.String(), comment="პასუხისმგებელი ორგანიზაცია")
-    volume_number = db.Column(db.Integer, comment="სერია")
+    volume_number = db.Column(db.String, comment="სერია")
     copies = db.Column(db.Integer, comment="ტირაჟი")
     physical_description = db.Column(db.String, comment="ფიზიკური აღწერილობა")
     cover_image = db.Column(db.String, nullable=False)
