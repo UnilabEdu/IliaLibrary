@@ -7,7 +7,7 @@ from markupsafe import Markup
 from wtforms.fields import TextAreaField
 
 from src.config import Config
-from src.admin.utils import ViewRowAction, GenericEqualFilter, _get_filter_options
+from src.admin.utils import ViewRowAction, GenericEqualFilter, _get_filter_options, gen_name
 from src.admin.base import SecureModelView
 from src.models import BookContent, Book, Genre, MediaType, Language
 
@@ -60,8 +60,8 @@ class BookView(SecureModelView):
                       "physical_description": TextAreaField,
                       "annotation": TextAreaField}
 
-    form_args = {"cover_image": {"base_path": Config.UPLOAD_PATH, "url_relative_path": "upload/"},
-                 "book_file": {"base_path": Config.UPLOAD_PATH, "label": "pdf-ის ატვირთვა"}}
+    form_args = {"cover_image": {"base_path": Config.UPLOAD_PATH, "url_relative_path": "upload/", 'namegen': gen_name},
+                 "book_file": {"base_path": Config.UPLOAD_PATH, "label": "pdf-ის ატვირთვა", 'namegen': gen_name}}
 
     form_columns = ["book_file",] + column_list
     inline_models = [InlineBookcontentView(BookContent)]
