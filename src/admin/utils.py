@@ -2,6 +2,8 @@ from flask import has_request_context
 from flask_admin.contrib.sqla.filters import FilterEqual
 from flask_admin.model.template import BaseListRowAction, LinkRowAction
 from flask_admin.model import filters
+from os import path
+from uuid import uuid4
 
 from src.models import Genre
 
@@ -25,3 +27,8 @@ class GenericEqualFilter(FilterEqual):
 
 def _get_filter_options(cls):
     return [(model.id, model.name) for model in cls.query.all()]
+
+def gen_name(obj, file):
+    name, ext = path.splitext(file.filename)
+
+    return f'{uuid4()}{ext}'
